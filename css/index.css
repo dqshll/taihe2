@@ -1,0 +1,17 @@
+body{padding:0;margin:0;}
+.img_bg{width:100vw;height:auto;position:absolute;z-index:-1;}
+
+#zoom_area {
+    width:100%;
+    height:90%;
+    overflow:hidden;
+}
+
+#pic {
+    width:100%;
+    height:100%;
+}
+/* #view_wait{display: none} */
+#view_play{display: block}
+/* #view_result{display: none} */
+

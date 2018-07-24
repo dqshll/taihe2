@@ -151,6 +151,7 @@ var justscale = function(a, b) {
     var alen = Math.sqrt(dot(a, a));
     var blen = Math.sqrt(dot(b, b));
     var scale = blen / alen;
+    console.log('scale = ' + scale);
     return rotate(scale, 0)
 };
 

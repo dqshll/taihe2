@@ -273,6 +273,8 @@ function Zoom(elem, config, wnd) {
     this.originHeight = this.elem.offsetHeight;
     console.log ('width=' + this.originWidth + ' height=' + this.originHeight);
 
+    console.log ('top = ' + this.elem.offsetTop + ' left = ' + this.elem.offsetLeft + ' right = ' + this.elem.offsetRight + ' bottom = ' + this.elem.offsetBottom);
+
     this.srcCoords = [0, 0];
     this.destCoords = [0, 0];
     var me = this;

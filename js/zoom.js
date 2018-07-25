@@ -386,7 +386,7 @@ Zoom.prototype.repaint = function() {
     var delta_y = this.resultantZoom.b[1];
     var out_y = this.originHeight * (scale - 1) * 0.5;
 
-    console ('scale=' + scale + ' dx/ox=' + delta_x + '/' + out_x + ' dy/oy=' + delta_y + '/' + out_y);
+    console.log ('scale=' + scale + ' dx/ox=' + delta_x + '/' + out_x + ' dy/oy=' + delta_y + '/' + out_y);
 
     if (scale < 1.0) {
         return;

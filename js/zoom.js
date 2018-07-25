@@ -267,6 +267,8 @@ function Zoom(elem, config, wnd) {
     this.activeZoom = identity;
     this.resultantZoom = identity;
 
+    console.log ('widht=' + this.elem.clientWidth + ' height=' + this.elem.height);
+
     this.srcCoords = [0, 0];
     this.destCoords = [0, 0];
     var me = this;

@@ -388,11 +388,11 @@ Zoom.prototype.repaint = function() {
 
     console.log ('scale=' + scale + ' dx/ox=' + delta_x + '/' + out_x + ' dy/oy=' + delta_y + '/' + out_y);
 
-    if (scale < 1.0) {
-        return;
-    } else if (Math.abs(delta_x) > out_x || Math.abs(delta_y) > out_y) {
-        return;
-    }
+    // if (scale < 1.0) {
+    //     return;
+    // } else if (Math.abs(delta_x) > out_x || Math.abs(delta_y) > out_y) {
+    //     return;
+    // }
 
     console.log('doing repaint');
 

@@ -273,8 +273,6 @@ function Zoom(elem, config, wnd) {
     this.originHeight = this.elem.offsetHeight;
     console.log ('width=' + this.originWidth + ' height=' + this.originHeight);
 
-    console.log ('top = ' + this.elem.offsetTop + ' left = ' + this.elem.offsetLeft);
-
     this.srcCoords = [0, 0];
     this.destCoords = [0, 0];
     var me = this;
@@ -398,11 +396,11 @@ Zoom.prototype.repaint = function(tmpZoom) {
 
     console.log ('scale=' + scale + ' dx/ox=' + delta_x + '/' + out_x + ' dy/oy=' + delta_y + '/' + out_y);
     this.doFinalize = false;
-    if (scale < 1.0 || scale > 4) {
-        return false;
-    } else if (Math.abs(delta_x) > out_x || Math.abs(delta_y) > out_y) {
-        return false;
-    }
+    // if (scale < 1.0 || scale > 4) {
+    //     return false;
+    // } else if (Math.abs(delta_x) > out_x || Math.abs(delta_y) > out_y) {
+    //     return false;
+    // }
 
     console.log('doing repaint');
 

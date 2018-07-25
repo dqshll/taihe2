@@ -266,6 +266,9 @@ function Zoom(elem, config, wnd) {
     this.elem = elem;
     this.activeZoom = identity;
     this.resultantZoom = identity;
+
+    this.doFinalize = false;
+
     this.originWidth = this.elem.clientWidth;
     this.originHeight = this.elem.clientHeight;
     console.log ('width=' + this.originWidth + ' height=' + this.originHeight);
@@ -376,8 +379,11 @@ Zoom.prototype.setZoom = function(newZoom) {
 };
 
 Zoom.prototype.finalize = function() {
-    console.log('finalize active/result ' + this.activeZoom + '->' + this.resultantZoom)
-    this.activeZoom = this.resultantZoom;
+    if (this.doFinalize) {
+        console.log('finalize active/result ' + this.activeZoom + '->' + this.resultantZoom)
+        this.activeZoom = this.resultantZoom;
+        this.doFinalize = false;
+    }
 };
 
 Zoom.prototype.repaint = function() {
@@ -388,16 +394,17 @@ Zoom.prototype.repaint = function() {
     var out_y = this.originHeight * (scale - 1) * 0.5;
 
     console.log ('scale=' + scale + ' dx/ox=' + delta_x + '/' + out_x + ' dy/oy=' + delta_y + '/' + out_y);
-
-    // if (scale < 1.0) {
-    //     return;
-    // } else if (Math.abs(delta_x) > out_x || Math.abs(delta_y) > out_y) {
-    //     return;
-    // }
+    this.doFinalize = false;
+    if (scale < 1.0) {
+        return;
+    } else if (Math.abs(delta_x) > out_x || Math.abs(delta_y) > out_y) {
+        return;
+    }
 
     console.log('doing repaint');
 
     this.elem.style.transform = this.resultantZoom.css();
+    this.doFinalize = true;
 };
 
 Zoom.prototype.reset = function() {

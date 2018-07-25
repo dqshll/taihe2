@@ -412,6 +412,7 @@ Zoom.prototype.repaint = function(tmpZoom) {
 };
 
 Zoom.prototype.reset = function() {
+    console.log('reset');
     if (this.wnd.requestAnimationFrame) {
         this.isAnimationRunning = true;
         var Z = this.activeZoom;

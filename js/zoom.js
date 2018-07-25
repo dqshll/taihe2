@@ -376,6 +376,7 @@ Zoom.prototype.setZoom = function(newZoom) {
 };
 
 Zoom.prototype.finalize = function() {
+    console.log('finalize active/result ' + this.activeZoom + '->' + this.resultantZoom)
     this.activeZoom = this.resultantZoom;
 };
 

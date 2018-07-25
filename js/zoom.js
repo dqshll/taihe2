@@ -99,8 +99,10 @@ function Transform(A, b) {
 Transform.prototype.css = function() {
     var A = this.A;
     var b = this.b;
-    return 'matrix(' + A[0][0] + ',' + A[0][1] + ',' + A[1][0] + ',' + A[1][1] +
+    var result =  'matrix(' + A[0][0] + ',' + A[0][1] + ',' + A[1][0] + ',' + A[1][1] +
             ',' + b[0] + ',' + b[1] + ')';
+    console.log(result);
+    return result;
 };
 
 /**
@@ -360,7 +362,6 @@ function Zoom(elem, config, wnd) {
 }
 
 Zoom.prototype.previewZoom = function() {
-    console.log('previewZoom');
     var additionalZoom = zoom(this.srcCoords, this.destCoords, this.config.rotate);
     this.resultantZoom = cascade(additionalZoom, this.activeZoom);
     this.repaint();

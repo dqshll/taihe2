@@ -375,6 +375,7 @@ Zoom.prototype.previewZoom = function() {
 };
 
 Zoom.prototype.setZoom = function(newZoom) {
+    console.log('setZoom');
     // this.resultantZoom = newZoom;
     this.repaint(newZoom);
 };

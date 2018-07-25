@@ -151,7 +151,6 @@ var justscale = function(a, b) {
     var alen = Math.sqrt(dot(a, a));
     var blen = Math.sqrt(dot(b, b));
     var scale = blen / alen;
-    console.log('scale = ' + scale);
     return rotate(scale, 0)
 };
 
@@ -361,6 +360,7 @@ function Zoom(elem, config, wnd) {
 }
 
 Zoom.prototype.previewZoom = function() {
+    console.log('previewZoom');
     var additionalZoom = zoom(this.srcCoords, this.destCoords, this.config.rotate);
     this.resultantZoom = cascade(additionalZoom, this.activeZoom);
     this.repaint();

@@ -269,8 +269,8 @@ function Zoom(elem, config, wnd) {
 
     this.doFinalize = false;
 
-    this.originWidth = this.elem.clientWidth;
-    this.originHeight = this.elem.clientHeight;
+    this.originWidth = this.elem.offsetWidth;
+    this.originHeight = this.elem.offsetHeight;
     console.log ('width=' + this.originWidth + ' height=' + this.originHeight);
 
     this.srcCoords = [0, 0];
@@ -396,7 +396,7 @@ Zoom.prototype.repaint = function(tmpZoom) {
 
     console.log ('scale=' + scale + ' dx/ox=' + delta_x + '/' + out_x + ' dy/oy=' + delta_y + '/' + out_y);
     this.doFinalize = false;
-    if (scale < 1.0) {
+    if (scale < 1.0 || scal > 4) {
         return false;
     } else if (Math.abs(delta_x) > out_x || Math.abs(delta_y) > out_y) {
         return false;
@@ -407,6 +407,7 @@ Zoom.prototype.repaint = function(tmpZoom) {
     this.resultantZoom = tmpZoom;
     this.elem.style.transform = this.resultantZoom.css();
     this.doFinalize = true;
+    return true;
 };
 
 Zoom.prototype.reset = function() {

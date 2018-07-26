@@ -402,8 +402,10 @@ Zoom.prototype.repaint = function(tmpZoom) {
     console.log ('scale=' + scale + ' dx/ox=' + delta_x + '/' + out_x + ' dy/oy=' + delta_y + '/' + out_y);
     this.doFinalize = false;
     if (scale < 1.0 || scale > 4) {
+        this.destCoords = this.srcCoords;
         return false;
     } else if (delta_x > 0 || delta_x < (out_x * -1) || delta_y > 0 || delta_y < (out_y * -1)) {
+        this.destCoords = this.srcCoords;
         return false;
     }
 

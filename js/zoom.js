@@ -273,6 +273,8 @@ function Zoom(elem, config, wnd) {
     this.originHeight = this.elem.offsetHeight;
     console.log ('width=' + this.originWidth + ' height=' + this.originHeight);
 
+    this.srcCoords = [0, 0];
+    this.destCoords = [0, 0];
     var me = this;
     
     this.config = default_config(config, {
@@ -308,15 +310,15 @@ function Zoom(elem, config, wnd) {
         return t.length > 1 ? getCoordsDouble(t) : getCoordsSingle(t);
     };
 
-    // var setSrcAndDest = function(touches){
-    //     console.log('setSrcAndDest')
-    //     me.srcCoords = getCoords(touches);
-    //     me.destCoords = me.srcCoords;
-    // };
+    var setSrcAndDest = function(touches){
+        console.log('setSrcAndDest')
+        me.srcCoords = getCoords(touches);
+        me.destCoords = me.srcCoords;
+    };
 
-    // var setDest = function(touches){
-    //     me.destCoords = getCoords(touches);
-    // };
+    var setDest = function(touches){
+        me.destCoords = getCoords(touches);
+    };
 
     var handleTouchEvent = function(cb) {
         return function(evt) {
@@ -333,9 +335,6 @@ function Zoom(elem, config, wnd) {
     };
 
     var handleZoom = handleTouchEvent(function(touches) {
-        var srcCoords = [0, 0];
-        var destCoords = [0, 0];
-
         var numOfFingers = touches.length;
         console.log('handleTouchEvent numOfFg = ' + numOfFingers)
         if (numOfFingers != me.curTouch){
@@ -343,14 +342,12 @@ function Zoom(elem, config, wnd) {
             me.curTouch = numOfFingers;
             me.finalize();
             if (numOfFingers != 0) {
-                srcCoords = getCoords(touches);
-                destCoords = me.srcCoords;
+                setSrcAndDest(touches);
             }
         } else {
             console.log('fg equal')
-            destCoords = getCoords(touches);
-            // setDest(touches);
-            me.previewZoom(srcCoords, destCoords);
+            setDest(touches);
+            me.previewZoom();
         }
     });
     
@@ -374,8 +371,8 @@ function Zoom(elem, config, wnd) {
     elem.parentNode.addEventListener('touchend', handleZoom);
 }
 
-Zoom.prototype.previewZoom = function(srcCoords, destCoords) {
-    var additionalZoom = zoom(srcCoords, destCoords, this.config.rotate);
+Zoom.prototype.previewZoom = function() {
+    var additionalZoom = zoom(this.srcCoords, this.destCoords, this.config.rotate);
     // this.resultantZoom = cascade(additionalZoom, this.activeZoom);
     var tmpZoom = cascade(additionalZoom, this.activeZoom);
     this.repaint(tmpZoom);

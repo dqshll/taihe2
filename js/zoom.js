@@ -342,7 +342,7 @@ function Zoom(elem, config, wnd) {
             me.curTouch = numOfFingers;
             me.finalize();
             if (numOfFingers != 0) {
-                // setSrcAndDest(touches);
+                setSrcAndDest(touches);
             }
         } else {
             console.log('fg equal')

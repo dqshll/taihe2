@@ -311,6 +311,7 @@ function Zoom(elem, config, wnd) {
     };
 
     var setSrcAndDest = function(touches){
+        console.log('setSrcAndDest')
         me.srcCoords = getCoords(touches);
         me.destCoords = me.srcCoords;
     };
@@ -335,13 +336,16 @@ function Zoom(elem, config, wnd) {
 
     var handleZoom = handleTouchEvent(function(touches) {
         var numOfFingers = touches.length;
+        console.log('handleTouchEvent numOfFg = ' + numOfFingers)
         if (numOfFingers != me.curTouch){
+            console.log('fg num changed')
             me.curTouch = numOfFingers;
             me.finalize();
             if (numOfFingers != 0) {
                 setSrcAndDest(touches);
             }
         } else {
+            console.log('fg equal')
             setDest(touches);
             me.previewZoom();
         }

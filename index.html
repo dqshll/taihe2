@@ -169,5 +169,15 @@ function requestChaPicInfo (chaPicId) {
         return false;
     }
 
+    function insertAfter(newEle, targetEle){
+        var parentEle = targetEle.parentNode;
+        if(parentEle.lastChild == targetEle){
+            parentEle.appendChild(newEle);
+        }
+        else{
+            parentEle.insertBefore(newEle, targetEle.nextSibling);
+        }
+    }
+
 </script>
 </html>

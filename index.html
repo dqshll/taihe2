@@ -152,7 +152,7 @@ function requestChaPicInfo (chaPicId) {
             var oImgBox = document.createElement("img");
             oImgBox.setAttribute("id", "wrong");
             oImgBox.setAttribute("src", "asset/diff_miss.png");
-            oImgBox.setAttribute("style", "width:5vw;height:auto;position:fixed;left:" + pickPos.x + "px;bottom:" + pickPos.y + "px;");
+            oImgBox.setAttribute("style", "width:5vw;height:auto;position:fixed;left:" + pickPos.x + "px;top:" + pickPos.y + "px;");
             var imgPic = document.getElementById('pic');
             insertAfter(oImgBox, imgPic);
         }

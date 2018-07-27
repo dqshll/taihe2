@@ -20,7 +20,8 @@
     <div class="container" id="view_play">
         <img src="asset/bg.jpg" class="img_bg"/>
         <div id="pic_area">
-            <img id="pic" src="asset/pic.jpg">
+            <img id="pic" alt="玩命加载中...">
+            <img id='wrong_ind' src='asset/diff_miss.png'>
         </div>
         <div class="sec">
             <img id="btn_tujian" src="asset/btn_tj_0.png">
@@ -28,7 +29,9 @@
         <h3 id="desc">测试下你的眼力! 查看上图与大屏幕不同之处, 赢取丰厚奖品!</h3>
     </div>
 
-    <div class="container" id="view_tujian">
+    <div class="popup" id="view_tujian">
+        <div class="opacity_cover"></div>
+
         <div id="dialog">
             <div id="list">
                 <div id='raw_0' class='tj_item'>
@@ -76,9 +79,97 @@
 <!-- <script type="text/javascript" src="js/zoom.js"> </script> -->
 <script src='http://h5.edisonx.cn/718_audio/flip/js/vconsole.min.js'></script>
 <script>
-//  var elem = document.getElementById('pic_area');
-//     var zm = new Zoom(elem, {
-//         rotate: false
-//     });
+var JudgeRadiusSquare = 100;
+var ChaPosList = []
+
+$(document).ready(function(){
+    requestChaPicInfo('7801');
+});
+
+function requestChaPicInfo (chaPicId) {
+        var url = 'https://miniapp.edisonx.cn/h5/taihe2/php/cha_info.php';
+        url = encodeURI(url);
+        console.log(url);
+
+        $.ajax({
+            url: url,
+            type: "get",
+            jsonType: "json",
+            timeout: 10000,
+            data: {
+                action:'cha_info', 
+                cid: chaPicId
+            },
+            success: function (data) {
+                console.log('success ' + data);
+                var jsonObj = JSON.parse(data);
+
+                if (jsonObj['error'] == 0) {
+                    var pos_list = jsonObj['info']['pos'];
+                    var pic_url = jsonObj['info']['url'];
+                    console.log('pos:' + pos_list + ' url:' + pic_url);
+
+                    $('#pic').src = pic_url;
+
+                    pos_list.forEach(function(value,i){
+                    　　var tmp = value.split(',')
+                        ChaPosList.push({
+                            "x":tmp[0],
+                            "y":tmp[0]
+                        })
+                    });
+                    var picture = document.getElementById('pic');
+                    picture.addEventListener('touchstart', onPickingUp); 
+                } else {
+                    console.log(jsonObj['msg']);
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                console.log('error');
+                console.log(XMLHttpRequest.status);
+                console.log(XMLHttpRequest.readyState);
+                console.log(textStatus);
+            },
+            complete: function (XMLHttpRequest, status) {
+                console.log('complete: ' + status);
+
+                if (status == 'timeout') {
+                    console.log("超时");
+                }
+            }
+        });
+    }
+    
+    function onPickingUp(event){
+        console.log('onTouchStart')
+    　　 var touch = event.targetTouches[0]; 
+        　　var pickPos = {
+            x:touch.pageX,
+            y:touch.pageY
+        };
+
+        if(checkHit(pickPos)) {
+
+        } else {
+            var oImgBox = document.createElement("img");
+            oImgBox.setAttribute("id", "wrong");
+            oImgBox.setAttribute("src", "asset/diff_miss.png");
+            oImgBox.setAttribute("style", "width:5vw;height:auto;position:fixed;left:20vw;right:55vw;");
+            var imgPic = document.getElementById('pic');
+            insertAfter(oImgBox, imgPic);
+        }
+
+        return false;
+    }
+
+    function checkHit (pos) {
+        for(var i=0; i<pos.length; i++) {
+            if ((pos.x - ChaPosList[i].x) * (pos.x - ChaPosList[i].x) + (pos.y - ChaPosList[i].y) * (pos.y - ChaPosList[i].y) < JudgeRadiusSquare) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 </script>
 </html>

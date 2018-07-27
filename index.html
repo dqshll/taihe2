@@ -148,6 +148,7 @@ function requestChaPicInfo (chaPicId) {
         if(checkHit(pickPos) || false) {
 
         } else {
+            console.log('pick ' + pickPos.x + ',' + pickPos.y);
             var oImgBox = document.createElement("img");
             oImgBox.setAttribute("id", "wrong");
             oImgBox.setAttribute("src", "asset/diff_miss.png");

@@ -157,7 +157,8 @@ function requestChaPicInfo (chaPicId) {
             insertAfter(oImgBox, imgPic);
             
             window.setTimeout(function(){
-                oImgBox.remove;
+                console.log('removing');
+                oImgBox.remove();
             }, 1000);
         }
 

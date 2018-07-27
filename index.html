@@ -107,7 +107,7 @@ function requestChaPicInfo (chaPicId) {
                     var pic_url = jsonObj['info']['url'];
                     console.log('pos:' + pos_list + ' url:' + pic_url);
 
-                    $('#pic').src = pic_url;
+                    $('#pic').attr('src', pic_url);
 
                     pos_list.forEach(function(value,i){
                     　　var tmp = value.split(',')

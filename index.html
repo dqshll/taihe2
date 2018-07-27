@@ -21,7 +21,6 @@
         <img src="asset/bg.jpg" class="img_bg"/>
         <div id="pic_area">
             <img id="pic" alt="玩命加载中...">
-            <img id='wrong_ind' src='asset/diff_miss.png'>
         </div>
         <div class="sec">
             <img id="btn_tujian" src="asset/btn_tj_0.png">
@@ -152,7 +151,7 @@ function requestChaPicInfo (chaPicId) {
             var oImgBox = document.createElement("img");
             oImgBox.setAttribute("id", "wrong");
             oImgBox.setAttribute("src", "asset/diff_miss.png");
-            oImgBox.setAttribute("style", "width:5vw;height:auto;position:fixed;left:20vw;right:55vw;");
+            oImgBox.setAttribute("style", "width:5vw;height:auto;position:fixed;left:" + pickPos.x + "px;top:" + pickPos.y + "vw;");
             var imgPic = document.getElementById('pic');
             insertAfter(oImgBox, imgPic);
         }

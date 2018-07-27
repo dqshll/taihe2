@@ -145,17 +145,20 @@ function requestChaPicInfo (chaPicId) {
             y:touch.pageY
         };
 
-        if(checkHit(pickPos) || false) {
+        console.log('pick ' + pickPos.x + ',' + pickPos.y);
 
+        var oImgBox = document.createElement("img");
+        oImgBox.setAttribute("style", "width:10vw;height:auto;position:fixed;left:" + pickPos.x + "px;top:" + pickPos.y + "px;");
+        var imgPic = document.getElementById('pic');
+        insertAfter(oImgBox, imgPic);
+
+        if(checkHit(pickPos) || false) {
+            oImgBox.setAttribute("id", "correct");
+            oImgBox.setAttribute("src", "asset/diff_match.png");
         } else {
-            console.log('pick ' + pickPos.x + ',' + pickPos.y);
-            var oImgBox = document.createElement("img");
             oImgBox.setAttribute("id", "wrong");
             oImgBox.setAttribute("src", "asset/diff_miss.png");
-            oImgBox.setAttribute("style", "width:5vw;height:auto;position:fixed;left:" + pickPos.x + "px;top:" + pickPos.y + "px;");
-            var imgPic = document.getElementById('pic');
-            insertAfter(oImgBox, imgPic);
-            
+
             window.setTimeout(function(){
                 console.log('removing');
                 oImgBox.remove();

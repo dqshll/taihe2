@@ -75,11 +75,13 @@
    
 </body>
 <script src="js/jquery.js"></script>
-<script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+<script src="js/jweixin-1.2.0.js"></script>
 <!-- <script type="text/javascript" src="js/zoom.js"> </script> -->
-<script src='http://h5.edisonx.cn/718_audio/flip/js/vconsole.min.js'></script>
+<script src='js/vconsole.min.js'></script>
 <script>
 var JudgeRadiusSquare = 100;
+var MainUrl = 'https://miniapp.edisonx.cn/h5/taihe2/php/cha_info.php';
+
 var ChaPosList = []
 
 $(document).ready(function(){
@@ -87,12 +89,8 @@ $(document).ready(function(){
 });
 
 function requestChaPicInfo (chaPicId) {
-        var url = 'https://miniapp.edisonx.cn/h5/taihe2/php/cha_info.php';
-        url = encodeURI(url);
-        console.log(url);
-
         $.ajax({
-            url: url,
+            url: MainUrl,
             type: "get",
             jsonType: "json",
             timeout: 10000,

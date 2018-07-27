@@ -155,6 +155,10 @@ function requestChaPicInfo (chaPicId) {
             oImgBox.setAttribute("style", "width:5vw;height:auto;position:fixed;left:" + pickPos.x + "px;top:" + pickPos.y + "px;");
             var imgPic = document.getElementById('pic');
             insertAfter(oImgBox, imgPic);
+            
+            window.setTimeout(function(){
+                oImgBox.remove;
+            }, 1000);
         }
 
         return false;

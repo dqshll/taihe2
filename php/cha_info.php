@@ -1,5 +1,6 @@
 <?php
 $result = array('error'=>1, 'msg'=>'参数错误');
+global $DB_HOST;
 $DB_HOST = 'api.edisonx.cn';
 
 // if (isset($_GET['action'])) {

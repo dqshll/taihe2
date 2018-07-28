@@ -45,8 +45,6 @@ function onQueryHandler () {
 
     $db_connection = mysql_connect($DB_HOST,"root","e5cda60c7e");
 
-    var_dump($db_connection);
-
     mysql_query("set names 'utf8'"); //数据库输出编码
 
     mysql_select_db("game"); //打开数据库
@@ -57,12 +55,8 @@ function onQueryHandler () {
 
     $all_info = mysql_query($sql);
 
-    var_dump($all_info);
-
     if ($all_info !== false) { // 空
-        echo 'not empty';
         while ($item = mysql_fetch_array($all_info)) {
-            echo 'whiling';
             $key = $item['id'];
             $value = array('version'=>$item['version'], 
                 'pkg_name'=>$item['pkg_name'], 

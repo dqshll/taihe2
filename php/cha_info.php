@@ -1,6 +1,6 @@
 <?php
 $result = array('error'=>1, 'msg'=>'参数错误');
-global $DB_HOST;
+
 $DB_HOST = 'api.edisonx.cn';
 
 // if (isset($_GET['action'])) {
@@ -41,7 +41,7 @@ echo json_encode($result);
 /** Query */
 function onQueryHandler () {
     $last_ver_pkg_map = array();
-    echo $DB_HOST;
+    global $DB_HOST;
 
     $db_connection = mysql_connect($DB_HOST,"root","e5cda60c7e");
 
@@ -133,6 +133,7 @@ function zipFile($file_path_A, $file_path_B, $file_path_P, $zip_file_path) {
 
 function save2Db ($pkg_name, $version, $file_path, $pos_list) {
     $error = 0;
+    global $DB_HOST;
     $db_connection = mysql_connect($DB_HOST,"root","e5cda60c7e");
 
     mysql_query("set names 'utf8'"); //数据库输出编码
@@ -173,6 +174,7 @@ function save2Db ($pkg_name, $version, $file_path, $pos_list) {
 /* Remove */
 function onRemoveHandler ($delID) {
     $result = array();
+    global $DB_HOST;
     $db_connection = mysql_connect($DB_HOST,"root","e5cda60c7e");
 
     mysql_query("set names 'utf8'"); //数据库输出编码

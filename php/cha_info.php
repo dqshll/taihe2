@@ -53,7 +53,7 @@ function onQueryHandler () {
 
     $all_info = mysql_query($sql);
 
-    // var_dump($all_info);
+    var_dump($all_info);
 
     if ($all_info !== false) { // 空
         echo 'not empty';

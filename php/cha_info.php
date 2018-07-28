@@ -29,10 +29,8 @@ if (isset($_POST['action'])) {
 } else if (isset($_GET['action'])) {
     $action = $_GET['action'];
     if ($action == "query") {
-        if (isset($_GET['cid'])) {
-            $result['error'] = 0;
-            $result['list'] = onQueryHandler();
-        }
+        $result['error'] = 0;
+        $result['list'] = onQueryHandler();
     } else if ($action == "remove") {
         $result = onRemoveHandler($_GET['id']);
     }

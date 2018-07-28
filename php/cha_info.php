@@ -56,14 +56,16 @@ function onQueryHandler () {
     // var_dump($all_info);
 
     if ($all_info !== false) { // 空
+        echo 'not empty';
         while ($item = mysql_fetch_array($all_info)) {
+            echo 'whiling';
             $key = $item['id'];
             $value = array('version'=>$item['version'], 
                 'pkg_name'=>$item['pkg_name'], 
                 'time'=>$item['upload_time'], 
                 'dur'=>$item['duration'], 
-                'url'=>str_ireplace('/alidata/www/default', 'http://h5.edisonx.cn', $item['file_path']));
-
+                // 'url'=>str_ireplace('/alidata/www/default', 'http://h5.edisonx.cn', $item['file_path']));
+                'url'=>$item['file_path']);
             if((!array_key_exists($key,$last_ver_pkg_map)) || 
                ($last_ver_pkg_map[$key]['version'] < $value['version'])) {
                 $last_ver_pkg_map[$key] = $value;

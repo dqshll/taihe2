@@ -1,82 +1,208 @@
 <?php
 $result = array('error'=>1, 'msg'=>'参数错误');
+$DB_HOST = 'api.edisonx.cn';
 
-if (isset($_GET['action'])) {
-    $action = $_GET['action'];
-    if ($action == "cha_info" && isset($_GET['cid'])) {
-        $cha_id = $_GET['cid'];
-        $cha_point_list = array('23,45', '55,65', '87,11');
-        $cha_pic_url = 'https://miniapp.edisonx.cn/data/files/cha/pics/' . $cha_id .'.jpg';
+// if (isset($_GET['action'])) {
+//     $action = $_GET['action'];
+//     if ($action == "cha_info" && isset($_GET['cid'])) {
+//         $cha_id = $_GET['cid'];
+//         $cha_point_list = array('23,45', '55,65', '87,11');
+//         $cha_pic_url = 'https://miniapp.edisonx.cn/data/files/cha/pics/' . $cha_id .'.jpg';
         
-        $info = array('pos'=>$cha_point_list, 'url'=>$cha_pic_url);
+//         $info = array('pos'=>$cha_point_list, 'url'=>$cha_pic_url);
         
-        $result = array('error'=>0, 'info'=>$info);
-    } 
-    // else if ($action == "remove") {
-    //     $result = onRemoveHandler($_GET['id']);
-    // }
-}
-
-echo json_encode($result);
-
-// $ver_info_list = array();
-
-// foreach($app_list as $app_name) {
-//     $result = null;
-//     if (isset($app_name)) {
-//         $result = checkDb($app_name);
-//     }
-//     if ($result['app_version'] !== null) {
-//         array_push($ver_info_list, $result);
-//     }
+//         $result = array('error'=>0, 'info'=>$info);
+//     } 
+//     // else if ($action == "remove") {
+//     //     $result = onRemoveHandler($_GET['id']);
+//     // }
 // }
 
-// echo json_encode($ver_info_list);
+// echo json_encode($result);
 
-function checkDb ($app_name) {
-    $result = array('error'=>0);
-    $db_connection = mysql_connect("localhost","root","e5cda60c7e");
+$result = array('error'=>101);
+if (isset($_POST['action'])) {
+    $action = $_POST['action'];
+    if ($action == "upload") {
+        $result = onUploadHandler();
+    }
+} else if (isset($_GET['action'])) {
+    $action = $_GET['action'];
+    if ($action == "query") {
+        if (isset($_GET['cid'])) {
+            $result['error'] = 0;
+            $result['list'] = onQueryHandler();
+        }
+    } else if ($action == "remove") {
+        $result = onRemoveHandler($_GET['id']);
+    }
+}
+echo json_encode($result);
+
+/** Query */
+function onQueryHandler () {
+    $last_ver_pkg_map = array();
+
+    $db_connection = mysql_connect($DB_HOST,"root","e5cda60c7e");
 
     mysql_query("set names 'utf8'"); //数据库输出编码
 
     mysql_select_db("game"); //打开数据库
 
-    $sql = "select * from app_pub where app_name = '$app_name' ORDER BY version DESC LIMIT 1";
+    $sql = "select * from find_pkg_pub";
+
+    // echo $sql;
+
+    $all_info = mysql_query($sql);
+
+    // var_dump($all_info);
+
+    if ($all_info !== false) { // 空
+        while ($item = mysql_fetch_array($all_info)) {
+            $key = $item['id'];
+            $value = array('version'=>$item['version'], 
+                'pkg_name'=>$item['pkg_name'], 
+                'time'=>$item['upload_time'], 
+                'dur'=>$item['duration'], 
+                'url'=>str_ireplace('/alidata/www/default', 'http://h5.edisonx.cn', $item['file_path']));
+
+            if((!array_key_exists($key,$last_ver_pkg_map)) || 
+               ($last_ver_pkg_map[$key]['version'] < $value['version'])) {
+                $last_ver_pkg_map[$key] = $value;
+            }
+        }
+    }
+    mysql_close(); 
+    return $last_ver_pkg_map;
+}
+
+/** Upload */
+function onUploadHandler() {
+    $result = array('error'=>$_FILES['upImgA']['error']);
+    if ($result['error'] === 0) {
+        $pkgName = $_POST['name'];
+        $duration = $_POST['dur'];
+        $version = $_POST['ver'];
+        $PosList = $_POST['p'];
+
+        if (isset($pkgName) && isset($duration) && isset($version) && isset($PosList)) {
+            $target_path_A = dirname(dirname(__FILE__)) . "/pkg/A.jpg";
+            $target_path_B = dirname(dirname(__FILE__)) . "/pkg/B.jpg";
+            $target_path_P = dirname(dirname(__FILE__)) . "/pkg/p.txt";
+            posList2File($target_path_P, $PosList);
+
+            if (!move_uploaded_file($_FILES['upImgA']['tmp_name'], $target_path_A)) {
+                $result['error'] = 104;
+                echo json_encode($result);
+                return $result;
+            }
+            if (!move_uploaded_file($_FILES['upImgB']['tmp_name'], $target_path_B)) {
+                $result['error'] = 104;
+                echo json_encode($result);
+                return $result;
+            }
+
+            $zip_path = dirname($target_path_A) . "/$pkgName-$version.zip";
+            zipFile($target_path_A, $target_path_B, $target_path_P, $zip_path);
+            $result['error'] = save2Db($pkgName, $version, $zip_path, $PosList);
+        } else {
+            $result['error'] = 103;
+        }
+    }
+    return $result;
+}
+
+function posList2File($path, $txt) {
+    $pfile = fopen($path, "w") or die("Unable to open file!");
+    fwrite($pfile, $txt);
+    fclose($pfile);
+}
+
+function zipFile($file_path_A, $file_path_B, $file_path_P, $zip_file_path) {
+    $zip = new ZipArchive();
+    $zip->open($zip_file_path,ZipArchive::CREATE);   //打开压缩包
+    $zip->addFile($file_path_A,basename($file_path_A));   //向压缩包中添加文件
+    $zip->addFile($file_path_B,basename($file_path_B));   
+    $zip->addFile($file_path_P,basename($file_path_P));   
+    $zip->close();  //关闭压缩包
+}
+
+function save2Db ($pkg_name, $version, $file_path, $pos_list) {
+    $error = 0;
+    $db_connection = mysql_connect($DB_HOST,"root","e5cda60c7e");
+
+    mysql_query("set names 'utf8'"); //数据库输出编码
+
+    mysql_select_db("game"); //打开数据库
+
+    $curtime = toDTS(curSystime());
+
+    $sql = "select * from find_pkg_pub where pkg_name = '$pkg_name' ORDER BY version DESC LIMIT 1";
 
 //    echo $sql;
 
-    $ver_info = mysql_query($sql);
+    $result = mysql_query($sql);
 
-//    var_dump($ver_info);
+    if ($result !== false) { //已经有该app的版本了
 
-    if ($ver_info === false) { // 没有该app的版本
-    } else {
-        $msg = mysql_fetch_array($ver_info);
+        $msg = mysql_fetch_array($result);
 
-//        var_dump($msg);
         $cur_version = $msg['version'];
-        $cur_app_url = $msg['file_path'];
-        $result['app_name'] = $app_name;
-        $result['app_version'] = $cur_version;
-        $result['file_type'] = $msg['file_type'];
-        $result['dl_url'] = str_ireplace('/alidata/www/default', 'http://h5.edisonx.cn', $cur_app_url);
-//        var_dump($result);
+
+        if ($cur_version >= $version) { // 不比当前版本高
+            $error = 105;
+//            echo $error;
+        }
+    }
+
+    if ($error === 0) {
+        $sql = "insert into find_pkg_pub (pkg_name,version,upload_time,file_path,point_info) 
+        values ('$pkg_name','$version','$curtime','$file_path','$pos_list')";
+        mysql_query($sql);
+//        echo $sql;
+    }
+
+    mysql_close();
+    return $error;
+}
+
+/* Remove */
+function onRemoveHandler ($delID) {
+    $result = array();
+    $db_connection = mysql_connect($DB_HOST,"root","e5cda60c7e");
+
+    mysql_query("set names 'utf8'"); //数据库输出编码
+
+    mysql_select_db("game"); //打开数据库
+
+    $sql = "delete from find_pkg_pub where id=$delID";
+
+    // echo $sql;
+
+    $all_info = mysql_query($sql);
+
+    // var_dump($all_info);
+
+    if ($all_info !== false) { // 空
+        $result['error'] = 0;
+    } else {
+        $result['error'] = 107;
     }
     mysql_close(); 
     return $result;
 }
 
-//function curSystime() {
-//    list($t1, $t2) = explode(' ', microtime());
-//    return (float)sprintf('%.0f',(floatval($t1)+floatval($t2))*1000);
-//}
-//
-//function toDTS($value) {
-//    if ($value === 0) {
-//        return '0';
-//    } else {
-//        return date("Y-m-d@H:i:s" , substr($value,0,10));
-//    }
-//}
+function curSystime() {
+    list($t1, $t2) = explode(' ', microtime());
+    return (float)sprintf('%.0f',(floatval($t1)+floatval($t2))*1000);
+}
+
+function toDTS($value) {
+    if ($value === 0) {
+        return '0';
+    } else {
+        return date("Y-m-d@H:i:s" , substr($value,0,10));
+    }
+}
 
 ?>

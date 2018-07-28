@@ -43,6 +43,8 @@ function onQueryHandler () {
 
     $db_connection = mysql_connect($DB_HOST,"root","e5cda60c7e");
 
+    var_dump($db_connection);
+
     mysql_query("set names 'utf8'"); //数据库输出编码
 
     mysql_select_db("game"); //打开数据库

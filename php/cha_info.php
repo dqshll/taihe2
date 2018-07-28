@@ -40,6 +40,7 @@ echo json_encode($result);
 /** Query */
 function onQueryHandler () {
     $last_ver_pkg_map = array();
+    echo $DB_HOST;
 
     $db_connection = mysql_connect($DB_HOST,"root","e5cda60c7e");
 

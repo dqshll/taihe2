@@ -105,7 +105,8 @@ function requestChaPicInfo (chaPicId) {
 
                 if (jsonObj['error'] == 0) {
                     for(var id in jsonObj['list']){
-                        var value = jsonObj['list'].id;
+                        var value = jsonObj['list'];
+                        value = value[id];
                         var chaPosList = [];
                         var pos_list = value['pos'].split(';');
                         var pic_url = value['url'];

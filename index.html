@@ -104,8 +104,9 @@ function requestChaPicInfo (chaPicId) {
                 var jsonObj = JSON.parse(data);
 
                 if (jsonObj['error'] == 0) {
-                    jsonObj['list'].forEach(function(value,id){
-                        var chaPosList = []
+                    for(var id in jsonObj['list']){
+                        var value = jsonObj['list']['id'];
+                        var chaPosList = [];
                         var pos_list = value['pos'].split(';');
                         var pic_url = value['url'];
                         console.log('pos:' + pos_list + ' url:' + pic_url);
@@ -123,7 +124,7 @@ function requestChaPicInfo (chaPicId) {
                         var picture = document.getElementById('pic');
                         picture.addEventListener('touchstart', onPickingUp); 
                         ChaInfoList[id] = chaPosList;
-                    });
+                    };
                 } else {
                     console.log(jsonObj['msg']);
                 }

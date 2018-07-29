@@ -106,7 +106,7 @@ function requestChaPicInfo (chaPicId) {
                 if (jsonObj['error'] == 0) {
                     jsonObj['list'].forEach(function(value,id){
                         var chaPosList = []
-                        var pos_list = value['pos'];
+                        var pos_list = value['pos'].split(';');
                         var pic_url = value['url'];
                         console.log('pos:' + pos_list + ' url:' + pic_url);
 
@@ -116,7 +116,8 @@ function requestChaPicInfo (chaPicId) {
                         　　var tmp = value.split(',')
                             chaPosList.push({
                                 "x":tmp[0],
-                                "y":tmp[0]
+                                "y":tmp[1],
+                                "r":tmp[2]
                             })
                         });
                         var picture = document.getElementById('pic');

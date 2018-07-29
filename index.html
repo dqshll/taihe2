@@ -84,7 +84,7 @@ var IndWidth = 40;
 
 
 
-var ChaPosList = []
+var ChaInfoList = []
 
 $(document).ready(function(){
     requestChaPicInfo('7801');
@@ -104,21 +104,25 @@ function requestChaPicInfo (chaPicId) {
                 var jsonObj = JSON.parse(data);
 
                 if (jsonObj['error'] == 0) {
-                    var pos_list = jsonObj['info']['pos'];
-                    var pic_url = jsonObj['info']['url'];
-                    console.log('pos:' + pos_list + ' url:' + pic_url);
+                    jsonObj['list'].forEach(function(value,id){
+                        var chaPosList = []
+                        var pos_list = value['pos'];
+                        var pic_url = value['url'];
+                        console.log('pos:' + pos_list + ' url:' + pic_url);
 
-                    $('#pic').attr('src', pic_url);
+                        $('#pic').attr('src', pic_url);
 
-                    pos_list.forEach(function(value,i){
-                    　　var tmp = value.split(',')
-                        ChaPosList.push({
-                            "x":tmp[0],
-                            "y":tmp[0]
-                        })
+                        pos_list.forEach(function(value,i){
+                        　　var tmp = value.split(',')
+                            chaPosList.push({
+                                "x":tmp[0],
+                                "y":tmp[0]
+                            })
+                        });
+                        var picture = document.getElementById('pic');
+                        picture.addEventListener('touchstart', onPickingUp); 
+                        ChaInfoList[id] = chaPosList;
                     });
-                    var picture = document.getElementById('pic');
-                    picture.addEventListener('touchstart', onPickingUp); 
                 } else {
                     console.log(jsonObj['msg']);
                 }

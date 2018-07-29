@@ -62,6 +62,7 @@ function onQueryHandler () {
                 'pkg_name'=>$item['pkg_name'], 
                 'time'=>$item['upload_time'], 
                 'dur'=>$item['duration'], 
+                'pos'=>$item['point_info'],
                 // 'url'=>str_ireplace('/alidata/www/default', 'http://h5.edisonx.cn', $item['file_path']));
                 'url'=>$item['file_path']);
             if((!array_key_exists($key,$last_ver_pkg_map)) || 

@@ -100,7 +100,7 @@ function requestChaPicInfo (chaPicId) {
                 action:'query', 
             },
             success: function (data) {
-                console.log('success ' + data);
+                console.log('200ok');
                 var jsonObj = JSON.parse(data);
 
                 if (jsonObj['error'] == 0) {

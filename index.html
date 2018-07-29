@@ -82,9 +82,8 @@ var JudgeRadiusSquare = 100;
 var MainUrl = 'https://miniapp.edisonx.cn/h5/taihe2/php/cha_info.php';
 var IndWidth = 40;
 
-
-
-var ChaInfoList = []
+var ChaInfoList = [];
+var CurChaId = null;
 
 $(document).ready(function(){
     requestChaPicInfo('7801');
@@ -107,7 +106,7 @@ function requestChaPicInfo (chaPicId) {
                     for(var id in jsonObj['list']){
                         var value = jsonObj['list'];
                         value = value[id];
-                        var chaPosList = [];
+                        var chaInfo = [];
                         var pos_list = value['pos'].split(';');
                         var pic_url = value['url'];
                         console.log('pos:' + pos_list + ' url:' + pic_url);
@@ -116,7 +115,7 @@ function requestChaPicInfo (chaPicId) {
 
                         pos_list.forEach(function(value,i){
                         　　var tmp = value.split(',')
-                            chaPosList.push({
+                            chaInfo.push({
                                 "x":tmp[0],
                                 "y":tmp[1],
                                 "r":tmp[2]
@@ -124,7 +123,11 @@ function requestChaPicInfo (chaPicId) {
                         });
                         var picture = document.getElementById('pic');
                         picture.addEventListener('touchstart', onPickingUp); 
-                        ChaInfoList[id] = chaPosList;
+                        chaInfo ['width'] = value['w'];
+                        chaInfo ['height'] = value['h'];
+
+                        ChaInfoList[id] = chaInfo;
+                        CurChaId = id;
                     };
                 } else {
                     console.log(jsonObj['msg']);
@@ -178,8 +181,18 @@ function requestChaPicInfo (chaPicId) {
     }
 
     function checkHit (pos) {
+        var pxWidth = $('#pic').offsetWidth;
+        var pxHeight = $('#pic').offsetHeight;
+        
+        var scale = chaInfo['width']/pxWidth;
+
+        var chaInfo = ChaInfoList[CurChaId];
         for(var i=0; i<pos.length; i++) {
-            if ((pos.x - ChaPosList[i].x) * (pos.x - ChaPosList[i].x) + (pos.y - ChaPosList[i].y) * (pos.y - ChaPosList[i].y) < JudgeRadiusSquare) {
+            var x = chaInfo[i].x * scale;
+            var y = chaInfo[i].y * scale;
+            var r = chaInfo[i].r * scale;
+
+            if ((pos.x - x) * (pos.x - x) + (pos.y - y) * (pos.y - y) < (r*r)) {
                 return true;
             }
         }

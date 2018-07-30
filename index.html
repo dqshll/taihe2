@@ -155,7 +155,7 @@ function requestChaPicInfo (chaPicId) {
         console.log('onPickingUp')
     　　 
     　　 var pickPos;
-    
+
         if (event.hasOwnProperty('targetTouches')) {
             var touch = event.targetTouches[0]; 
             pickPos = {
@@ -194,9 +194,8 @@ function requestChaPicInfo (chaPicId) {
     }
 
     function checkHit (pos) {
-        console.log('');
-        var pxWidth = $('#pic').offsetWidth;
-        var pxHeight = $('#pic').offsetHeight;
+        var pxWidth = $('#pic')[0].offsetWidth;
+        var pxHeight = $('#pic')[0].offsetHeight;
         
         var scale = chaInfo['width']/pxWidth;
 

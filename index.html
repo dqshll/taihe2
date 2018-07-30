@@ -116,7 +116,7 @@ function requestChaPicInfo (chaPicId) {
                         chaInfo ['width'] = value['w'];
                         chaInfo ['height'] = value['h'];
 
-                        var scale = chaInfo['width']/pxWidth;
+                        var scale = pxWidth / chaInfo['width'];
                         console.log('w=' + pxWidth + " ,h=" + pxHeight + ' ,s=' + scale);
 
                         $('#pic').attr('src', pic_url);

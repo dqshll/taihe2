@@ -198,7 +198,7 @@ function requestChaPicInfo (chaPicId) {
     }
 
     function checkHit (pos) {
-
+        var chaInfo = ChaInfoList[CurChaId];
         var pxWidth = $('#pic')[0].offsetWidth;
         var pxHeight = $('#pic')[0].offsetHeight;
         
@@ -206,7 +206,7 @@ function requestChaPicInfo (chaPicId) {
 
         console.log('checkHit w=' + pxWidth + " ,h=" + pxHeight + ' ,s=' + scale);
 
-        var chaInfo = ChaInfoList[CurChaId];
+        
         for(var i=0; i<pos.length; i++) {
             var x = chaInfo[i].x;
             var y = chaInfo[i].y;

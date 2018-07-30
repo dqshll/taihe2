@@ -186,11 +186,15 @@ function requestChaPicInfo (chaPicId) {
         
         var scale = chaInfo['width']/pxWidth;
 
+        console.log('w=' + pxWidth + " ,h=" + pxHeight + ' ,s=' + scale);
+
         var chaInfo = ChaInfoList[CurChaId];
         for(var i=0; i<pos.length; i++) {
             var x = chaInfo[i].x * scale;
             var y = chaInfo[i].y * scale;
             var r = chaInfo[i].r * scale;
+
+            console.log('x=' + pxWidth + " ,y=" + pxHeight + ' ,r=' + scale);
 
             if ((pos.x - x) * (pos.x - x) + (pos.y - y) * (pos.y - y) < (r*r)) {
                 return true;

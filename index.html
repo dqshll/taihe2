@@ -123,7 +123,8 @@ function requestChaPicInfo (chaPicId) {
                         });
                         var picture = document.getElementById('pic');
                         picture.addEventListener('touchstart', onPickingUp);
-                        picture.addEventListener('onmousedown', onPickingUp);
+                        picture.onmousedown =  onPickingUp;
+                        
                         chaInfo ['width'] = value['w'];
                         chaInfo ['height'] = value['h'];
 

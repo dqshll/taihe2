@@ -198,12 +198,13 @@ function requestChaPicInfo (chaPicId) {
     }
 
     function checkHit (pos) {
-        // var pxWidth = $('#pic')[0].offsetWidth;
-        // var pxHeight = $('#pic')[0].offsetHeight;
-        
-        // var scale = chaInfo['width']/pxWidth;
 
-        // console.log('w=' + pxWidth + " ,h=" + pxHeight + ' ,s=' + scale);
+        var pxWidth = $('#pic')[0].offsetWidth;
+        var pxHeight = $('#pic')[0].offsetHeight;
+        
+        var scale = pxWidth / chaInfo['width'];
+
+        console.log('checkHit w=' + pxWidth + " ,h=" + pxHeight + ' ,s=' + scale);
 
         var chaInfo = ChaInfoList[CurChaId];
         for(var i=0; i<pos.length; i++) {

@@ -100,6 +100,10 @@ function requestChaPicInfo (chaPicId) {
             },
             success: function (data) {
                 console.log('200ok');
+
+                var pxWidth = $('#pic')[0].offsetWidth;
+                var pxHeight = $('#pic')[0].offsetHeight;
+
                 var jsonObj = JSON.parse(data);
 
                 if (jsonObj['error'] == 0) {
@@ -109,25 +113,26 @@ function requestChaPicInfo (chaPicId) {
                         var chaInfo = [];
                         var pos_list = value['pos'].split(';');
                         var pic_url = value['url'];
-                        console.log('pos:' + pos_list + ' url:' + pic_url);
+                        chaInfo ['width'] = value['w'];
+                        chaInfo ['height'] = value['h'];
+
+                        var scale = chaInfo['width']/pxWidth;
+                        console.log('w=' + pxWidth + " ,h=" + pxHeight + ' ,s=' + scale);
 
                         $('#pic').attr('src', pic_url);
 
                         pos_list.forEach(function(value,i){
                         　　var tmp = value.split(',')
                             chaInfo.push({
-                                "x":tmp[0],
-                                "y":tmp[1],
-                                "r":tmp[2]
+                                "x":tmp[0] * scale,
+                                "y":tmp[1] * scale,
+                                "r":tmp[2] * scale
                             })
                         });
                         var picture = document.getElementById('pic');
                         picture.addEventListener('touchstart', onPickingUp);
                         picture.onmousedown =  onPickingUp;
-
-                        chaInfo ['width'] = value['w'];
-                        chaInfo ['height'] = value['h'];
-
+        
                         ChaInfoList[id] = chaInfo;
                         CurChaId = id;
                     };
@@ -169,7 +174,6 @@ function requestChaPicInfo (chaPicId) {
                 };
         }
        
-
         console.log('pick ' + pickPos.x + ',' + pickPos.y);
 
         var oImgBox = document.createElement("img");
@@ -194,20 +198,18 @@ function requestChaPicInfo (chaPicId) {
     }
 
     function checkHit (pos) {
-        var pxWidth = $('#pic')[0].offsetWidth;
-        var pxHeight = $('#pic')[0].offsetHeight;
+        // var pxWidth = $('#pic')[0].offsetWidth;
+        // var pxHeight = $('#pic')[0].offsetHeight;
         
-        var scale = chaInfo['width']/pxWidth;
+        // var scale = chaInfo['width']/pxWidth;
 
-        console.log('w=' + pxWidth + " ,h=" + pxHeight + ' ,s=' + scale);
+        // console.log('w=' + pxWidth + " ,h=" + pxHeight + ' ,s=' + scale);
 
         var chaInfo = ChaInfoList[CurChaId];
         for(var i=0; i<pos.length; i++) {
-            var x = chaInfo[i].x * scale;
-            var y = chaInfo[i].y * scale;
-            var r = chaInfo[i].r * scale;
-
-            console.log('x=' + pxWidth + " ,y=" + pxHeight + ' ,r=' + scale);
+            var x = chaInfo[i].x;
+            var y = chaInfo[i].y;
+            var r = chaInfo[i].r;
 
             if ((pos.x - x) * (pos.x - x) + (pos.y - y) * (pos.y - y) < (r*r)) {
                 return true;

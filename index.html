@@ -124,7 +124,7 @@ function requestChaPicInfo (chaPicId) {
                         var picture = document.getElementById('pic');
                         picture.addEventListener('touchstart', onPickingUp);
                         picture.onmousedown =  onPickingUp;
-                        
+
                         chaInfo ['width'] = value['w'];
                         chaInfo ['height'] = value['h'];
 
@@ -153,11 +153,22 @@ function requestChaPicInfo (chaPicId) {
     
     function onPickingUp(event) {
         console.log('onPickingUp')
-    　　 var touch = event.targetTouches[0]; 
-        　　var pickPos = {
-            x:touch.pageX,
-            y:touch.pageY
-        };
+    　　 
+    　　 var pickPos;
+    
+        if (event.hasOwnProperty('targetTouches')) {
+            var touch = event.targetTouches[0]; 
+            pickPos = {
+                x:touch.pageX,
+                y:touch.pageY
+                };
+        } else {
+            pickPos = {
+                x:event.x,
+                y:event.y
+                };
+        }
+       
 
         console.log('pick ' + pickPos.x + ',' + pickPos.y);
 

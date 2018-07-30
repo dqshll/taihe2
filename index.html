@@ -122,7 +122,8 @@ function requestChaPicInfo (chaPicId) {
                             })
                         });
                         var picture = document.getElementById('pic');
-                        picture.addEventListener('touchstart', onPickingUp); 
+                        picture.addEventListener('touchstart', onPickingUp); onmousedown
+                        picture.addEventListener('onmousedown', onPickingUp);
                         chaInfo ['width'] = value['w'];
                         chaInfo ['height'] = value['h'];
 
@@ -181,6 +182,7 @@ function requestChaPicInfo (chaPicId) {
     }
 
     function checkHit (pos) {
+        console.log('');
         var pxWidth = $('#pic').offsetWidth;
         var pxHeight = $('#pic').offsetHeight;
         

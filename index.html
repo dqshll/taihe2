@@ -214,11 +214,14 @@ function requestChaPicInfo (chaPicId) {
         console.log('checkHit s=' + scale);
         
         for(var i=0; i<chaInfo.length; i++) {
-            var x = chaInfo[i].x;
-            var y = chaInfo[i].y;
-            var r = chaInfo[i].r;
+            var x = chaInfo[i].x * scale;
+            var y = chaInfo[i].y * scale;
+            var r = chaInfo[i].r * scale;
 
-            if ((pos.x - x) * (pos.x - x) + (pos.y - y) * (pos.y - y) < (r*r)) {
+            var sum = (pos.x - x) * (pos.x - x) + (pos.y - y) * (pos.y - y);
+            var r2 = r*r;
+            console.log ('comparing sum=' + sum + ' r2=' + r2);
+            if (sum < r_sq) {
                 return true;
             }
         }

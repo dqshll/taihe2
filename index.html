@@ -155,7 +155,7 @@ function requestChaPicInfo (chaPicId) {
     　　 
     　　 var pickPos;
 
-        JSON.stringify(event.targetTouches);
+        outputObj(event);
 
         if (event.hasOwnProperty('targetTouches')) {
             console.log('targetTouches');
@@ -234,6 +234,14 @@ function requestChaPicInfo (chaPicId) {
         else{
             parentEle.insertBefore(newEle, targetEle.nextSibling);
         }
+    }
+
+    function outputObj(obj) {
+        var description = "";
+        for (var i in obj) {
+            description += i + " = " + obj[i] + "\n";
+        }
+        console.log(description);
     }
 
 </script>

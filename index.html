@@ -201,8 +201,8 @@ function requestChaPicInfo (chaPicId) {
         if(chaInfo.hasOwnProperty('scale')) {
             scale = chaInfo['scale'];
         } else {
-            var pxWidth = $('#pic')[0].outerWidth(true);
-            var pxHeight = $('#pic')[0].outerWidth(true);
+            var pxWidth = $('#pic').outerWidth(true);
+            var pxHeight = $('#pic').outerWidth(true);
             
             scale = pxWidth / chaInfo['width'];
             chaInfo['scale'] = scale;

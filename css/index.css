@@ -25,6 +25,7 @@ body{padding:0;margin:0;}
     display: table-cell; 
     /* vertical-align: middle; */
     text-align: center;
+    background-color: blue;
 } 
 
 #pic {
@@ -32,6 +33,7 @@ body{padding:0;margin:0;}
     padding: 0;
     width:86vw;
     height:auto;
+    background-color:red;
 }
 
 .sec {

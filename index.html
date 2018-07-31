@@ -218,7 +218,7 @@ function requestChaPicInfo (chaPicId) {
             var sum = (pos.x - x) * (pos.x - x) + (pos.y - y) * (pos.y - y);
             var r2 = r*r;
             console.log ('comparing sum=' + sum + ' r2=' + r2);
-            if (sum < r_sq) {
+            if (sum < r2) {
                 return true;
             }
         }

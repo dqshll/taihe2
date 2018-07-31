@@ -18,15 +18,19 @@ body{padding:0;margin:0;}
 
 #pic_area {
     width:100vw;
-    height:130vw;
+    height:auto;
+
     overflow:hidden;
-}
+    display: table-cell; 
+    vertical-align: middle;
+    text-align: center;
+} 
 
 #pic {
-    margin-top: 9vw;
-    margin-left: 7vw;
+    margin: 0;
+    padding: 0;
     width:86vw;
-    height:130vw;
+    height:auto;
 }
 
 .sec {

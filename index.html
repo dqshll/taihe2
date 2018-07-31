@@ -196,11 +196,12 @@ function requestChaPicInfo (chaPicId) {
         console.log("checking touch x=" + pos.x + ' y=' + pos.y);  
         var chaInfo = ChaInfoList[CurChaId];
         var scale = 1;
+        
+        var bounding = $('#pic')[0].getBoundingClientRect();
+
         if(chaInfo.hasOwnProperty('scale')) {
             scale = chaInfo['scale'];
-        } else {
-            var bounding = $('#pic')[0].getBoundingClientRect();
-            
+        } else {    
             scale = bounding.width / chaInfo['width'];
             chaInfo['scale'] = scale;
             console.log('Calculating w=' + bounding.width + " ,h=" + bounding.height + ' ,s=' + scale);

@@ -116,17 +116,14 @@ function requestChaPicInfo (chaPicId) {
                         chaInfo ['width'] = value['w'];
                         chaInfo ['height'] = value['h'];
 
-                        var scale = pxWidth / chaInfo['width'];
-                        console.log('w=' + pxWidth + " ,h=" + pxHeight + ' ,s=' + scale);
-
                         $('#pic').attr('src', pic_url);
 
                         pos_list.forEach(function(value,i){
                         　　var tmp = value.split(',')
                             chaInfo.push({
-                                "x":tmp[0] * scale,
-                                "y":tmp[1] * scale,
-                                "r":tmp[2] * scale
+                                "x":tmp[0],
+                                "y":tmp[1],
+                                "r":tmp[2]
                             })
                         });
                         var picture = document.getElementById('pic');

@@ -20,7 +20,7 @@ body{padding:0;margin:0;}
     width:100vw;
     height:156;
     margin:0;
-    padding-top: 7vw; 
+    margin-top: 7vw; 
     overflow:hidden;
     display: table-cell; 
     /* vertical-align: middle; */

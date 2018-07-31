@@ -199,15 +199,21 @@ function requestChaPicInfo (chaPicId) {
 
     function checkHit (pos) {
         var chaInfo = ChaInfoList[CurChaId];
-        var pxWidth = $('#pic')[0].offsetWidth;
-        var pxHeight = $('#pic')[0].offsetHeight;
-        
-        var scale = pxWidth / chaInfo['width'];
+        var scale = 1;
+        if(chaInfo.hasOwnProperty('scale')) {
+            scale = chaInfo['scale'];
+        } else {
+            var pxWidth = $('#pic')[0].offsetWidth;
+            var pxHeight = $('#pic')[0].offsetHeight;
+            
+            scale = pxWidth / chaInfo['width'];
+            chaInfo['scale'] = scale;
+            console.log('Calculating w=' + pxWidth + " ,h=" + pxHeight + ' ,s=' + scale);
+        }
 
-        console.log('checkHit w=' + pxWidth + " ,h=" + pxHeight + ' ,s=' + scale);
-
+        console.log('checkHit s=' + scale);
         
-        for(var i=0; i<pos.length; i++) {
+        for(var i=0; i<chaInfo.length; i++) {
             var x = chaInfo[i].x;
             var y = chaInfo[i].y;
             var r = chaInfo[i].r;

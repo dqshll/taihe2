@@ -155,8 +155,6 @@ function requestChaPicInfo (chaPicId) {
     　　 
     　　 var pickPos;
 
-        
-
         if ("targetTouches" in event) {
             console.log('targetTouches');
             var touch = event.targetTouches[0]; 
@@ -211,6 +209,9 @@ function requestChaPicInfo (chaPicId) {
             scale = pxWidth / chaInfo['width'];
             chaInfo['scale'] = scale;
             console.log('Calculating w=' + pxWidth + " ,h=" + pxHeight + ' ,s=' + scale);
+
+            var bounding = $('#pic').getBoundingClientRect();
+            outputObj(bounding);
         }
 
         console.log('checkHit s=' + scale);

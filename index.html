@@ -195,6 +195,7 @@ function requestChaPicInfo (chaPicId) {
     }
 
     function checkHit (pos) {
+        console.log("checking touch x=" + pos.x + ' y=' + pos.y);  
         var chaInfo = ChaInfoList[CurChaId];
         var scale = 1;
         if(chaInfo.hasOwnProperty('scale')) {
@@ -217,7 +218,7 @@ function requestChaPicInfo (chaPicId) {
 
             var sum = (pos.x - x) * (pos.x - x) + (pos.y - y) * (pos.y - y);
             var r2 = r*r;
-            console.log ('comparing sum=' + sum + ' r2=' + r2);
+            console.log ('comparing x=' + x + ' y=' + y + ' r=' + r);
             if (sum < r2) {
                 return true;
             }

@@ -164,8 +164,8 @@ function requestChaPicInfo (chaPicId) {
             };
             outputObj(event.targetTouches[0]);
             
-            var top = $('#pic').clientTop;
-            var left = $('#pic').clientLeft;
+            var top = $('#pic')[0].clientTop;
+            var left = $('#pic')[0].clientLeft;
 
             console.log('top='  + top + ' left=' + left);
             return;

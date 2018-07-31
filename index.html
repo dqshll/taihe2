@@ -163,7 +163,9 @@ function requestChaPicInfo (chaPicId) {
                 y:touch.pageY
             };
             outputObj(event.targetTouches[0]);
-            return;
+            console.log('getting bounding');
+            var bounding = $('#pic').getBoundingClientRect();
+            outputObj(bounding);
         } else if("x" in event) {
             pickPos = {
                 x:event.x,
@@ -210,8 +212,7 @@ function requestChaPicInfo (chaPicId) {
             chaInfo['scale'] = scale;
             console.log('Calculating w=' + pxWidth + " ,h=" + pxHeight + ' ,s=' + scale);
 
-            var bounding = $('#pic').getBoundingClientRect();
-            outputObj(bounding);
+            
         }
 
         console.log('checkHit s=' + scale);

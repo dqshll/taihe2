@@ -18,8 +18,9 @@ body{padding:0;margin:0;}
 
 #pic_area {
     width:100vw;
-    height:156vw;
-    margin-top: 7vw; 
+    height:156;
+    margin:0;
+    padding-top: 7vw; 
     overflow:hidden;
     display: table-cell; 
     /* vertical-align: middle; */
@@ -32,7 +33,6 @@ body{padding:0;margin:0;}
     padding: 0;
     width:86vw;
     height:auto;
-    background-color:red;
 }
 
 .sec {

@@ -164,7 +164,7 @@ function requestChaPicInfo (chaPicId) {
                 x:touch.pageX,
                 y:touch.pageY
             };
-            outputObj(event.targetTouches[0]);
+            outputObj(event.touches[0]);
             return;
         } else if("x" in event) {
             pickPos = {

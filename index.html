@@ -162,23 +162,14 @@ function requestChaPicInfo (chaPicId) {
                 x:touch.pageX,
                 y:touch.pageY
             };
-            outputObj(event.targetTouches[0]);
-
-            console.log("getBoundingClientRect");
-
-            var bounding = $('#pic')[0].getBoundingClientRect();
-            outputObj(bounding);
-
         } else if("x" in event) {
             pickPos = {
                 x:event.x,
                 y:event.y
             };
         } else {
-            return;
+            // return;
         }
-       
-        console.log('pick ' + pickPos.x + ',' + pickPos.y);
 
         var oImgBox = document.createElement("img");
         oImgBox.setAttribute("style", "width:" + IndWidth + "px;height:auto;position:fixed;left:" + (pickPos.x - IndWidth*0.5) + "px;top:" + (pickPos.y - IndWidth*0.5) + "px;");
@@ -208,21 +199,18 @@ function requestChaPicInfo (chaPicId) {
         if(chaInfo.hasOwnProperty('scale')) {
             scale = chaInfo['scale'];
         } else {
-            var pxWidth = $('#pic').outerWidth(true);
-            var pxHeight = $('#pic').outerHeight(true);
+            var bounding = $('#pic')[0].getBoundingClientRect();
             
-            scale = pxWidth / chaInfo['width'];
+            scale = bounding.width / chaInfo['width'];
             chaInfo['scale'] = scale;
-            console.log('Calculating w=' + pxWidth + " ,h=" + pxHeight + ' ,s=' + scale);
-
-            
+            console.log('Calculating w=' + bounding.width + " ,h=" + bounding.height + ' ,s=' + scale);
         }
 
         console.log('checkHit s=' + scale);
         
         for(var i=0; i<chaInfo.length; i++) {
-            var x = chaInfo[i].x * scale;
-            var y = chaInfo[i].y * scale;
+            var x = chaInfo[i].x * scale + bounding.left;
+            var y = chaInfo[i].y * scale + bounding.top;
             var r = chaInfo[i].r * scale;
 
             var sum = (pos.x - x) * (pos.x - x) + (pos.y - y) * (pos.y - y);

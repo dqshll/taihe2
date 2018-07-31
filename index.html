@@ -193,7 +193,7 @@ function requestChaPicInfo (chaPicId) {
     }
 
     function checkHit (pos) {
-        console.log("checking touch x=" + pos.x + ' y=' + pos.y);  
+        // console.log("checking touch x=" + pos.x + ' y=' + pos.y);  
         var chaInfo = ChaInfoList[CurChaId];
         var scale = 1;
         
@@ -204,10 +204,10 @@ function requestChaPicInfo (chaPicId) {
         } else {    
             scale = bounding.width / chaInfo['width'];
             chaInfo['scale'] = scale;
-            console.log('Calculating w=' + bounding.width + " ,h=" + bounding.height + ' ,s=' + scale);
+            // console.log('Calculating w=' + bounding.width + " ,h=" + bounding.height + ' ,s=' + scale);
         }
 
-        console.log('checkHit s=' + scale);
+        // console.log('checkHit s=' + scale);
         
         for(var i=0; i<chaInfo.length; i++) {
             var x = chaInfo[i].x * scale + bounding.left;
@@ -216,7 +216,7 @@ function requestChaPicInfo (chaPicId) {
 
             var sum = (pos.x - x) * (pos.x - x) + (pos.y - y) * (pos.y - y);
             var r2 = r*r;
-            console.log ('comparing x=' + x + ' y=' + y + ' r=' + r);
+            // console.log ('comparing x=' + x + ' y=' + y + ' r=' + r);
             if (sum < r2) {
                 return true;
             }

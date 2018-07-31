@@ -158,7 +158,7 @@ function requestChaPicInfo (chaPicId) {
         console.log(JSON.stringify(event));
 
         if (event.hasOwnProperty('targetTouches')) {
-            // console.log('targetTouches');
+            console.log('targetTouches');
             var touch = event.targetTouches[0]; 
             pickPos = {
                 x:touch.pageX,

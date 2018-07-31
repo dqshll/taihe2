@@ -164,13 +164,11 @@ function requestChaPicInfo (chaPicId) {
                 x:touch.pageX,
                 y:touch.pageY
                 };
-        } else if (event.hasOwnProperty('x')){
+        } else {
             pickPos = {
                 x:event.x,
                 y:event.y
                 };
-        } else {
-            return false;
         }
        
         console.log('pick ' + pickPos.x + ',' + pickPos.y);

@@ -101,9 +101,6 @@ function requestChaPicInfo (chaPicId) {
             success: function (data) {
                 console.log('200ok');
 
-                var pxWidth = $('#pic')[0].offsetWidth;
-                var pxHeight = $('#pic')[0].offsetHeight;
-
                 var jsonObj = JSON.parse(data);
 
                 if (jsonObj['error'] == 0) {
@@ -202,7 +199,7 @@ function requestChaPicInfo (chaPicId) {
             scale = chaInfo['scale'];
         } else {
             var pxWidth = $('#pic').outerWidth(true);
-            var pxHeight = $('#pic').outerWidth(true);
+            var pxHeight = $('#pic').outerHeight(true);
             
             scale = pxWidth / chaInfo['width'];
             chaInfo['scale'] = scale;

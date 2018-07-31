@@ -157,14 +157,14 @@ function requestChaPicInfo (chaPicId) {
 
         outputObj(event);
 
-        if ('targetTouches' in event) {
+        if ("targetTouches" in event) {
             console.log('targetTouches');
             var touch = event.targetTouches[0]; 
             pickPos = {
                 x:touch.pageX,
                 y:touch.pageY
             };
-        } else if('x' in event) {
+        } else if("x" in event) {
             pickPos = {
                 x:event.x,
                 y:event.y

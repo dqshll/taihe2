@@ -163,15 +163,12 @@ function requestChaPicInfo (chaPicId) {
                 y:touch.pageY
             };
             outputObj(event.targetTouches[0]);
-            
-            var top = $('#pic')[0].clientTop;
-            var left = $('#pic')[0].clientLeft;
 
-            console.log('top='  + top + ' left=' + left);
+            console.log("getBoundingClientRect");
 
             var bounding = $('#pic')[0].getBoundingClientRect();
             outputObj(bounding);
-            return;
+
         } else if("x" in event) {
             pickPos = {
                 x:event.x,

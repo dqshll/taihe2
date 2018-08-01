@@ -161,7 +161,7 @@ function requestChaPicInfo () {
                 continue; // skip
             }
 
-            var value = jsonList[id];
+            var value = jsonList[sid];
             var chaInfo = [];
             var pos_list = value['pos'].split(';');
            
@@ -329,11 +329,6 @@ function requestChaPicInfo () {
         }
         return false;
     }
-
-    function startTimer () {
-      
-    }
-    
 
     function insertAfter(newEle, targetEle){
         var parentEle = targetEle.parentNode;

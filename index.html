@@ -150,8 +150,8 @@ function requestChaPicInfo () {
 
     function parseStageList (jsonList) {
         var foundCurId = false;
-        for (var i=0; i< StageList.length; i ++) {
-            var stage = StageList[i];
+        for (var i=0; i< jsonList.length; i ++) {
+            var stage = jsonList[i];
             if (stage.sid == CurStageId) {
                 foundCurId = true;
             }

@@ -63,7 +63,7 @@ function onQueryHandler () {
             $start_time = strtotime($item['start_time']) * 1000; // s -> ms
             $end_time = strtotime($item['end_time']) * 1000; // s -> ms
 
-            // echo "cur time = $curTimeStamp start time = $start_time end time = $end_time";
+            echo "cur time = $curTimeStamp start time = $start_time end time = $end_time";
 
             if (!empty($start_time) && $curTimeStamp < $start_time) {
                 // echo ('start time check failed');
@@ -93,7 +93,7 @@ function onQueryHandler () {
     }
 
     mysql_close(); 
-    
+    echo "mysql_close";
     return $actions;
 }
 

@@ -118,6 +118,10 @@ function requestChaPicInfo () {
                 var jsonObj = JSON.parse(data);
 
                 if (jsonObj['error'] == 0) {
+                    var picture = document.getElementById('pic');
+                    picture.addEventListener('touchstart', onPickingUp);
+                    // picture.onmousedown =  onPickingUp;
+
                     searchCurAction(jsonObj['actions']);
                 } else {
                     console.log(jsonObj['msg']);
@@ -160,25 +164,21 @@ function requestChaPicInfo () {
                 continue; // skip
             }
 
-            var value = jsonList['sid'];
             var chaInfo = [];
-            var pos_list = value['pos'].split(';');
+            var pos_list = stage['pos'].split(';');
            
-            chaInfo ['width'] = value['w'];
-            chaInfo ['height'] = value['h'];
-            chaInfo ['url'] = value['url'];
+            chaInfo ['width'] = stage['w'];
+            chaInfo ['height'] = stage['h'];
+            chaInfo ['url'] = stage['url'];
 
-            pos_list.forEach(function(value,i){
-            　　var tmp = value.split(',')
+            pos_list.forEach(function(stage,i){
+            　　var tmp = stage.split(',')
                 chaInfo.push({
                     "x":tmp[0],
                     "y":tmp[1],
                     "r":tmp[2]
                 })
             });
-            var picture = document.getElementById('pic');
-            picture.addEventListener('touchstart', onPickingUp);
-            // picture.onmousedown =  onPickingUp;
 
             StageList.push(chaInfo);
         }

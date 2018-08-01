@@ -61,17 +61,17 @@ function onQueryHandler () {
 
             print_r($item);
 
-            $start_time = $item['start_time']; 
-            $end_time = $item['end_time'];
+            $start_time = strtotime($item['start_time']); 
+            $end_time = strtotime($item['end_time']);
 
             echo "start time = $start_time end time = $end_time";
 
             if (!empty($start_time) && $curTimeStamp < $start_time) {
-                echo ('start time not continue');
+                echo ('start time failed continue');
                 continue;
             }
             if (!empty($end_time) && $curTimeStamp > $end_time) {
-                echo ('end time ok continue');
+                echo ('end time failed continue');
                 continue;
             }
             $enable = $item['enable']; 

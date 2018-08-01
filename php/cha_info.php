@@ -63,8 +63,8 @@ function onQueryHandler () {
 
             echo "start time = $start_time end time = $end_time";
 
-            if (!empty($start_time) || $curTimeStamp < $start_time) {
-                echo ('start time ok continue');
+            if (!empty($start_time)) {
+                echo ('start time not continue');
                 continue;
             }
             if (!empty($end_time) || $curTimeStamp > $end_time) {

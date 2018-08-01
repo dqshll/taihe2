@@ -146,13 +146,12 @@ function requestChaPicInfo () {
                 break;
             }
         }
-
-        outputObj(StageList);
     }
 
     function parseStageList (jsonList) {
         var foundCurId = false;
-        for(var stage in jsonList){
+        for (var i=0; i< StageList.length; i ++) {
+            var stage = StageList[i];
             if (stage.sid == CurStageId) {
                 foundCurId = true;
             }

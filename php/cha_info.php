@@ -100,7 +100,7 @@ function onQueryHandler () {
 function parseActionPackages($packages) {
     $last_ver_pkg_map = array();
 
-    $sql = "select * from find_pkg where id in($packages) ORDER BY CHARINDEX(id,$packages)";
+    $sql = "select * from find_pkg where id in($packages) ORDER BY FIND_IN_SET(id,$packages)";
 
     // echo $sql;
 

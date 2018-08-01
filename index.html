@@ -188,7 +188,8 @@ function requestChaPicInfo () {
     
     function toPlayState () {
         console.log('toPlayState ' + CurStageId);
-        for (var stage in StageList) {
+        for (var i=0; i< StageList.length; i++) {
+            var stage =  StageList[i];
             if (stage ['sid'] == CurStageId) {
                 $('#pic').attr('src', stage['url']);
 

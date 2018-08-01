@@ -32,7 +32,7 @@ if (isset($_POST['action'])) {
     $action = $_GET['action'];
     if ($action == "query") {
         $result['error'] = 0;
-        $result['list'] = onQueryHandler();
+        $result['actions'] = onQueryHandler();
     } else if ($action == "remove") {
         $result = onRemoveHandler($_GET['id']);
     }

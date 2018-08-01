@@ -64,7 +64,7 @@ function onQueryHandler () {
             $start_time = strtotime($item['start_time']); 
             $end_time = strtotime($item['end_time']);
 
-            echo "start time = $start_time end time = $end_time";
+            echo "cur time = $curTimeStamp start time = $start_time end time = $end_time";
 
             if (!empty($start_time) && $curTimeStamp < $start_time) {
                 echo ('start time failed continue');

@@ -271,7 +271,7 @@ function requestChaPicInfo () {
     }
 
     function getQueryString(name) {
-        var url = window.location.search.substr(1);
+        var url = window.location.search.substr(0);
         var theRequest = new Object();
         var n = url.indexOf("?")
         if (n != -1) {

@@ -58,6 +58,9 @@ function onQueryHandler () {
         $curTimeStamp = curSystime();
 
         while ($item = mysql_fetch_array($all_actions)) {
+
+            print_r($item);
+
             $start_time = $item['start_time']; 
             $end_time = $item['end_time'];
 

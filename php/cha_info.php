@@ -84,7 +84,7 @@ function onQueryHandler () {
             $name = $item['name'];
             $packages = $item['packages'];
 
-            echo "handling $name : $packages";
+            // echo "handling $name : $packages";
             
         }
     }
@@ -100,13 +100,14 @@ function onQueryHandler () {
             $key = $item['id'];
             $value = array('version'=>$item['version'], 
                 'pkg_name'=>$item['pkg_name'], 
-                'time'=>$item['upload_time'], 
+                'to'=>$item['redirect'], 
                 'dur'=>$item['duration'], 
+                'fdur'=>$item['follow_duration'], 
                 'pos'=>$item['point_info'],
                 'w'=>$item['width'],
                 'h'=>$item['height'],
                 // 'url'=>str_ireplace('/alidata/www/default', 'http://h5.edisonx.cn', $item['file_path']));
-                'url'=>$item['file_path']);
+                'url'=>$item['img_url']);
             if((!array_key_exists($key,$last_ver_pkg_map)) || 
                ($last_ver_pkg_map[$key]['version'] < $value['version'])) {
                 $last_ver_pkg_map[$key] = $value;

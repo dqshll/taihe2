@@ -89,7 +89,7 @@ var StartTime = 0;
 $(document).ready(function(){
     StartTime = getQueryString('t');
     CurChaId = getQueryString('cid');
-    console.log('starting at ' + StartTime);
+    console.log('starting at ' + StartTime + ' cid=' + CurChaId);
     requestChaPicInfo();
 });
 

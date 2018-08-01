@@ -108,8 +108,7 @@ function parseActionPackages($packages) {
 
     if ($all_info !== false) { // 空
         while ($item = mysql_fetch_array($all_info)) {
-            $key = $item['id'];
-            $value = array('version'=>$item['version'], 
+            $value = array('sid'=>$item['id'], 
                 'pkg_name'=>$item['pkg_name'], 
                 'to'=>$item['redirect'], 
                 'dur'=>$item['duration'], 
@@ -119,10 +118,8 @@ function parseActionPackages($packages) {
                 'h'=>$item['height'],
                 // 'url'=>str_ireplace('/alidata/www/default', 'http://h5.edisonx.cn', $item['file_path']));
                 'url'=>$item['img_url']);
-            if((!array_key_exists($key,$last_ver_pkg_map)) || 
-               ($last_ver_pkg_map[$key]['version'] < $value['version'])) {
-                $last_ver_pkg_map[$key] = $value;
-            }
+           
+            array_push($last_ver_pkg_map, $value);
         }
     }
     return $last_ver_pkg_map;

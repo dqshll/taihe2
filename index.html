@@ -83,13 +83,13 @@ var MainUrl = 'https://miniapp.edisonx.cn/h5/taihe2/php/cha_info.php';
 var IndWidth = 40;
 
 var StageList = [];
-var CurChaId = null;
+var CurStageId = null;
 var StartTime = 0;
 
 $(document).ready(function(){
     StartTime = getQueryString('t');
-    CurChaId = getQueryString('cid');
-    console.log('starting at ' + StartTime + ' cid=' + CurChaId);
+    CurStageId = getQueryString('cid');
+    console.log('starting at ' + StartTime + ' cid=' + CurStageId);
     requestChaPicInfo();
 });
 
@@ -141,8 +141,8 @@ function requestChaPicInfo () {
 
     function parseStageList (jsonList) {
         var foundCurId = false;
-        for(var id in jsonList){
-            if (id == CurChaId) {
+        for(var stage in jsonList){
+            if (cha.sid == CurStageId) {
                 foundCurId = true;
             }
 
@@ -172,7 +172,7 @@ function requestChaPicInfo () {
             // picture.onmousedown =  onPickingUp;
 
             StageList[id] = chaInfo;
-            CurChaId = id;
+            CurStageId = id;
         }
 
         return foundCurId;
@@ -222,7 +222,7 @@ function requestChaPicInfo () {
 
     function checkHit (pos) {
         // console.log("checking touch x=" + pos.x + ' y=' + pos.y);  
-        var chaInfo = StageList[CurChaId];
+        var chaInfo = StageList[CurStageId];
         var scale = 1;
         
         var bounding = $('#pic')[0].getBoundingClientRect();

@@ -171,8 +171,8 @@ function requestChaPicInfo () {
             chaInfo ['height'] = stage['h'];
             chaInfo ['url'] = stage['url'];
 
-            pos_list.forEach(function(pos_list,i){
-            　　var tmp = stage.split(',')
+            pos_list.forEach(function(value,i){
+            　　var tmp = value.split(',')
                 chaInfo.push({
                     "x":tmp[0],
                     "y":tmp[1],

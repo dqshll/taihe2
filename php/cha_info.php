@@ -41,7 +41,8 @@ echo json_encode($result);
 
 /** Query */
 function onQueryHandler () {
-    $last_ver_pkg_map = array();
+    $actions = array();
+
     global $DB_HOST, $DB_NAME;
 
     $db_connection = mysql_connect($DB_HOST,"root","e5cda60c7e");
@@ -84,10 +85,20 @@ function onQueryHandler () {
             $name = $item['name'];
             $packages = $item['packages'];
 
-            // echo "handling $name : $packages";
-            
+            $actionPkg =  parseActionPackages ($packages);
+            if (!empty($actionPkg) && count($actionPkg) > 0) {
+                $actions[$aid] = $actionPkg;
+            }
         }
     }
+
+    mysql_close(); 
+    
+    return $actions;
+}
+
+function parseActionPackages($packages) {
+    $last_ver_pkg_map = array();
 
     $sql = "select * from find_pkg where id in($packages)";
 
@@ -114,7 +125,6 @@ function onQueryHandler () {
             }
         }
     }
-    mysql_close(); 
     return $last_ver_pkg_map;
 }
 

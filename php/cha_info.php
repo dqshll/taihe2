@@ -59,21 +59,21 @@ function onQueryHandler () {
 
         while ($item = mysql_fetch_array($all_actions)) {
 
-            // print_r($item);
-
             $start_time = strtotime($item['start_time']) * 1000; // s -> ms
             $end_time = strtotime($item['end_time']) * 1000; // s -> ms
 
-            echo "cur time = $curTimeStamp start time = $start_time end time = $end_time";
+            // echo "cur time = $curTimeStamp start time = $start_time end time = $end_time";
 
             if (!empty($start_time) && $curTimeStamp < $start_time) {
-                echo ('start time failed continue');
+                // echo ('start time check failed');
                 continue;
             }
+
             if (!empty($end_time) && $curTimeStamp > $end_time) {
-                echo ('end time failed continue');
+                // echo ('end time check failed');
                 continue;
             }
+
             $enable = $item['enable']; 
 
             if (!$enable) {
@@ -89,9 +89,7 @@ function onQueryHandler () {
         }
     }
 
-    return;
-
-    $sql = "select * from find_pkg";
+    $sql = "select * from find_pkg where id in($packages)";
 
     // echo $sql;
 

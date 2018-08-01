@@ -20,12 +20,20 @@
     <div class="container" id="view_play">
         <img src="asset/bg.jpg" class="img_bg"/>
         <div id="pic_area">
-            <img id="pic" src="https://miniapp.edisonx.cn/data/files/cha/pics/11.jpg">
+            <img id="pic">
         </div>
         <div class="sec">
             <img id="btn_tujian" src="asset/btn_tj_0.png">
         </div>
         <h3 id="desc">测试下你的眼力! 查看上图与大屏幕不同之处, 赢取丰厚奖品!</h3>
+    </div>
+
+    <div class="container" id="view_wait">
+        <img src="asset/bg.jpg" class="img_bg"/>
+        <section id="wait_count_down">
+            <img id="wait_count_down_d1" class="wait_count_down_digit" src="" alt=""></img>
+            <img id="wait_count_down_d0" class="wait_count_down_digit" src="" alt=""></img>
+        </section>
     </div>
 
     <div class="popup" id="view_tujian">
@@ -67,7 +75,7 @@
                 </div>
 
                 <h4 id="readme">温馨提示:<br>
-                        寻找与大屏幕海报不同点。每找到一处可获得一枚勋章，集齐后可兑换奖品。<br>每次游戏结果可累加哦！多玩多得, 大家一起来比眼力吧！</h5>
+                        寻找与大屏幕海报不同点。每找到一处可获得一枚勋章，集齐后可兑换奖品。<br>每次游戏结果可累加哦！多玩多得, 大家一起来比眼力吧！</h4>
             </div>
         </div>
     </div>
@@ -85,9 +93,11 @@ var IndWidth = 40;
 var StageList = [];
 var CurStageId = null;
 var StartTime = 0;
+var WaitTimer = null;
+var WaitCountDown = 0;
 
 $(document).ready(function(){
-    StartTime = getQueryString('t');
+    StartTime = getQueryString('t') * 1000;
     CurStageId = getQueryString('cid');
     console.log('starting at ' + StartTime + ' cid=' + CurStageId);
     requestChaPicInfo();
@@ -132,6 +142,7 @@ function requestChaPicInfo () {
     function searchCurAction (actions) {
         for(var aid in actions){
             if (parseStageList(actions[aid])) {
+                toPlayState();
                 break;
             }
         }
@@ -142,7 +153,7 @@ function requestChaPicInfo () {
     function parseStageList (jsonList) {
         var foundCurId = false;
         for(var stage in jsonList){
-            if (cha.sid == CurStageId) {
+            if (stage.sid == CurStageId) {
                 foundCurId = true;
             }
 
@@ -153,11 +164,10 @@ function requestChaPicInfo () {
             var value = jsonList[id];
             var chaInfo = [];
             var pos_list = value['pos'].split(';');
-            var pic_url = value['url'];
+           
             chaInfo ['width'] = value['w'];
             chaInfo ['height'] = value['h'];
-
-            $('#pic').attr('src', pic_url);
+            chaInfo ['url'] = value['url'];
 
             pos_list.forEach(function(value,i){
             　　var tmp = value.split(',')
@@ -171,13 +181,81 @@ function requestChaPicInfo () {
             picture.addEventListener('touchstart', onPickingUp);
             // picture.onmousedown =  onPickingUp;
 
-            StageList[id] = chaInfo;
-            CurStageId = id;
+            StageList.push(chaInfo);
         }
 
         return foundCurId;
     }
     
+    function toPlayState () {
+        console.log('toPlayState ' + CurStageId);
+        for (var stage in StageList) {
+            if (stage ['sid'] == CurStageId) {
+                $('#pic').attr('src', stage['url']);
+
+                var duration = stage['dur'];
+                duration -= StartTime;
+
+                if (duration > 1000) {
+                    setTimeout(function(follow_duration){
+                        toWaitState(follow_duration);
+                    }, duration, stage['fdur']);
+                } else {
+                    toWaitState(stage['fdur'] + (1000 - duration));
+                }
+
+                return;
+            } else {
+                continue;
+            }
+        }
+        alert('活动未开始, 敬请期待!');
+    }
+
+    function getNextStageId () {
+        for (var i=0; i< StageList.length; i ++) {
+            var stage = StageList[i];
+            if (stage ['sid'] == CurStageId) {
+                if (i+1 < StageList.length) {
+                    return StageList[i+1];
+                } else {
+                    return null;
+                }
+            } 
+        }
+        return null;
+    }
+
+    function toWaitState (dur) {
+        WaitCountDown = parseInt(dur * 0.001);
+        console.log('toWaitState countDown=' + WaitCountDown);
+
+        if (WaitTimer != null) {
+            clearInterval(WaitTimer);
+        }
+
+        WaitTimer = setInterval(function () {
+            updateTimeCounting(-- WaitCountDown);
+            if (WaitCountDown <= 0) {
+                CurStageId = getNextStageId();
+                toPlayState();
+            }
+        }, 1000);
+    }
+
+    function updateTimeCounting (evt) {
+        var d0 = evt % 10;
+        var d1 = (evt - d0) / 10;
+            
+        if(evt < 10) {
+            $('#wait_count_down_d1').hide();
+        } else {
+            $('#wait_count_down_d1').show();
+            $('#wait_count_down_d1').attr("src", "img/" + d1 + ".png");
+        }
+        $('#wait_count_down_d0').attr("src", "img/" + d0 + ".png");
+    }
+
     function onPickingUp(event) {
         console.log('onPickingUp')
     　　 
@@ -251,6 +329,11 @@ function requestChaPicInfo () {
         }
         return false;
     }
+
+    function startTimer () {
+      
+    }
+    
 
     function insertAfter(newEle, targetEle){
         var parentEle = targetEle.parentNode;

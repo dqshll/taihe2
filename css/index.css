@@ -56,6 +56,32 @@ body{padding:0;margin:0;}
     color: white;
 }
 
+#view_wait {
+    display: none;
+}
+
+#wait_count_down {
+	-webkit-flex:1;
+	display: flex;
+	height: 100vh;
+	width: 100vw;
+	justify-content:center;
+	position: absolute;
+	align-items:center;
+    flex-direction: row;
+}
+
+#wait_count_down_d1 {
+    display: none;
+}
+
+.wait_count_down_digit {
+	width: 2em;
+	height: auto;
+	justify-content: space-between;
+}
+
+
 #view_tujian {
     top: 0;
     left: 0;

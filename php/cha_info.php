@@ -59,7 +59,7 @@ function onQueryHandler () {
 
         while ($item = mysql_fetch_array($all_actions)) {
 
-            print_r($item);
+            // print_r($item);
 
             $start_time = strtotime($item['start_time']); 
             $end_time = strtotime($item['end_time']);

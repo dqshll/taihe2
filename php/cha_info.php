@@ -61,8 +61,8 @@ function onQueryHandler () {
 
             // print_r($item);
 
-            $start_time = strtotime($item['start_time']); 
-            $end_time = strtotime($item['end_time']);
+            $start_time = strtotime($item['start_time']) * 1000; // s -> ms
+            $end_time = strtotime($item['end_time']) * 1000; // s -> ms
 
             echo "cur time = $curTimeStamp start time = $start_time end time = $end_time";
 

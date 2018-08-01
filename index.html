@@ -188,6 +188,9 @@ function requestChaPicInfo () {
     
     function toPlayState () {
         console.log('toPlayState ' + CurStageId);
+        document.getElementById('view_play').style.display = "block";
+        document.getElementById('view_wait').style.display = "none";
+
         for (var i=0; i< StageList.length; i++) {
             var stage =  StageList[i];
             if (stage ['sid'] == CurStageId) {
@@ -241,6 +244,9 @@ function requestChaPicInfo () {
                 toPlayState();
             }
         }, 1000);
+
+        document.getElementById('view_play').style.display = "none";
+        document.getElementById('view_wait').style.display = "block";
     }
 
     function updateTimeCounting (evt) {

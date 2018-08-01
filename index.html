@@ -82,12 +82,13 @@ var JudgeRadiusSquare = 100;
 var MainUrl = 'https://miniapp.edisonx.cn/h5/taihe2/php/cha_info.php';
 var IndWidth = 40;
 
-var ChaInfoList = [];
+var StageList = [];
 var CurChaId = null;
 var StartTime = 0;
 
 $(document).ready(function(){
     StartTime = getQueryString('t');
+    CurChaId = getQueryString('cid');
     console.log('starting at ' + StartTime);
     requestChaPicInfo();
 });
@@ -107,7 +108,7 @@ function requestChaPicInfo () {
                 var jsonObj = JSON.parse(data);
 
                 if (jsonObj['error'] == 0) {
-                    parseChaInfoList(jsonObj['list']);
+                    searchCurAction(jsonObj['actions']);
                 } else {
                     console.log(jsonObj['msg']);
                 }
@@ -128,8 +129,27 @@ function requestChaPicInfo () {
         });
     }
 
-    function parseChaInfoList (jsonList) {
+    function searchCurAction (actions) {
+        for(var aid in actions){
+            if (parseStageList(actions[aid])) {
+                break;
+            }
+        }
+
+        outputObj(StageList);
+    }
+
+    function parseStageList (jsonList) {
+        var foundCurId = false;
         for(var id in jsonList){
+            if (id == CurChaId) {
+                foundCurId = true;
+            }
+
+            if (!foundCurId) {
+                continue; // skip
+            }
+
             var value = jsonList[id];
             var chaInfo = [];
             var pos_list = value['pos'].split(';');
@@ -151,9 +171,11 @@ function requestChaPicInfo () {
             picture.addEventListener('touchstart', onPickingUp);
             // picture.onmousedown =  onPickingUp;
 
-            ChaInfoList[id] = chaInfo;
+            StageList[id] = chaInfo;
             CurChaId = id;
-        };
+        }
+
+        return foundCurId;
     }
     
     function onPickingUp(event) {
@@ -200,7 +222,7 @@ function requestChaPicInfo () {
 
     function checkHit (pos) {
         // console.log("checking touch x=" + pos.x + ' y=' + pos.y);  
-        var chaInfo = ChaInfoList[CurChaId];
+        var chaInfo = StageList[CurChaId];
         var scale = 1;
         
         var bounding = $('#pic')[0].getBoundingClientRect();

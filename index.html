@@ -198,15 +198,15 @@ function requestChaPicInfo () {
             if (stage ['sid'] == CurStageId) {
                 $('#pic').attr('src', stage['url']);
 
-                var duration = stage['dur'];
+                var duration = stage['dur'] * 1000;
                 duration -= StartTime;
 
                 if (duration > 1000) {
                     setTimeout(function(follow_duration){
                         toWaitState(follow_duration);
-                    }, duration, stage['fdur']);
+                    }, duration, stage['fdur'] * 1000);
                 } else {
-                    toWaitState(stage['fdur'] + (1000 - duration));
+                    toWaitState(stage['fdur']*1000 + (1000 - duration));
                 }
 
                 return;

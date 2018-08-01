@@ -2,6 +2,7 @@
 $result = array('error'=>1, 'msg'=>'参数错误');
 
 $DB_HOST = 'api.edisonx.cn';
+$DB_NAME = 'taihe';
 
 // if (isset($_GET['action'])) {
 //     $action = $_GET['action'];
@@ -41,15 +42,45 @@ echo json_encode($result);
 /** Query */
 function onQueryHandler () {
     $last_ver_pkg_map = array();
-    global $DB_HOST;
+    global $DB_HOST, $DB_NAME;
 
     $db_connection = mysql_connect($DB_HOST,"root","e5cda60c7e");
 
     mysql_query("set names 'utf8'"); //数据库输出编码
 
-    mysql_select_db("game"); //打开数据库
+    mysql_select_db($DB_NAME); //打开数据库
 
-    $sql = "select * from find_pkg_pub";
+    $sql = "select * from find_action";
+
+    $all_actions = mysql_query($sql);
+
+    if ($all_actions !== false) { // 空
+        $curTimeStamp = curSystime();
+
+        while ($item = mysql_fetch_array($all_actions)) {
+            $start_time = $item['start_time']; 
+            $end_time = $item['end_time'];
+
+            echo "start time = $start_time end time = $end_time";
+
+            if (!empty($start_time) && $curTimeStamp < $start_time) {
+                continue;
+            }
+            if (!empty($end_time) && $curTimeStamp > $end_time) {
+                continue;
+            }
+        
+
+            $aid = $item['aid'];
+            $name = $item['name'];
+            $packages = $item['packages'];
+            
+        }
+    }
+
+    return;
+
+    $sql = "select * from find_pkg";
 
     // echo $sql;
 
@@ -130,12 +161,12 @@ function zipFile($file_path_A, $file_path_B, $file_path_P, $zip_file_path) {
 
 function save2Db ($pkg_name, $version, $file_path, $pos_list) {
     $error = 0;
-    global $DB_HOST;
+    global $DB_HOST, $DB_NAME;
     $db_connection = mysql_connect($DB_HOST,"root","e5cda60c7e");
 
     mysql_query("set names 'utf8'"); //数据库输出编码
 
-    mysql_select_db("game"); //打开数据库
+    mysql_select_db($DB_NAME); //打开数据库
 
     $curtime = toDTS(curSystime());
 
@@ -171,12 +202,12 @@ function save2Db ($pkg_name, $version, $file_path, $pos_list) {
 /* Remove */
 function onRemoveHandler ($delID) {
     $result = array();
-    global $DB_HOST;
+    global $DB_HOST, $DB_NAME;
     $db_connection = mysql_connect($DB_HOST,"root","e5cda60c7e");
 
     mysql_query("set names 'utf8'"); //数据库输出编码
 
-    mysql_select_db("game"); //打开数据库
+    mysql_select_db($DB_NAME); //打开数据库
 
     $sql = "delete from find_pkg_pub where id=$delID";
 

@@ -84,12 +84,15 @@ var IndWidth = 40;
 
 var ChaInfoList = [];
 var CurChaId = null;
+var StartTime = 0;
 
 $(document).ready(function(){
-    requestChaPicInfo('7801');
+    StartTime = getQueryString('t');
+    console.log('starting at ' + StartTime);
+    requestChaPicInfo();
 });
 
-function requestChaPicInfo (chaPicId) {
+function requestChaPicInfo () {
         $.ajax({
             url: MainUrl,
             type: "get",
@@ -104,32 +107,7 @@ function requestChaPicInfo (chaPicId) {
                 var jsonObj = JSON.parse(data);
 
                 if (jsonObj['error'] == 0) {
-                    for(var id in jsonObj['list']){
-                        var value = jsonObj['list'];
-                        value = value[id];
-                        var chaInfo = [];
-                        var pos_list = value['pos'].split(';');
-                        var pic_url = value['url'];
-                        chaInfo ['width'] = value['w'];
-                        chaInfo ['height'] = value['h'];
-
-                        $('#pic').attr('src', pic_url);
-
-                        pos_list.forEach(function(value,i){
-                        　　var tmp = value.split(',')
-                            chaInfo.push({
-                                "x":tmp[0],
-                                "y":tmp[1],
-                                "r":tmp[2]
-                            })
-                        });
-                        var picture = document.getElementById('pic');
-                        picture.addEventListener('touchstart', onPickingUp);
-                        // picture.onmousedown =  onPickingUp;
-        
-                        ChaInfoList[id] = chaInfo;
-                        CurChaId = id;
-                    };
+                    parseChaInfoList(jsonObj['list']);
                 } else {
                     console.log(jsonObj['msg']);
                 }
@@ -148,6 +126,34 @@ function requestChaPicInfo (chaPicId) {
                 }
             }
         });
+    }
+
+    function parseChaInfoList (jsonList) {
+        for(var id in jsonList){
+            var value = jsonList[id];
+            var chaInfo = [];
+            var pos_list = value['pos'].split(';');
+            var pic_url = value['url'];
+            chaInfo ['width'] = value['w'];
+            chaInfo ['height'] = value['h'];
+
+            $('#pic').attr('src', pic_url);
+
+            pos_list.forEach(function(value,i){
+            　　var tmp = value.split(',')
+                chaInfo.push({
+                    "x":tmp[0],
+                    "y":tmp[1],
+                    "r":tmp[2]
+                })
+            });
+            var picture = document.getElementById('pic');
+            picture.addEventListener('touchstart', onPickingUp);
+            // picture.onmousedown =  onPickingUp;
+
+            ChaInfoList[id] = chaInfo;
+            CurChaId = id;
+        };
     }
     
     function onPickingUp(event) {
@@ -242,5 +248,18 @@ function requestChaPicInfo (chaPicId) {
         console.log(description);
     }
 
+    function getQueryString(name) {
+        var url = window.location.search.substr(1);
+        var theRequest = new Object();
+        var n = url.indexOf("?")
+        if (n != -1) {
+            var str = url.substr(n + 1);
+            var strs = str.split("&");
+            for (var i = 0; i < strs.length; i++) {
+                theRequest[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1]);
+            }
+        }
+        return theRequest[name];
+    }
 </script>
 </html>

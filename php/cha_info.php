@@ -224,16 +224,19 @@ function onActionDetail ($actionId) {
 function onActionAdd () {
     $name = $_GET['name'];
     if(empty($name)) {
+        $result['error'] = 102;
         return;
     }
 
     $stages_json = $_GET['stage'];
     if ( empty($stages_json) || strlen($stages_json) <= 0) {
+        $result['error'] = 103;
         return;
     }
 
     $stages = json_decode($stages_json,true);
     if (count($stages) <= 0) {
+        $result['error'] = 104;
         return;
     }
 
@@ -262,18 +265,21 @@ function onActionAdd () {
         $desc = $stage['desc'];
         $img_url = $stage['url'];
         if (empty($w) || empty($h) || empty($img_url) || empty($pos) || empty($dur) || empty($fdur) || empty($pkg_name)) {
+            $result['error'] = 105;
             return;
         }
 
         $sql = "INSERT INTO find_pkg (pkg_name, point_info, description, img_url, duration, follow_duration, width, height) VALUES ($pkg_name,$pos,$desc,$img_url,$dur,$fdur,$w,$h);";
         $insert_result = mysql_query($sql);
         if (!$insert_result) {
+            $result['error'] = 106;
             return;
         }
 
         $sql = "SELECT LAST_INSERT_ID()";
         $insert_result = mysql_query($sql);
         if (!$insert_result) {
+            $result['error'] = 107;
             return;
         }
         if ($i == 0) {
@@ -294,7 +300,7 @@ function onActionAdd () {
     // var_dump($action_result);
 
     if ($action_result !== false) { // 空
-        $result['error'] = 102;
+        $result['error'] = 112;
     }
 
     mysql_close(); 

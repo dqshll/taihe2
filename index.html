@@ -243,6 +243,7 @@ function requestChaPicInfo () {
         WaitTimer = setInterval(function () {
             updateTimeCounting(-- WaitCountDown);
             if (WaitCountDown <= 0) {
+                clearInterval(WaitTimer);
                 CurStageId = getNextStageId();
                 toPlayState();
             }

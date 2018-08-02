@@ -36,9 +36,9 @@ if (isset($_POST['action'])) {
     } else if ($action == "action_list") {
         $result['error'] = 0;
         $result['actions'] = onActionList();
-    } else if ($action == "action_detail") {
+    } else if ($action == "action_detail" && isset($_GET['aid'])) {
         $result['error'] = 0;
-        $result['actions'] = onActionDetail();
+        $result['actions'] = onActionDetail($_GET['aid']);
     }
     else if ($action == "del") {
         $result = onRemoveHandler($_GET['id']);

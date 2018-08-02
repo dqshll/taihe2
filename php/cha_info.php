@@ -222,6 +222,8 @@ function onActionDetail ($actionId) {
 }
 
 function onActionAdd () {
+    global $result;
+
     $name = $_GET['name'];
     if(empty($name)) {
         $result['error'] = 102;
@@ -289,7 +291,7 @@ function onActionAdd () {
 
     $result['error'] = 0;
 
-    $sql = "INSERT INTO find_action (name, packages, start_time, end_time, enable) VALUES ($name, $pkg_ids, $start_time, $end_time, $enable)";
+    $sql = "INSERT INTO find_action (name, packages, start_time, end_time, enable) VALUES ('$name','$pkg_ids','$start_time','$end_time','$enable')";
 
     echo $sql;
      

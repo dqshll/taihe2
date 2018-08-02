@@ -206,6 +206,11 @@ function onActionDetail ($actionId) {
             'qr_video_url'=>"http://xxx/xxx/$aid.zip",
             'qr_pics_url'=>"http://yyy/yyy/$aid.zip",
             'enable'=>$enable);
+
+        $actionPkg =  parseActionPackages ($packages);
+        if (!empty($actionPkg) && count($actionPkg) > 0) {
+            $action['stage'] = $actionPkg;
+        }
     }
 
     mysql_close(); 

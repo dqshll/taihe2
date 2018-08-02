@@ -183,6 +183,8 @@ function onActionDetail ($actionId) {
 
     $sql = "select * from find_action where aid=" + $actionId;
 
+    echo $sql;
+     
     $action_result = mysql_query($sql);
 
     $item = null;

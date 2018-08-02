@@ -223,7 +223,7 @@ function requestChaPicInfo () {
             var stage = StageList[i];
             if (stage ['sid'] == CurStageId) {
                 if (i+1 < StageList.length) {
-                    return StageList[i+1];
+                    return StageList[i+1]['sid'];
                 } else {
                     return null;
                 }

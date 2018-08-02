@@ -234,15 +234,11 @@ function onActionAdd () {
         return;
     }
 
-    var_dump($stages_json);
-
     $stages = json_decode($stages_json,true);
     if (count($stages) <= 0) {
         $result['error'] = 104;
         return;
     }
-
-    var_dump($stages);
 
     $start_time = $_GET['st'];
     $end_time = $_GET['ed'];
@@ -260,6 +256,9 @@ function onActionAdd () {
     $pkg_ids = '';
     for ($i=0; $i< count($stages); $i++) {
         $stage = $stages[$i];
+        
+        var_dump($stage);
+
         $pkg_name = $stage['pkg_name'];
         $dur = $stage['dur'];
         $fdur = $stage['fdur'];

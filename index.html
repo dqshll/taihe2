@@ -126,10 +126,6 @@ function requestChaPicInfo () {
                 var jsonObj = JSON.parse(data);
 
                 if (jsonObj['error'] == 0) {
-                    var picture = document.getElementById('pic');
-                    picture.addEventListener('touchstart', onPickingUp);
-                    // picture.onmousedown =  onPickingUp;
-
                     searchCurAction(jsonObj['actions']);
                 } else {
                     console.log(jsonObj['msg']);
@@ -202,6 +198,8 @@ function requestChaPicInfo () {
         document.getElementById('view_wait').style.display = "none";
         document.getElementById('view_result').style.display = "none";
 
+        registerTouchListener();
+
         for (var i=0; i< StageList.length; i++) {
             var stage =  StageList[i];
             if (stage ['sid'] == CurStageId) {
@@ -244,6 +242,8 @@ function requestChaPicInfo () {
         WaitCountDown = parseInt(dur * 0.001);
         console.log('toWaitState countDown=' + WaitCountDown);
 
+        unRegisterTouchListener();
+
         if (WaitTimer != null) {
             clearInterval(WaitTimer);
         }
@@ -267,6 +267,7 @@ function requestChaPicInfo () {
     }
 
     function toResultState () {
+        unRegisterTouchListener();
         document.getElementById('view_play').style.display = "none";
         document.getElementById('view_wait').style.display = "none";
         document.getElementById('view_result').style.display = "block";
@@ -283,6 +284,18 @@ function requestChaPicInfo () {
             $('#wait_count_down_d1').attr("src", "asset/" + d1 + ".png");
         }
         $('#wait_count_down_d0').attr("src", "asset/" + d0 + ".png");
+    }
+
+    function registerTouchListener () {
+        var picture = document.getElementById('pic');
+        picture.addEventListener('touchstart', onPickingUp);
+        // picture.onmousedown =  onPickingUp;
+    }
+
+    function unRegisterTouchListener () {
+        var picture = document.getElementById('pic');
+        picture.removeEventListener('touchstart', onPickingUp);
+        // picture.onmousedown =  null;
     }
 
     function onPickingUp(event) {

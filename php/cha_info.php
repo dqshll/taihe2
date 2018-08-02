@@ -272,27 +272,30 @@ function onActionAdd () {
 
         $sql = "INSERT INTO find_pkg (pkg_name, point_info, description, img_url, duration, follow_duration, width, height) VALUES ('$pkg_name','$pos,$desc','$desc','$img_url','$dur','$fdur','$w','$h')";
 
-        echo $sql;
-
         $insert_result = mysql_query($sql);
         if (!$insert_result) {
             $result['error'] = 106;
             return;
         }
 
+        $sql = "SELECT LAST_INSERT_ID()";
         echo $sql;
 
-        $sql = "SELECT LAST_INSERT_ID()";
         $insert_result = mysql_query($sql);
         if (!$insert_result) {
             $result['error'] = 107;
             return;
         }
+
+        var_dump($insert_result);
+
         if ($i == 0) {
             $pkg_ids = $insert_result;
         } else {
             $pkg_ids = $pkg_ids . ',' . $insert_result;
         }
+
+        echo $pkg_ids;
     }
 
     $result['error'] = 0;

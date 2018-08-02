@@ -280,20 +280,10 @@ function onActionAdd () {
 
         $lastId = mysql_insert_id($db_connection);
 
-        echo "lastid = $lastId"; 
-
-        $insert_result = mysql_query($sql);
-        if (!$insert_result) {
-            $result['error'] = 107;
-            return;
-        }
-
-        var_dump($insert_result);
-
         if ($i == 0) {
-            $pkg_ids = $insert_result;
+            $pkg_ids = $lastId;
         } else {
-            $pkg_ids = $pkg_ids . ',' . $insert_result;
+            $pkg_ids = $pkg_ids . ',' . $lastId;
         }
 
         echo $pkg_ids;

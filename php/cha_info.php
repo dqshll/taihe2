@@ -278,8 +278,9 @@ function onActionAdd () {
             return;
         }
 
-        $sql = "SELECT LAST_INSERT_ID()";
-        echo $sql;
+        $lastId = mysql_insert_id($db_connection);
+
+        echo "lastid = $lastId"; 
 
         $insert_result = mysql_query($sql);
         if (!$insert_result) {

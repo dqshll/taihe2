@@ -39,6 +39,8 @@ if (isset($_POST['action'])) {
     } else if ($action == "action_detail" && isset($_GET['aid'])) {
         $result['error'] = 0;
         $result['actions'] = onActionDetail($_GET['aid']);
+    } else if ($action == "action_add") {
+        onActionAdd();
     }
     else if ($action == "del") {
         $result = onRemoveHandler($_GET['id']);
@@ -206,7 +208,7 @@ function onActionDetail ($actionId) {
             'qr_video_url'=>"http://xxx/xxx/$aid.zip",
             'qr_pics_url'=>"http://yyy/yyy/$aid.zip",
             'enable'=>$enable);
-            
+
         $packages = $item['packages'];
         $actionPkg =  parseActionPackages ($packages);
         if (!empty($actionPkg) && count($actionPkg) > 0) {
@@ -217,6 +219,87 @@ function onActionDetail ($actionId) {
     mysql_close(); 
 
     return $action;
+}
+
+function onActionAdd () {
+    $name = $_GET['name'];
+    if(empty($name)) {
+        return;
+    }
+
+    $stages_json = $_GET['stage'];
+    if ( empty($stages_json) || strlen($stages_json) <= 0) {
+        return;
+    }
+
+    $stages = json_decode($stages_json,true);
+    if (count($stages) <= 0) {
+        return;
+    }
+
+    $start_time = $_GET['st'];
+    $end_time = $_GET['ed'];
+    $enable = $_GET['enable'];
+    $to = $_GET['to'];
+
+    global $DB_HOST, $DB_NAME;
+
+    $db_connection = mysql_connect($DB_HOST,"root","e5cda60c7e");
+
+    mysql_query("set names 'utf8'"); //数据库输出编码
+
+    mysql_select_db($DB_NAME); //打开数据库
+
+    $pkg_ids = '';
+    for ($i=0; $i< count($stages); $i++) {
+        $stage = $stages[$i];
+        $pkg_name = $stage['pkg_name'];
+        $dur = $stage['dur'];
+        $fdur = $stage['fdur'];
+        $pos = $stage['pos'];
+        $w = $stage['w'];
+        $h = $stage['h'];
+        $desc = $stage['desc'];
+        $img_url = $stage['url'];
+        if (empty($w) || empty($h) || empty($img_url) || empty($pos) || empty($dur) || empty($fdur) || empty($pkg_name)) {
+            return;
+        }
+
+        $sql = "INSERT INTO find_pkg (pkg_name, point_info, description, img_url, duration, follow_duration, width, height) VALUES ($pkg_name,$pos,$desc,$img_url,$dur,$fdur,$w,$h);";
+        $insert_result = mysql_query($sql);
+        if (!$insert_result) {
+            return;
+        }
+
+        $sql = "SELECT LAST_INSERT_ID()";
+        $insert_result = mysql_query($sql);
+        if (!$insert_result) {
+            return;
+        }
+        if ($i == 0) {
+            $pkg_ids = $insert_result;
+        } else {
+            $pkg_ids = $pkg_ids . ',' . $insert_result;
+        }
+    }
+
+    $result['error'] = 0;
+
+    $sql = "INSERT INTO find_action (name, packages, start_time, end_time, enable) VALUES ($name, $pkg_ids, $start_time, $end_time, $enable)";
+
+    // echo $sql;
+     
+    $action_result = mysql_query($sql);
+
+    // var_dump($action_result);
+
+    if ($action_result !== false) { // 空
+        $result['error'] = 102;
+    }
+
+    mysql_close(); 
+
+    return;
 }
 
 /** Upload */

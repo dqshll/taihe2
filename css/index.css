@@ -60,6 +60,11 @@ body{padding:0;margin:0;}
     display: none;
 }
 
+.title {
+    text-align: center;
+    color: #9cefff;
+}
+
 #wait_count_down {
 	-webkit-flex:1;
 	display: flex;
@@ -80,7 +85,6 @@ body{padding:0;margin:0;}
 	height: auto;
 	justify-content: space-between;
 }
-
 
 #view_tujian {
     top: 0;

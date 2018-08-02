@@ -30,12 +30,15 @@ if (isset($_POST['action'])) {
     }
 } else if (isset($_GET['action'])) {
     $action = $_GET['action'];
-    if ($action == "query_c") {
+    if ($action == "query") {
         $result['error'] = 0;
-        $result['actions'] = onQueryHandlerCustom();
-    } else if ($action == "query") {
+        $result['actions'] = onQueryHandler();
+    } else if ($action == "action_list") {
         $result['error'] = 0;
-        $result['actions'] = onQueryHandlerBuzz();
+        $result['actions'] = onActionList();
+    } else if ($action == "action_detail") {
+        $result['error'] = 0;
+        $result['actions'] = onActionDetail();
     }
     else if ($action == "del") {
         $result = onRemoveHandler($_GET['id']);
@@ -44,7 +47,7 @@ if (isset($_POST['action'])) {
 echo json_encode($result);
 
 /** Query */
-function onQueryHandlerCustom () {
+function onQueryHandler () {
     $actions = array();
 
     global $DB_HOST, $DB_NAME;
@@ -130,7 +133,7 @@ function parseActionPackages($packages) {
 }
 
 
-function onQueryHandlerBuzz () {
+function onActionList () {
     $actions = array();
 
     global $DB_HOST, $DB_NAME;
@@ -149,35 +152,16 @@ function onQueryHandlerBuzz () {
         // $curTimeStamp = curSystime();
 
         while ($item = mysql_fetch_array($all_actions)) {
-
-            // $start_time = strtotime($item['start_time']) * 1000; // s -> ms
-            // $end_time = strtotime($item['end_time']) * 1000; // s -> ms
-
-            // echo "cur time = $curTimeStamp start time = $start_time end time = $end_time";
-
-            if (!empty($start_time) && $curTimeStamp < $start_time) {
-                // echo ('start time check failed');
-                continue;
-            }
-
-            if (!empty($end_time) && $curTimeStamp > $end_time) {
-                // echo ('end time check failed');
-                continue;
-            }
-
             $enable = $item['enable']; 
-
-            if (!$enable) {
-                continue;
-            }
-
             $aid = $item['aid'];
             $name = $item['name'];
             $data = array('aid'=>$aid,
-                    'name'=>$name, 
-                    'st'=>$item['start_time'], 
-                    'ed'=>$item['end_time'],
-                    'enable'=>$enable);
+                'name'=>$name, 
+                'st'=>$item['start_time'], 
+                'ed'=>$item['end_time'],
+                'qr_video_url'=>"http://xxx/xxx/$aid.zip",
+                'qr_pics_url'=>"http://yyy/yyy/$aid.zip",
+                'enable'=>$enable);
             array_push($actions, $data);
         }
     }
@@ -185,6 +169,45 @@ function onQueryHandlerBuzz () {
     mysql_close(); 
 
     return $actions;
+}
+
+/** Query */
+function onActionDetail ($actionId) {
+    global $DB_HOST, $DB_NAME;
+
+    $db_connection = mysql_connect($DB_HOST,"root","e5cda60c7e");
+
+    mysql_query("set names 'utf8'"); //数据库输出编码
+
+    mysql_select_db($DB_NAME); //打开数据库
+
+    $sql = "select * from find_action where aid=" + $actionId;
+
+    $action_result = mysql_query($sql);
+
+    $item = null;
+
+    if ($action_result !== false) { // 空
+        $curTimeStamp = curSystime();
+
+        $item = mysql_fetch_array($all_actions);
+
+        $enable = $item['enable']; 
+        $aid = $item['aid'];
+        $name = $item['name'];
+        $data = array('aid'=>$aid,
+            'name'=>$name, 
+            'st'=>$item['start_time'], 
+            'ed'=>$item['end_time'],
+            'qr_video_url'=>"http://xxx/xxx/$aid.zip",
+            'qr_pics_url'=>"http://yyy/yyy/$aid.zip",
+            'enable'=>$enable);
+        array_push($actions, $data);
+    }
+
+    mysql_close(); 
+
+    return $item;
 }
 
 /** Upload */

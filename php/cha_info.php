@@ -285,15 +285,13 @@ function onActionAdd () {
         } else {
             $pkg_ids = $pkg_ids . ',' . $lastId;
         }
-
-        echo $pkg_ids;
     }
 
     $result['error'] = 0;
 
     $sql = "INSERT INTO find_action (name, packages, start_time, end_time, enable) VALUES ($name, $pkg_ids, $start_time, $end_time, $enable)";
 
-    // echo $sql;
+    echo $sql;
      
     $action_result = mysql_query($sql);
 

@@ -189,7 +189,7 @@ function onActionDetail ($actionId) {
 
     // var_dump($action_result);
 
-    $item = null;
+    $action = null;
 
     if ($action_result !== false) { // 空
         $curTimeStamp = curSystime();
@@ -199,19 +199,18 @@ function onActionDetail ($actionId) {
         $enable = $item['enable']; 
         $aid = $item['aid'];
         $name = $item['name'];
-        $data = array('aid'=>$aid,
+        $action = array('aid'=>$aid,
             'name'=>$name, 
             'st'=>$item['start_time'], 
             'ed'=>$item['end_time'],
             'qr_video_url'=>"http://xxx/xxx/$aid.zip",
             'qr_pics_url'=>"http://yyy/yyy/$aid.zip",
             'enable'=>$enable);
-        array_push($actions, $data);
     }
 
     mysql_close(); 
 
-    return $item;
+    return $action;
 }
 
 /** Upload */

@@ -222,7 +222,6 @@ function onActionDetail ($actionId) {
 }
 
 function onActionAdd () {
-    echo 'onActionAdd';
     $name = $_GET['name'];
     if(empty($name)) {
         $result['error'] = 102;
@@ -235,11 +234,15 @@ function onActionAdd () {
         return;
     }
 
+    var_dump($stages_json);
+
     $stages = json_decode($stages_json,true);
     if (count($stages) <= 0) {
         $result['error'] = 104;
         return;
     }
+
+    var_dump($stages);
 
     $start_time = $_GET['st'];
     $end_time = $_GET['ed'];
@@ -253,8 +256,6 @@ function onActionAdd () {
     mysql_query("set names 'utf8'"); //数据库输出编码
 
     mysql_select_db($DB_NAME); //打开数据库
-
-    echo 'begin insert pkg';
 
     $pkg_ids = '';
     for ($i=0; $i< count($stages); $i++) {

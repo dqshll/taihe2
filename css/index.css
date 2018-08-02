@@ -56,8 +56,15 @@ body{padding:0;margin:0;}
     color: white;
 }
 
+#view_play {
+    display: none;
+}
+
 #view_wait {
     display: none;
+}
+#view_result {
+    display: block;
 }
 
 .title {
@@ -67,6 +74,28 @@ body{padding:0;margin:0;}
     margin-left: 2vw;
     text-align: center;
     color: #9cefff;
+}
+
+#wait_desc {
+    width:100vw;
+    height: 25vw;
+    margin-top: 6vw;
+    margin-left: 2vw;
+    text-align: center;
+    color: #9cefff;
+}
+
+#result_desc {
+    width:100vw;
+    height: 25vw;
+    margin-top: 6vw;
+    margin-left: 2vw;
+    text-align: center;
+    color: #9cefff;
+}
+
+#view_result {
+    display: block;
 }
 
 #wait_count_down {

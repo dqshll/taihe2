@@ -37,6 +37,11 @@
         </section>
     </div>
 
+    <div class="container" id="view_result">
+        <img src="asset/bg.jpg" class="img_bg"/>
+        <h2 class="title">玩得不错啊, 亲~</h2>
+    </div>
+
     <div class="popup" id="view_tujian">
         <div class="opacity_cover"></div>
 
@@ -193,6 +198,7 @@ function requestChaPicInfo () {
         console.log('toPlayState ' + CurStageId);
         document.getElementById('view_play').style.display = "block";
         document.getElementById('view_wait').style.display = "none";
+        document.getElementById('view_result').style.display = "none";
 
         for (var i=0; i< StageList.length; i++) {
             var stage =  StageList[i];
@@ -245,12 +251,23 @@ function requestChaPicInfo () {
             if (WaitCountDown <= 0) {
                 clearInterval(WaitTimer);
                 CurStageId = getNextStageId();
-                toPlayState();
+                if (CurStageId != null) {
+                    toPlayState();
+                } else {
+                    toResultState();
+                }
             }
         }, 1000);
 
         document.getElementById('view_play').style.display = "none";
         document.getElementById('view_wait').style.display = "block";
+        document.getElementById('view_result').style.display = "none";
+    }
+
+    function toResultState () {
+        document.getElementById('view_play').style.display = "none";
+        document.getElementById('view_wait').style.display = "none";
+        document.getElementById('view_result').style.display = "block";
     }
 
     function updateTimeCounting (evt) {

@@ -62,12 +62,13 @@ body{
 }
 
 #view_play {
-    display: block;
+    display: none;
 }
 
 #view_wait {
-    display: none;
+    display: block;
 }
+
 #view_result {
     display: none;
 }

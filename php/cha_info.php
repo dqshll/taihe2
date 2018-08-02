@@ -30,17 +30,21 @@ if (isset($_POST['action'])) {
     }
 } else if (isset($_GET['action'])) {
     $action = $_GET['action'];
-    if ($action == "query") {
+    if ($action == "query_c") {
         $result['error'] = 0;
-        $result['actions'] = onQueryHandler();
-    } else if ($action == "remove") {
+        $result['actions'] = onQueryHandlerCustom();
+    } else if ($action == "query") {
+        $result['error'] = 0;
+        $result['actions'] = onQueryHandlerBuzz();
+    }
+    else if ($action == "del") {
         $result = onRemoveHandler($_GET['id']);
     }
 }
 echo json_encode($result);
 
 /** Query */
-function onQueryHandler () {
+function onQueryHandlerCustom () {
     $actions = array();
 
     global $DB_HOST, $DB_NAME;
@@ -123,6 +127,64 @@ function parseActionPackages($packages) {
         }
     }
     return $last_ver_pkg_map;
+}
+
+
+function onQueryHandlerBuzz () {
+    $actions = array();
+
+    global $DB_HOST, $DB_NAME;
+
+    $db_connection = mysql_connect($DB_HOST,"root","e5cda60c7e");
+
+    mysql_query("set names 'utf8'"); //数据库输出编码
+
+    mysql_select_db($DB_NAME); //打开数据库
+
+    $sql = "select * from find_action";
+
+    $all_actions = mysql_query($sql);
+
+    if ($all_actions !== false) { // 空
+        // $curTimeStamp = curSystime();
+
+        while ($item = mysql_fetch_array($all_actions)) {
+
+            // $start_time = strtotime($item['start_time']) * 1000; // s -> ms
+            // $end_time = strtotime($item['end_time']) * 1000; // s -> ms
+
+            // echo "cur time = $curTimeStamp start time = $start_time end time = $end_time";
+
+            if (!empty($start_time) && $curTimeStamp < $start_time) {
+                // echo ('start time check failed');
+                continue;
+            }
+
+            if (!empty($end_time) && $curTimeStamp > $end_time) {
+                // echo ('end time check failed');
+                continue;
+            }
+
+            $enable = $item['enable']; 
+
+            if (!$enable) {
+                continue;
+            }
+
+            $aid = $item['aid'];
+            $name = $item['name'];
+            $data = array('aid'=>$aid,
+                    'name'=>$name, 
+                    'st'=>$item['start_time'], 
+                    'ed'=>$item['end_time'],
+                    'enable'=>$enable);
+            array_push($action, $data);
+        }
+    }
+
+    mysql_close(); 
+
+    return $actions;
 }
 
 /** Upload */

@@ -256,8 +256,6 @@ function onActionAdd () {
     $pkg_ids = '';
     for ($i=0; $i< count($stages); $i++) {
         $stage = $stages[$i];
-        
-        var_dump($stage);
 
         $pkg_name = $stage['pkg_name'];
         $dur = $stage['dur'];
@@ -273,6 +271,9 @@ function onActionAdd () {
         }
 
         $sql = "INSERT INTO find_pkg (pkg_name, point_info, description, img_url, duration, follow_duration, width, height) VALUES ($pkg_name,$pos,$desc,$img_url,$dur,$fdur,$w,$h);";
+
+        echo $sql;
+
         $insert_result = mysql_query($sql);
         if (!$insert_result) {
             $result['error'] = 106;

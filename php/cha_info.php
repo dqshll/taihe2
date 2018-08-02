@@ -181,7 +181,7 @@ function onActionDetail ($actionId) {
 
     mysql_select_db($DB_NAME); //打开数据库
 
-    $sql = "select * from find_action where aid=" + $actionId;
+    $sql = "select * from find_action where aid=" . $actionId;
 
     echo $sql;
      

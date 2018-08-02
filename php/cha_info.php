@@ -187,14 +187,14 @@ function onActionDetail ($actionId) {
      
     $action_result = mysql_query($sql);
 
-    var_dump($action_result);
+    // var_dump($action_result);
 
     $item = null;
 
     if ($action_result !== false) { // 空
         $curTimeStamp = curSystime();
 
-        $item = mysql_fetch_array($all_actions);
+        $item = mysql_fetch_array($action_result);
 
         $enable = $item['enable']; 
         $aid = $item['aid'];

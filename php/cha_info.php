@@ -178,7 +178,7 @@ function onQueryHandlerBuzz () {
                     'st'=>$item['start_time'], 
                     'ed'=>$item['end_time'],
                     'enable'=>$enable);
-            array_push($action, $data);
+            array_push($actions, $data);
         }
     }
 

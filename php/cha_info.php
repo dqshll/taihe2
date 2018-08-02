@@ -222,6 +222,7 @@ function onActionDetail ($actionId) {
 }
 
 function onActionAdd () {
+    echo 'onActionAdd';
     $name = $_GET['name'];
     if(empty($name)) {
         $result['error'] = 102;
@@ -253,6 +254,8 @@ function onActionAdd () {
 
     mysql_select_db($DB_NAME); //打开数据库
 
+    echo 'begin insert pkg';
+
     $pkg_ids = '';
     for ($i=0; $i< count($stages); $i++) {
         $stage = $stages[$i];
@@ -275,6 +278,8 @@ function onActionAdd () {
             $result['error'] = 106;
             return;
         }
+
+        echo $sql;
 
         $sql = "SELECT LAST_INSERT_ID()";
         $insert_result = mysql_query($sql);

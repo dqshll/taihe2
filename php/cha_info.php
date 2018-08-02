@@ -270,7 +270,7 @@ function onActionAdd () {
             return;
         }
 
-        $sql = "INSERT INTO find_pkg (pkg_name, point_info, description, img_url, duration, follow_duration, width, height) VALUES ($pkg_name,$pos,$desc,$img_url,$dur,$fdur,$w,$h);";
+        $sql = "INSERT INTO find_pkg (pkg_name, point_info, description, img_url, duration, follow_duration, width, height) VALUES ('$pkg_name','$pos,$desc','$img_url','$dur','$fdur','$w','$h')";
 
         echo $sql;
 

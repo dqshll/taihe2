@@ -292,14 +292,12 @@ function onActionAdd () {
     $result['error'] = 0;
 
     $sql = "INSERT INTO find_action (name, packages, start_time, end_time, enable) VALUES ('$name','$pkg_ids','$start_time','$end_time','$enable')";
-
-    echo $sql;
      
     $action_result = mysql_query($sql);
 
     // var_dump($action_result);
 
-    if ($action_result !== false) { // 空
+    if (!$action_result) { // 空
         $result['error'] = 112;
     }
 

@@ -4,24 +4,6 @@ $result = array('error'=>1, 'msg'=>'参数错误');
 $DB_HOST = 'api.edisonx.cn';
 $DB_NAME = 'taihe';
 
-// if (isset($_GET['action'])) {
-//     $action = $_GET['action'];
-//     if ($action == "cha_info" && isset($_GET['cid'])) {
-//         $cha_id = $_GET['cid'];
-//         $cha_point_list = array('23,45', '55,65', '87,11');
-//         $cha_pic_url = 'https://miniapp.edisonx.cn/data/files/cha/pics/' . $cha_id .'.jpg';
-        
-//         $info = array('pos'=>$cha_point_list, 'url'=>$cha_pic_url);
-        
-//         $result = array('error'=>0, 'info'=>$info);
-//     } 
-//     // else if ($action == "remove") {
-//     //     $result = onRemoveHandler($_GET['id']);
-//     // }
-// }
-
-// echo json_encode($result);
-
 $result = array('error'=>101);
 if (isset($_POST['action'])) {
     $action = $_POST['action'];
@@ -41,9 +23,8 @@ if (isset($_POST['action'])) {
         $result['actions'] = onActionDetail($_GET['aid']);
     } else if ($action == "action_add") {
         onActionAdd();
-    }
-    else if ($action == "del") {
-        $result = onRemoveHandler($_GET['id']);
+    } else if ($action == "action_del") {
+        $result = onActionDel();
     }
 }
 echo json_encode($result);
@@ -306,6 +287,138 @@ function onActionAdd () {
     return;
 }
 
+function onActionUpdate () {
+    global $result;
+    
+    $aid = $_GET['aid'];
+    if(empty($aid)) {
+        $result['error'] = 111;
+        return;
+    }
+
+    $name = $_GET['name'];
+    if(empty($name)) {
+        $result['error'] = 102;
+        return;
+    }
+
+    $stages_json = $_GET['stage'];
+    if ( empty($stages_json) || strlen($stages_json) <= 0) {
+        $result['error'] = 103;
+        return;
+    }
+
+    $stages = json_decode($stages_json,true);
+    if (count($stages) <= 0) {
+        $result['error'] = 104;
+        return;
+    }
+
+    $start_time = $_GET['st'];
+    $end_time = $_GET['ed'];
+    $enable = $_GET['enable'];
+    $to = $_GET['to'];
+
+    global $DB_HOST, $DB_NAME;
+
+    $db_connection = mysql_connect($DB_HOST,"root","e5cda60c7e");
+
+    mysql_query("set names 'utf8'"); //数据库输出编码
+
+    mysql_select_db($DB_NAME); //打开数据库
+
+    $pkg_ids = '';
+    for ($i=0; $i< count($stages); $i++) {
+        $stage = $stages[$i];
+
+        $pkg_name = $stage['pkg_name'];
+        $dur = $stage['dur'];
+        $fdur = $stage['fdur'];
+        $pos = $stage['pos'];
+        $w = $stage['w'];
+        $h = $stage['h'];
+        $desc = $stage['desc'];
+        $img_url = $stage['url'];
+        if (empty($w) || empty($h) || empty($img_url) || empty($pos) || empty($dur) || empty($fdur) || empty($pkg_name)) {
+            $result['error'] = 105;
+            return;
+        }
+
+        $sid = $stages['sid'];
+
+        $lastId = $sid;
+        if (empty($sid)) { // new pkg shoud insert
+            $sql = "INSERT INTO find_pkg (pkg_name, point_info, description, img_url, duration, follow_duration, width, height) VALUES ('$pkg_name','$pos','$desc','$img_url','$dur','$fdur','$w','$h')";
+            $lastId = mysql_insert_id($db_connection);
+        } else {// old pkg should update
+            $sql = "UPDATE find_pkg SET pkg_name='$pkg_name', point_info='$pos', description='$desc', img_url='$img_url, duration='$dur', follow_duration='$fdur', width='$w', height='$h' WHERE id='$sid'";
+        }
+        
+        $db_result = mysql_query($sql);
+        if (!$db_result) {
+            $result['error'] = 106;
+            return;
+        }
+
+        if ($i == 0) {
+            $pkg_ids = $lastId;
+        } else {
+            $pkg_ids = $pkg_ids . ',' . $lastId;
+        }
+    }
+
+    $result['error'] = 0;
+
+    $sql = "UPDATE find_action SET name='$name', packages='$pkg_ids', start_time='$start_time', end_time='$end_time', enable='$enable' WHERE aid='$aid";
+     
+    $action_result = mysql_query($sql);
+
+    // var_dump($action_result);
+
+    if (!$action_result) { // 空
+        $result['error'] = 112;
+    }
+
+    mysql_close(); 
+
+    return;
+}
+
+/* Remove */
+function onActionDel ($delID) {
+
+    global $result;
+    
+    $aid = $_GET['aid'];
+    if(empty($aid)) {
+        $result['error'] = 111;
+        return;
+    }
+    
+    global $DB_HOST, $DB_NAME;
+    $db_connection = mysql_connect($DB_HOST,"root","e5cda60c7e");
+
+    mysql_query("set names 'utf8'"); //数据库输出编码
+
+    mysql_select_db($DB_NAME); //打开数据库
+
+    $sql = "delete from find_action where id=$aid";
+
+    // echo $sql;
+
+    $db_result = mysql_query($sql);
+
+    // var_dump($all_info);
+
+    if ($db_result !== false) { // 空
+        $result['error'] = 0;
+    } else {
+        $result['error'] = 113;
+    }
+    mysql_close(); 
+    return $result;
+}
+
 /** Upload */
 function onUploadHandler() {
     $result = array('error'=>$_FILES['upImgA']['error']);
@@ -395,33 +508,6 @@ function save2Db ($pkg_name, $version, $file_path, $pos_list) {
 
     mysql_close();
     return $error;
-}
-
-/* Remove */
-function onRemoveHandler ($delID) {
-    $result = array();
-    global $DB_HOST, $DB_NAME;
-    $db_connection = mysql_connect($DB_HOST,"root","e5cda60c7e");
-
-    mysql_query("set names 'utf8'"); //数据库输出编码
-
-    mysql_select_db($DB_NAME); //打开数据库
-
-    $sql = "delete from find_pkg_pub where id=$delID";
-
-    // echo $sql;
-
-    $all_info = mysql_query($sql);
-
-    // var_dump($all_info);
-
-    if ($all_info !== false) { // 空
-        $result['error'] = 0;
-    } else {
-        $result['error'] = 107;
-    }
-    mysql_close(); 
-    return $result;
 }
 
 function curSystime() {

@@ -75,7 +75,7 @@ body{
 
 .title {
     width:100vw;
-    height: 15vw;
+    height: 5vw;
     margin-top: 6vw;
     margin-left: 2vw;
     text-align: center;
@@ -89,7 +89,7 @@ body{
     margin-top: 6vw;
     margin-left: 2vw;
     text-align: center;
-    font-size: 24vw;
+    font-size: 4vw;
     color: #9cefff;
 }
 

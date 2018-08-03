@@ -255,7 +255,7 @@ function onActionAdd () {
             return;
         }
 
-        $sql = "INSERT INTO find_pkg (pkg_name, point_info, description, img_url, duration, follow_duration, width, height) VALUES ('$pkg_name','$pos,$desc','$desc','$img_url','$dur','$fdur','$w','$h')";
+        $sql = "INSERT INTO find_pkg (pkg_name, point_info, description, img_url, duration, follow_duration, width, height, redirect) VALUES ('$pkg_name','$pos,$desc','$desc','$img_url','$dur','$fdur','$w','$h','$redirect')";
 
         $insert_result = mysql_query($sql);
         if (!$insert_result) {
@@ -347,13 +347,15 @@ function onActionUpdate () {
         }
 
         $sid = $stage['sid'];
-
         $lastId = $sid;
+
+        $redirect = $stage['to'];
+
         if (empty($sid)) { // new pkg shoud insert
-            $sql = "INSERT INTO find_pkg (pkg_name, point_info, description, img_url, duration, follow_duration, width, height) VALUES ('$pkg_name','$pos','$desc','$img_url','$dur','$fdur','$w','$h')";
+            $sql = "INSERT INTO find_pkg (pkg_name, point_info, description, img_url, duration, follow_duration, width, height, redirect) VALUES ('$pkg_name','$pos','$desc','$img_url','$dur','$fdur','$w','$h','$redirect')";
             
         } else {// old pkg should update
-            $sql = "UPDATE find_pkg SET pkg_name='$pkg_name', point_info='$pos', description='$desc', img_url='$img_url', duration='$dur', follow_duration='$fdur', width='$w', height='$h' WHERE id='$sid'";
+            $sql = "UPDATE find_pkg SET pkg_name='$pkg_name', point_info='$pos', description='$desc', img_url='$img_url', duration='$dur', follow_duration='$fdur', width='$w', height='$h', redirect='$redirect' WHERE id='$sid'";
         }
         // echo $sql;
 

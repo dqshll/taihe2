@@ -85,7 +85,7 @@ body{
 
 #wait_desc {
     width:100vw;
-    height: 25vh;
+    height: 23vh;
     margin-top: 6vw;
     margin-left: 2vw;
     text-align: center;
@@ -109,7 +109,7 @@ body{
 #wait_count_down {
 	-webkit-flex:1;
     display: flex;
-    top: 40vh;
+    top: 42vh;
 	height: 15vh;
 	width: 100vw;
 	justify-content:center;

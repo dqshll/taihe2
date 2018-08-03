@@ -353,9 +353,9 @@ function onActionUpdate () {
             $sql = "INSERT INTO find_pkg (pkg_name, point_info, description, img_url, duration, follow_duration, width, height) VALUES ('$pkg_name','$pos','$desc','$img_url','$dur','$fdur','$w','$h')";
             
         } else {// old pkg should update
-            $sql = "UPDATE find_pkg SET pkg_name='$pkg_name', point_info='$pos', description='$desc', img_url='$img_url, duration='$dur', follow_duration='$fdur', width='$w', height='$h' WHERE id='$sid'";
+            $sql = "UPDATE find_pkg SET pkg_name='$pkg_name', point_info='$pos', description='$desc', img_url='$img_url', duration='$dur', follow_duration='$fdur', width='$w', height='$h' WHERE id='$sid'";
         }
-        echo $sql;
+        // echo $sql;
 
         $db_result = mysql_query($sql);
         if (!$db_result) {

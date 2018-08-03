@@ -255,7 +255,7 @@ function onActionAdd () {
             return;
         }
 
-        $sql = "INSERT INTO find_pkg (pkg_name, point_info, description, img_url, duration, follow_duration, width, height, redirect) VALUES ('$pkg_name','$pos,$desc','$desc','$img_url','$dur','$fdur','$w','$h','$redirect')";
+        $sql = "INSERT INTO find_pkg (pkg_name, point_info, description, img_url, duration, follow_duration, width, height) VALUES ('$pkg_name','$pos,$desc','$desc','$img_url','$dur','$fdur','$w','$h')";
 
         $insert_result = mysql_query($sql);
         if (!$insert_result) {
@@ -274,7 +274,7 @@ function onActionAdd () {
 
     $result['error'] = 0;
 
-    $sql = "INSERT INTO find_action (name, packages, start_time, end_time, enable) VALUES ('$name','$pkg_ids','$start_time','$end_time','$enable')";
+    $sql = "INSERT INTO find_action (name, packages, start_time, end_time, enable, redirect) VALUES ('$name','$pkg_ids','$start_time','$end_time','$enable','$to')";
      
     $action_result = mysql_query($sql);
 
@@ -349,13 +349,11 @@ function onActionUpdate () {
         $sid = $stage['sid'];
         $lastId = $sid;
 
-        $redirect = $stage['to'];
-
         if (empty($sid)) { // new pkg shoud insert
-            $sql = "INSERT INTO find_pkg (pkg_name, point_info, description, img_url, duration, follow_duration, width, height, redirect) VALUES ('$pkg_name','$pos','$desc','$img_url','$dur','$fdur','$w','$h','$redirect')";
+            $sql = "INSERT INTO find_pkg (pkg_name, point_info, description, img_url, duration, follow_duration, width, height) VALUES ('$pkg_name','$pos','$desc','$img_url','$dur','$fdur','$w','$h')";
             
         } else {// old pkg should update
-            $sql = "UPDATE find_pkg SET pkg_name='$pkg_name', point_info='$pos', description='$desc', img_url='$img_url', duration='$dur', follow_duration='$fdur', width='$w', height='$h', redirect='$redirect' WHERE id='$sid'";
+            $sql = "UPDATE find_pkg SET pkg_name='$pkg_name', point_info='$pos', description='$desc', img_url='$img_url', duration='$dur', follow_duration='$fdur', width='$w', height='$h' WHERE id='$sid'";
         }
         // echo $sql;
 
@@ -376,9 +374,7 @@ function onActionUpdate () {
         }
     }
 
-    $result['error'] = 0;
-
-    $sql = "UPDATE find_action SET name='$name', packages='$pkg_ids', start_time='$start_time', end_time='$end_time', enable='$enable' WHERE aid=$aid";
+    $sql = "UPDATE find_action SET name='$name', packages='$pkg_ids', start_time='$start_time', end_time='$end_time', enable='$enable', redirect='$to' WHERE aid=$aid";
      
     $action_result = mysql_query($sql);
 

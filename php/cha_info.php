@@ -411,7 +411,7 @@ function onActionDel ($delID) {
 
     $sql = "delete from find_action where id=$aid";
 
-    // echo $sql;
+    echo $sql;
 
     $db_result = mysql_query($sql);
 

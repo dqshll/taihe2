@@ -79,17 +79,17 @@ body{
     margin-top: 6vw;
     margin-left: 2vw;
     text-align: center;
-    font-size: 12vw;
+    font-size: 10vw;
     color:white;
 }
 
 #wait_desc {
     width:100vw;
-    height: 35vh;
+    height: 25vh;
     margin-top: 6vw;
     margin-left: 2vw;
     text-align: center;
-    font-size: 10vw;
+    font-size: 8vw;
     color: #9cefff;
 }
 

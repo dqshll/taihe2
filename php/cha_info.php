@@ -346,7 +346,7 @@ function onActionUpdate () {
             return;
         }
 
-        $sid = $stages['sid'];
+        $sid = $stage['sid'];
 
         $lastId = $sid;
         if (empty($sid)) { // new pkg shoud insert
@@ -362,6 +362,7 @@ function onActionUpdate () {
             $result['error'] = 106;
             return;
         }
+
         if (empty($sid)) {
             $lastId = mysql_insert_id($db_connection);
         }

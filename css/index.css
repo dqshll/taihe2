@@ -108,8 +108,9 @@ body{
 
 #wait_count_down {
 	-webkit-flex:1;
-	display: flex;
-	height: 15vh;
+    display: flex;
+    top: 20vh;
+	height: 10vh;
 	width: 100vw;
 	justify-content:center;
 	position: absolute;

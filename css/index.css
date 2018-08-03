@@ -62,11 +62,11 @@ body{
 }
 
 #view_play {
-    display: none;
+    display: block;
 }
 
 #view_wait {
-    display: block;
+    display: none;
 }
 
 #view_result {
@@ -75,7 +75,7 @@ body{
 
 .title {
     width:100vw;
-    height: 25vw;
+    height: 15vw;
     margin-top: 6vw;
     margin-left: 2vw;
     text-align: center;
@@ -84,7 +84,7 @@ body{
 
 #wait_desc {
     width:100vw;
-    height: 25vw;
+    height: 15vw;
     margin-top: 6vw;
     margin-left: 2vw;
     text-align: center;
@@ -120,7 +120,7 @@ body{
 }
 
 .wait_count_down_digit {
-	width: 2em;
+	width: 20vw;
 	height: auto;
 	justify-content: space-between;
 }

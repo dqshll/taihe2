@@ -371,7 +371,7 @@ function onActionUpdate () {
 
     $result['error'] = 0;
 
-    $sql = "UPDATE find_action SET name='$name', packages='$pkg_ids', start_time='$start_time', end_time='$end_time', enable='$enable' WHERE aid='$aid";
+    $sql = "UPDATE find_action SET name='$name', packages='$pkg_ids', start_time='$start_time', end_time='$end_time', enable='$enable' WHERE aid=$aid";
      
     $action_result = mysql_query($sql);
 

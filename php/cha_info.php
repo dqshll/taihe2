@@ -349,6 +349,8 @@ function onActionUpdate () {
         $sid = $stage['sid'];
         $lastId = $sid;
 
+        $result['error'] = 0;
+
         if (empty($sid)) { // new pkg shoud insert
             $sql = "INSERT INTO find_pkg (pkg_name, point_info, description, img_url, duration, follow_duration, width, height) VALUES ('$pkg_name','$pos','$desc','$img_url','$dur','$fdur','$w','$h')";
             

@@ -352,8 +352,10 @@ function onActionUpdate () {
         if (empty($sid)) { // new pkg shoud insert
             $sql = "INSERT INTO find_pkg (pkg_name, point_info, description, img_url, duration, follow_duration, width, height) VALUES ('$pkg_name','$pos','$desc','$img_url','$dur','$fdur','$w','$h')";
             $lastId = mysql_insert_id($db_connection);
+            echo "insert id = $lastId";
         } else {// old pkg should update
             $sql = "UPDATE find_pkg SET pkg_name='$pkg_name', point_info='$pos', description='$desc', img_url='$img_url, duration='$dur', follow_duration='$fdur', width='$w', height='$h' WHERE id='$sid'";
+            echo "update id $sid";
         }
         
         $db_result = mysql_query($sql);

@@ -23,6 +23,8 @@ if (isset($_POST['action'])) {
         $result['actions'] = onActionDetail($_GET['aid']);
     } else if ($action == "action_add") {
         onActionAdd();
+    } else if ($action == "action_update") {
+        onActionUpdate();
     } else if ($action == "action_del") {
         $result = onActionDel();
     }

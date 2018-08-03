@@ -354,9 +354,9 @@ function onActionUpdate () {
             
         } else {// old pkg should update
             $sql = "UPDATE find_pkg SET pkg_name='$pkg_name', point_info='$pos', description='$desc', img_url='$img_url, duration='$dur', follow_duration='$fdur', width='$w', height='$h' WHERE id='$sid'";
-            echo "update id $sid";
         }
-        
+        echo $sql;
+
         $db_result = mysql_query($sql);
         if (!$db_result) {
             $result['error'] = 106;

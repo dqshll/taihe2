@@ -75,7 +75,7 @@ body{
 
 .title {
     width:100vw;
-    height: 15vh;
+    height: 20vh;
     margin-top: 6vw;
     margin-left: 2vw;
     text-align: center;
@@ -109,7 +109,7 @@ body{
 #wait_count_down {
 	-webkit-flex:1;
     display: flex;
-    top: 35vh;
+    top: 40vh;
 	height: 15vh;
 	width: 100vw;
 	justify-content:center;

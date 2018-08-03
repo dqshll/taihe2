@@ -250,12 +250,14 @@ function onActionAdd () {
         $h = $stage['h'];
         $desc = $stage['desc'];
         $img_url = $stage['url'];
+        $xls = $stage['xls'];
+        
         if (empty($w) || empty($h) || empty($img_url) || empty($pos) || empty($dur) || empty($fdur) || empty($pkg_name)) {
             $result['error'] = 105;
             return;
         }
 
-        $sql = "INSERT INTO find_pkg (pkg_name, point_info, description, img_url, duration, follow_duration, width, height) VALUES ('$pkg_name','$pos,$desc','$desc','$img_url','$dur','$fdur','$w','$h')";
+        $sql = "INSERT INTO find_pkg (pkg_name, point_info, description, img_url, duration, follow_duration, width, height, xls) VALUES ('$pkg_name','$pos,$desc','$desc','$img_url','$dur','$fdur','$w','$h','$xls')";
 
         $insert_result = mysql_query($sql);
         if (!$insert_result) {
@@ -341,6 +343,8 @@ function onActionUpdate () {
         $h = $stage['h'];
         $desc = $stage['desc'];
         $img_url = $stage['url'];
+        $xls = $stage['xls'];
+
         if (empty($w) || empty($h) || empty($img_url) || empty($pos) || empty($dur) || empty($fdur) || empty($pkg_name)) {
             $result['error'] = 105;
             return;
@@ -352,10 +356,10 @@ function onActionUpdate () {
         $result['error'] = 0;
 
         if (empty($sid)) { // new pkg shoud insert
-            $sql = "INSERT INTO find_pkg (pkg_name, point_info, description, img_url, duration, follow_duration, width, height) VALUES ('$pkg_name','$pos','$desc','$img_url','$dur','$fdur','$w','$h')";
+            $sql = "INSERT INTO find_pkg (pkg_name, point_info, description, img_url, duration, follow_duration, width, height, xls) VALUES ('$pkg_name','$pos','$desc','$img_url','$dur','$fdur','$w','$h','$xls')";
             
         } else {// old pkg should update
-            $sql = "UPDATE find_pkg SET pkg_name='$pkg_name', point_info='$pos', description='$desc', img_url='$img_url', duration='$dur', follow_duration='$fdur', width='$w', height='$h' WHERE id='$sid'";
+            $sql = "UPDATE find_pkg SET pkg_name='$pkg_name', point_info='$pos', description='$desc', img_url='$img_url', duration='$dur', follow_duration='$fdur', width='$w', height='$h', xls='$xls' WHERE id='$sid'";
         }
         // echo $sql;
 

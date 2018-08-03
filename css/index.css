@@ -75,7 +75,7 @@ body{
 
 .title {
     width:100vw;
-    height: 20vh;
+    height: 10vh;
     margin-top: 8vh;
     margin-left: 2vw;
     text-align: center;
@@ -93,18 +93,14 @@ body{
     color: #9cefff;
 }
 
-#result_desc {
+/* #result_desc {
     width:100vw;
     height: 25vw;
     margin-top: 6vw;
     margin-left: 2vw;
     text-align: center;
     color: #9cefff;
-}
-
-#view_result {
-    display: block;
-}
+} */
 
 #wait_count_down {
 	-webkit-flex:1;
@@ -126,6 +122,19 @@ body{
 	width: 18vw;
 	height: auto;
 	justify-content: space-between;
+}
+
+#result_info_img {
+    width: 70vw;
+    height: auto;
+    margin-left:15vw; 
+}
+
+#btn_join {
+    width: 40vw;
+    height: auto;
+    margin-top: 6vh; 
+    margin-left:30vw; 
 }
 
 #view_tujian {

@@ -409,7 +409,7 @@ function onActionDel ($delID) {
 
     mysql_select_db($DB_NAME); //打开数据库
 
-    $sql = "delete from find_action where id=$aid";
+    $sql = "delete from find_action where aid=$aid";
 
     echo $sql;
 

@@ -563,8 +563,9 @@ function toDTS($value) {
 
 function createQRCodes($sid, $t) {
     // $data = input('post.');
-     $filename = "$QR_FOLDER/'$sid-$t'.png";
-     echo 'target = ' . $filename;
+    global $QR_FOLDER;
+    $filename = "$QR_FOLDER/$sid-$t.png";
+    echo 'target = ' . $filename;
     // if (file_exists($filename)) {
     //     return "thinkphp/public/uploads/ticket/{$data['code']}.png";
     // }

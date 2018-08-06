@@ -607,7 +607,8 @@ function createQRCodes($sid, $t) {
     $logo = 'edisonx_logo.png';  //准备好的logo图片   
     $QR = $filename;   //已经生成的原始二维码图  
     
-    if (file_exists($logo)) {   
+    if (file_exists($logo)) {  
+        echo 'logo = ' . $logo;
         $QR = imagecreatefromstring(file_get_contents($QR));     //目标图象连接资源。
         $logo = imagecreatefromstring(file_get_contents($logo));    //源图象连接资源。
         $QR_width = imagesx($QR);   //二维码图片宽度   

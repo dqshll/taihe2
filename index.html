@@ -254,7 +254,8 @@ function requestChaPicInfo () {
         console.log('toWaitState countDown=' + WaitCountDown);
 
         unRegisterTouchListener();
-
+        updateTimeCounting(WaitCountDown);
+        
         if (WaitTimer != null) {
             clearInterval(WaitTimer);
         }

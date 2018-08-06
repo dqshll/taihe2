@@ -135,6 +135,7 @@ body{
     height: auto;
     margin-top: 6vh; 
     margin-left:30vw; 
+    display: none;
 }
 
 #view_tujian {

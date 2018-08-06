@@ -40,7 +40,7 @@
 
     <div class="container" id="view_result">
         <img src="asset/bg.jpg" class="img_bg"/>
-        <h2 class="title">欢乐找茬</h2>
+        <h2 class="title" id="result_title">欢乐找茬</h2>
 
         <img src="asset/default_result.png" id="result_info_img"/>
         <img src="asset/join_0.png" id="btn_join"/>
@@ -100,6 +100,8 @@ var JudgeRadiusSquare = 100;
 var MainUrl = 'https://miniapp.edisonx.cn/h5/taihe2/php/cha_info.php';
 var IndWidth = 40;
 
+var ActionName = '';
+var ActionRedirect = null;
 var StageList = [];
 var CurStageId = null;
 var StartTime = 0;
@@ -150,13 +152,19 @@ function requestChaPicInfo () {
     }
 
     function searchCurAction (actions) {
+        ActionName = '欢乐找茬';
+        ActionRedirect = null;
         for(var aid in actions){
-            if (parseStageList(actions[aid])) {
-                actions[aid] []
+            if (parseStageList(actions[aid]['pkg'])) {
+                ActionName = actions[aid]['name'];
+                ActionRedirect = actions[aid]['to'];
                 toPlayState();
                 break;
             }
         }
+        document.getElementById('action_name').innerHTML = ActionName;
+        document.getElementById('result_title').innerHTML = ActionName;
+        document.getElementById('btn_join').display = ((ActionRedirect == null) ? 'none' : 'block');
     }
 
     function parseStageList (jsonList) {

@@ -29,11 +29,11 @@ if (isset($_POST['action'])) {
         onActionUpdate();
     } else if ($action == "action_del") {
         $result = onActionDel();
+    } else if($actionPkg == "qr") {
+        createQRCodes(11, 0.5);
     }
 }
 echo json_encode($result);
-
-// createQRCodes(11, 0.5);
 
 /** Query */
 function onQueryHandler ($sid) {

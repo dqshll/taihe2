@@ -271,7 +271,7 @@ function onActionAdd () {
         }
 
         $sql = "INSERT INTO find_pkg (pkg_name, point_info, description, img_url, duration, follow_duration, width, height, xls) VALUES ('$pkg_name','$pos,$desc','$desc','$img_url','$dur','$fdur','$w','$h','$xls')";
-        echo $sql;
+        // echo $sql;
         $insert_result = mysql_query($sql);
         if (!$insert_result) {
             $result['error'] = 106;

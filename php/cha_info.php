@@ -76,12 +76,16 @@ function onQueryHandler ($sid) {
             $aid = $item['aid'];
             $name = $item['name'];
             $to = $item['redirect'];
+
             $packages = $item['packages'];
 
             if (containSid($sid)) {
                 $actionPkg =  parseActionPackages ($packages);
                 if (!empty($actionPkg) && count($actionPkg) > 0) {
-                    $actions[$aid] = $actionPkg;
+                    $actions[$aid] = array();
+                    $actions[$aid]['name'] =  $name ;
+                    $actions[$aid]['to'] =  $redirect ;
+                    $actions[$aid]['pkg'] = $actionPkg;
                     break;
                 }
             }

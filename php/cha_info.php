@@ -3,6 +3,7 @@ $result = array('error'=>1, 'msg'=>'参数错误');
 
 $DB_HOST = 'api.edisonx.cn';
 $DB_NAME = 'taihe';
+$QR_FOLDER = '/alidata/www/ecmall/data/files/cha/qr';
 
 $result = array('error'=>101);
 if (isset($_POST['action'])) {
@@ -211,6 +212,7 @@ function onActionDetail ($actionId) {
             'qr_pics_url'=>"http://yyy/yyy/$aid.zip",
             'desc'=>$item['description'],
             'ct'=>$item['create_time'],
+            'to'=>$item['redirect'],
             'enable'=>$enable);
 
         $packages = $item['packages'];
@@ -556,4 +558,36 @@ function toDTS($value) {
     }
 }
 
+function createQRCodes($sid) {
+    // $data = input('post.');
+    // $filename = "../qrcodes/ticket/{$data['code']}.png";
+    // if (file_exists($filename)) {
+    //     return "thinkphp/public/uploads/ticket/{$data['code']}.png";
+    // }
+    
+    include 'lib.QRcode';
+
+    $longUrlString = 'https://movieplusplus.com/thinkphp/public/index.php/api/index/charge?code=' . $data['code'];
+    $errorCorrectionLevel = 'H';    //容错级别  
+    $matrixPointSize = 6;           //生成图片大小  
+    //调用类方法（此时二维码已经生成，只是还未集成logo）
+    \QRcode::png($longUrlString, false, $errorCorrectionLevel, $matrixPointSize, 2);  
+    $icon = 'edisonx_logo.png';
+    $code = ob_get_clean();
+    $code = imagecreatefromstring($code);
+    $logo = imagecreatefrompng($icon);
+    $QR_width = imagesx($code);//二维码图片宽度
+    $QR_height = imagesy($code);//二维码图片高度
+    $logo_width = imagesx($logo);//logo图片宽度
+    $logo_height = imagesy($logo);//logo图片高度
+    $logo_qr_width = $QR_width / 4;
+    $scale = $logo_width/$logo_qr_width;
+    $logo_qr_height = $logo_height/$scale;
+    $from_width = ($QR_width - $logo_qr_width) / 2;
+    //重新组合图片并调整大小
+    imagecopyresampled($code, $logo, $from_width, $from_width, 0, 0, $logo_qr_width, $logo_qr_height, $logo_width, $logo_height);
+    // header ( "Content-type: image/png" );
+    ImagePng($code, $filename);
+    return "thinkphp/public/uploads/ticket/{$data['code']}.png";
+}
 ?>

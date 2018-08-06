@@ -573,7 +573,7 @@ function createQRCodes($sid, $t) {
     $matrixPointSize = 6;           //生成图片大小  
     //调用类方法（此时二维码已经生成，只是还未集成logo）
     echo '1 -> ' . $longUrlString;
-    return;
+
     QRcode::png($longUrlString, false, $errorCorrectionLevel, $matrixPointSize, 2);  
     echo '2';
     return;

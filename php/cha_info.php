@@ -242,6 +242,7 @@ function onActionAdd () {
     $end_time = $_GET['ed'];
     $enable = $_GET['enable'];
     $to = $_GET['to'];
+    $adesc = $_GET['desc'];
 
     global $DB_HOST, $DB_NAME;
 
@@ -289,7 +290,7 @@ function onActionAdd () {
 
     $result['error'] = 0;
 
-    $sql = "INSERT INTO find_action (name, packages, start_time, end_time, enable, redirect) VALUES ('$name','$pkg_ids','$start_time','$end_time','$enable','$to')";
+    $sql = "INSERT INTO find_action (name, packages, start_time, end_time, enable, redirect, description) VALUES ('$name','$pkg_ids','$start_time','$end_time','$enable','$to','$adesc')";
      
     $action_result = mysql_query($sql);
 

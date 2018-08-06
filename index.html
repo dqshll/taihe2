@@ -152,6 +152,7 @@ function requestChaPicInfo () {
     function searchCurAction (actions) {
         for(var aid in actions){
             if (parseStageList(actions[aid])) {
+                actions[aid] []
                 toPlayState();
                 break;
             }

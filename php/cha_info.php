@@ -562,7 +562,7 @@ function toDTS($value) {
 }
 
 function createQRCodes($sid, $t) {
-    $data = input('get.');
+    // $data = input('get.');
     global $QR_FOLDER, $BUZZ_URL;
     $filename = "$QR_FOLDER/$sid-$t.png";
 
@@ -598,7 +598,7 @@ function createQRCodes($sid, $t) {
     echo 'target = ' . $longUrlString;
 
     return;
-    
+
     require_once 'QRcode.php';
     // $value = 'http://www.chenle.top';     //二维码内容  
     $errorCorrectionLevel = 'H'; //容错级别  

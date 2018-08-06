@@ -576,7 +576,7 @@ function createQRCodes($sid, $t) {
     $errorCorrectionLevel = 'H';    //容错级别  
     $matrixPointSize = 6;           //生成图片大小  
     //调用类方法（此时二维码已经生成，只是还未集成logo）
-    echo $filename;
+    echo 'long = ' . $longUrlString;
     QRcode::png($longUrlString, false, $errorCorrectionLevel, $matrixPointSize, 2);  
     $icon = 'edisonx_logo.png';
     $code = ob_get_clean();

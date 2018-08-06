@@ -84,7 +84,7 @@ function onQueryHandler ($sid) {
                 if (!empty($actionPkg) && count($actionPkg) > 0) {
                     $actions[$aid] = array();
                     $actions[$aid]['name'] =  $name ;
-                    $actions[$aid]['to'] =  $redirect ;
+                    $actions[$aid]['to'] =  $to ;
                     $actions[$aid]['pkg'] = $actionPkg;
                     break;
                 }

@@ -4,6 +4,7 @@ $result = array('error'=>1, 'msg'=>'参数错误');
 $DB_HOST = 'api.edisonx.cn';
 $DB_NAME = 'taihe';
 $QR_FOLDER = '/alidata/www/ecmall/data/files/cha/qr';
+$BUZZ_URL = 'https://miniapp.edisonx.cn/h5/taihe2';
 
 $result = array('error'=>101);
 if (isset($_POST['action'])) {
@@ -31,6 +32,8 @@ if (isset($_POST['action'])) {
     }
 }
 echo json_encode($result);
+
+createQRCodes(11, 0.5);
 
 /** Query */
 function onQueryHandler ($sid) {
@@ -558,20 +561,20 @@ function toDTS($value) {
     }
 }
 
-function createQRCodes($sid) {
+function createQRCodes($sid, $t) {
     // $data = input('post.');
-    // $filename = "../qrcodes/ticket/{$data['code']}.png";
+     $filename = "$QR_FOLDER/'$sid-$t'.png";
     // if (file_exists($filename)) {
     //     return "thinkphp/public/uploads/ticket/{$data['code']}.png";
     // }
     
-    include 'lib.QRcode';
+    include './QRcode.php';
 
-    $longUrlString = 'https://movieplusplus.com/thinkphp/public/index.php/api/index/charge?code=' . $data['code'];
+    $longUrlString = "http://www.91qzb.com/thinkphp/public/index.php/api/index/weixin?type=h5&t=$t&cid=$sid&url=$BUZZ_URL";
     $errorCorrectionLevel = 'H';    //容错级别  
     $matrixPointSize = 6;           //生成图片大小  
     //调用类方法（此时二维码已经生成，只是还未集成logo）
-    \QRcode::png($longUrlString, false, $errorCorrectionLevel, $matrixPointSize, 2);  
+    QRcode::png($longUrlString, false, $errorCorrectionLevel, $matrixPointSize, 2);  
     $icon = 'edisonx_logo.png';
     $code = ob_get_clean();
     $code = imagecreatefromstring($code);
@@ -588,6 +591,6 @@ function createQRCodes($sid) {
     imagecopyresampled($code, $logo, $from_width, $from_width, 0, 0, $logo_qr_width, $logo_qr_height, $logo_width, $logo_height);
     // header ( "Content-type: image/png" );
     ImagePng($code, $filename);
-    return "thinkphp/public/uploads/ticket/{$data['code']}.png";
+    // return "thinkphp/public/uploads/ticket/{$data['code']}.png";
 }
 ?>

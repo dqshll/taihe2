@@ -604,6 +604,8 @@ function createQRCodes($sid, $t) {
     //生成二维码图片
     // $filename = microtime().'.png';
     echo 'path = ' . $filename;
+    return;
+    
     QRcode::png($longUrlString, false, $errorCorrectionLevel, $matrixPointSize, 2);  
     
     $logo = 'edisonx_logo.png';  //准备好的logo图片   

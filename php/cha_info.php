@@ -565,7 +565,7 @@ function createQRCodes($sid, $t) {
     // $data = input('post.');
     global $QR_FOLDER;
     $filename = "$QR_FOLDER/$sid-$t.png";
-        
+
     include './QRcode.php';
 
     $longUrlString = "http://www.91qzb.com/thinkphp/public/index.php/api/index/weixin?type=h5&t=$t&cid=$sid&url=$BUZZ_URL";
@@ -573,6 +573,7 @@ function createQRCodes($sid, $t) {
     $matrixPointSize = 6;           //生成图片大小  
     //调用类方法（此时二维码已经生成，只是还未集成logo）
     echo '1';
+    return;
     QRcode::png($longUrlString, false, $errorCorrectionLevel, $matrixPointSize, 2);  
     echo '2';
     $icon = 'edisonx_logo.png';

@@ -595,6 +595,8 @@ function createQRCodes($sid, $t) {
     // ImagePng($code, $filename);
     // echo 'done';
     // // return "thinkphp/public/uploads/ticket/{$data['code']}.png";
+    echo 'target = ' . $longUrlString;
+    
     require_once 'QRcode.php';
     // $value = 'http://www.chenle.top';     //二维码内容  
     $errorCorrectionLevel = 'H'; //容错级别  

@@ -159,6 +159,8 @@ function onActionList () {
                 'ed'=>$item['end_time'],
                 'qr_video_url'=>"http://xxx/xxx/$aid.zip",
                 'qr_pics_url'=>"http://yyy/yyy/$aid.zip",
+                'desc'=>$item['description'],
+                'ct'=>$item['create_time'],
                 'enable'=>$enable);
             array_push($actions, $data);
         }

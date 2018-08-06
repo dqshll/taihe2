@@ -562,7 +562,7 @@ function toDTS($value) {
 }
 
 function createQRCodes($sid, $t) {
-    $data = input('post.');
+    // $data = input('post.');
     // global $QR_FOLDER, $BUZZ_URL;
     // $filename = "$QR_FOLDER/$sid-$t.png";
 

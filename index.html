@@ -120,7 +120,7 @@ function requestChaPicInfo () {
             jsonType: "json",
             timeout: 10000,
             data: {
-                action:'query', 
+                action:'query', sid:CurStageId
             },
             success: function (data) {
                 console.log('200ok');

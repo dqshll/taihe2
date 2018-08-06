@@ -12,9 +12,9 @@ if (isset($_POST['action'])) {
     }
 } else if (isset($_GET['action'])) {
     $action = $_GET['action'];
-    if ($action == "query") {
+    if ($action == "query" && !empty($_GET['sid'])) {
         $result['error'] = 0;
-        $result['actions'] = onQueryHandler();
+        $result['actions'] = onQueryHandler($_GET['sid']);
     } else if ($action == "action_list") {
         $result['error'] = 0;
         $result['actions'] = onActionList();
@@ -32,7 +32,7 @@ if (isset($_POST['action'])) {
 echo json_encode($result);
 
 /** Query */
-function onQueryHandler () {
+function onQueryHandler ($sid) {
     $actions = array();
 
     global $DB_HOST, $DB_NAME;
@@ -75,11 +75,15 @@ function onQueryHandler () {
 
             $aid = $item['aid'];
             $name = $item['name'];
+            $to = $item['redirect'];
             $packages = $item['packages'];
 
-            $actionPkg =  parseActionPackages ($packages);
-            if (!empty($actionPkg) && count($actionPkg) > 0) {
-                $actions[$aid] = $actionPkg;
+            if (containSid($sid)) {
+                $actionPkg =  parseActionPackages ($packages);
+                if (!empty($actionPkg) && count($actionPkg) > 0) {
+                    $actions[$aid] = $actionPkg;
+                    break;
+                }
             }
         }
     }
@@ -87,6 +91,16 @@ function onQueryHandler () {
     mysql_close(); 
 
     return $actions;
+}
+
+function containSid () {
+    $sid_list = explode(",",$packages);
+    for ($i=0; $i<count($sid_list); $i++) {
+        if ($sid_list[$i] == $sid) {
+            return true;
+        }
+    }
+    return false;
 }
 
 function parseActionPackages($packages) {
@@ -102,7 +116,6 @@ function parseActionPackages($packages) {
         while ($item = mysql_fetch_array($all_info)) {
             $value = array('sid'=>$item['id'], 
                 'pkg_name'=>$item['pkg_name'], 
-                'to'=>$item['redirect'], 
                 'dur'=>$item['duration'], 
                 'fdur'=>$item['follow_duration'], 
                 'pos'=>$item['point_info'],
@@ -251,7 +264,7 @@ function onActionAdd () {
         $desc = $stage['desc'];
         $img_url = $stage['url'];
         $xls = $stage['xls'];
-        
+
         if (empty($w) || empty($h) || empty($img_url) || empty($pos) || empty($dur) || empty($fdur) || empty($pkg_name)) {
             $result['error'] = 105;
             return;

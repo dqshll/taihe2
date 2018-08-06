@@ -220,13 +220,24 @@ function requestChaPicInfo () {
 
                 var duration = stage['dur'] * 1000;
                 duration -= StartTime;
+                StartTime = 0; // clear this time for next stage
+                var isLastStage = (getNextStageId() == null);
 
                 if (duration > 1000) {
                     setTimeout(function(follow_duration){
-                        toWaitState(follow_duration);
+                        if(isLastStage) {
+                            toResultState();
+                        } else {
+                            toWaitState(follow_duration);
+                        }
+                        
                     }, duration, stage['fdur'] * 1000);
                 } else {
-                    toWaitState(stage['fdur']*1000 + (1000 - duration));
+                    if(isLastStage) {
+                        toResultState();
+                    } else {
+                        toWaitState(stage['fdur']*1000 + (1000 - duration));
+                    }
                 }
 
                 return;

@@ -33,7 +33,7 @@ if (isset($_POST['action'])) {
 }
 echo json_encode($result);
 
-createQRCodes(11, 0.5);
+// createQRCodes(11, 0.5);
 
 /** Query */
 function onQueryHandler ($sid) {

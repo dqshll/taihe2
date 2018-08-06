@@ -43,7 +43,7 @@
         <h2 class="title" id="result_title">欢乐找茬</h2>
 
         <img src="asset/default_result.png" id="result_info_img"/>
-        <img src="asset/join_0.png" id="btn_join"/>
+        <img src="asset/join_0.png" id="btn_join" onclick="onJoin()"/>
     </div>
 
     <div class="popup" id="view_tujian">
@@ -255,7 +255,7 @@ function requestChaPicInfo () {
 
         unRegisterTouchListener();
         updateTimeCounting(WaitCountDown);
-        
+
         if (WaitTimer != null) {
             clearInterval(WaitTimer);
         }
@@ -414,6 +414,13 @@ function requestChaPicInfo () {
             }
         }
         return theRequest[name];
+    }
+
+    function onJoin () {
+        if (ActionRedirect != null) {
+            window.location = ActionRedirect;
+            document.getElementById('btn_join').src = 'asset/join_1.png'
+        }
     }
 </script>
 </html>

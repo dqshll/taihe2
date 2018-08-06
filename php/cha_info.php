@@ -598,7 +598,7 @@ function createQRCodes($sid, $t) {
     // echo 'target = ' . $longUrlString;
 
     require_once 'QRcode.php';
-    // $value = 'http://www.chenle.top';     //二维码内容  
+    $longUrlString = 'http://www.chenle.top';     //二维码内容  
     $errorCorrectionLevel = 'H'; //容错级别  
     $matrixPointSize = 6;   //生成图片大小  
     //生成二维码图片

@@ -563,7 +563,7 @@ function toDTS($value) {
 
 function createQRCodes($sid, $t) {
     // $data = input('post.');
-    global $QR_FOLDER;
+    global $QR_FOLDER, $BUZZ_URL;
     $filename = "$QR_FOLDER/$sid-$t.png";
 
     include './QRcode.php';
@@ -572,8 +572,8 @@ function createQRCodes($sid, $t) {
     $errorCorrectionLevel = 'H';    //容错级别  
     $matrixPointSize = 6;           //生成图片大小  
     //调用类方法（此时二维码已经生成，只是还未集成logo）
-    echo '1';
-    
+    echo '1 -> ' . longUrlString;
+    return;
     QRcode::png($longUrlString, false, $errorCorrectionLevel, $matrixPointSize, 2);  
     echo '2';
     return;

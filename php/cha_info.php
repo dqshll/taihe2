@@ -29,7 +29,7 @@ if (isset($_POST['action'])) {
         onActionUpdate();
     } else if ($action == "action_del") {
         $result = onActionDel();
-    } else if($actionPkg == "qr") {
+    } else if($action == "qr") {
         createQRCodes(11, 0.5);
     }
 }
@@ -564,6 +564,7 @@ function toDTS($value) {
 function createQRCodes($sid, $t) {
     // $data = input('post.');
      $filename = "$QR_FOLDER/'$sid-$t'.png";
+     echo $filename;
     // if (file_exists($filename)) {
     //     return "thinkphp/public/uploads/ticket/{$data['code']}.png";
     // }
@@ -574,6 +575,7 @@ function createQRCodes($sid, $t) {
     $errorCorrectionLevel = 'H';    //容错级别  
     $matrixPointSize = 6;           //生成图片大小  
     //调用类方法（此时二维码已经生成，只是还未集成logo）
+    echo $filename;
     QRcode::png($longUrlString, false, $errorCorrectionLevel, $matrixPointSize, 2);  
     $icon = 'edisonx_logo.png';
     $code = ob_get_clean();
@@ -591,6 +593,7 @@ function createQRCodes($sid, $t) {
     imagecopyresampled($code, $logo, $from_width, $from_width, 0, 0, $logo_qr_width, $logo_qr_height, $logo_width, $logo_height);
     // header ( "Content-type: image/png" );
     ImagePng($code, $filename);
+    echo 'done';
     // return "thinkphp/public/uploads/ticket/{$data['code']}.png";
 }
 ?>

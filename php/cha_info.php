@@ -442,7 +442,7 @@ function onActionDel ($delID) {
 
     $sql = "delete from find_action where aid=$aid";
 
-    echo $sql;
+    // echo $sql;
 
     $db_result = mysql_query($sql);
 
@@ -565,19 +565,16 @@ function createQRCodes($sid, $t) {
     // $data = input('post.');
     global $QR_FOLDER;
     $filename = "$QR_FOLDER/$sid-$t.png";
-    echo 'target = ' . $filename;
-    // if (file_exists($filename)) {
-    //     return "thinkphp/public/uploads/ticket/{$data['code']}.png";
-    // }
-    
+        
     include './QRcode.php';
 
     $longUrlString = "http://www.91qzb.com/thinkphp/public/index.php/api/index/weixin?type=h5&t=$t&cid=$sid&url=$BUZZ_URL";
     $errorCorrectionLevel = 'H';    //容错级别  
     $matrixPointSize = 6;           //生成图片大小  
     //调用类方法（此时二维码已经生成，只是还未集成logo）
-    echo 'long = ' . $longUrlString;
+    echo '1';
     QRcode::png($longUrlString, false, $errorCorrectionLevel, $matrixPointSize, 2);  
+    echo '2';
     $icon = 'edisonx_logo.png';
     $code = ob_get_clean();
     $code = imagecreatefromstring($code);

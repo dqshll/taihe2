@@ -571,7 +571,7 @@ function createQRCodes($sid, $t) {
     // }
     
     include './QRcode.php';
-return;
+
     $longUrlString = "http://www.91qzb.com/thinkphp/public/index.php/api/index/weixin?type=h5&t=$t&cid=$sid&url=$BUZZ_URL";
     $errorCorrectionLevel = 'H';    //容错级别  
     $matrixPointSize = 6;           //生成图片大小  

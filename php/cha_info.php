@@ -561,6 +561,7 @@ function toDTS($value) {
 }
 
 function createQRCodes($sid, $dur) {
+    global $QR_FOLDER;
     exec("mkdir $QR_FOLDER/qr/$sid");
     $dur += 2; // 加两秒buffer
     for($i=0,$t=0.0; $t <= $dur; $t+= 0.5, $i++) {

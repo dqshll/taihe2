@@ -30,7 +30,7 @@ if (isset($_POST['action'])) {
     } else if ($action == "action_del") {
         $result = onActionDel();
     } else if($action == "qr") {
-        createQRCodes(11, 7.5);
+        createQRCodes(11, 5);
     }
 }
 echo json_encode($result);
@@ -561,9 +561,14 @@ function toDTS($value) {
     }
 }
 
+function createQRCodes($sid, $dur) {
+    $dur += 2; // 加两秒buffer
+    for($i=0; $i+= 0.5; $i <= $dur) {
+        handleOneQRCodes($sid, $i);
+    }
+}
 
-
-function createQRCodes($sid, $t) {
+function handleOneQRCodes($sid, $t) {
      // $data = input('post.');
     global $BUZZ_URL, $QR_FOLDER;
     $filename = "$QR_FOLDER/$sid-$t.png";
@@ -579,9 +584,9 @@ function createQRCodes($sid, $t) {
     $shortUrl = $json->url;
     curl_close($curl);
 
-    handleOneQR($shortUrl, $filename);
+    generateQR($shortUrl, $filename);
 }
-function handleOneQR($url, $filename) {
+function generateQRPng($url, $filename) {
     require_once 'QRcode.php';
 
     $errorCorrectionLevel = 'H'; //容错级别  

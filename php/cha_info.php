@@ -563,7 +563,7 @@ function toDTS($value) {
 
 function createQRCodes($sid, $dur) {
     $dur += 2; // 加两秒buffer
-    for($i=0; $i+= 0.5; $i <= $dur) {
+    for($i=0; $i+= 0.5; $i <= 0) {
         handleOneQRCodes($sid, $i);
     }
 }

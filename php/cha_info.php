@@ -581,13 +581,14 @@ function createQRCodes($sid, $t) {
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
     //执行命令
     $data = curl_exec($curl);
+    print_r($json);
     //关闭URL请求
     curl_close($curl);
     //显示获得的数据
 
     $json = json_decode($data);
     print_r($json);
-    
+
     $shortUrl = $json['url'];
     echo 'shot url = ' . $shortUrl;
 

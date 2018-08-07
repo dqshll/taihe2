@@ -563,7 +563,7 @@ function toDTS($value) {
 
 function createQRCodes($sid, $dur) {
     $dur += 2; // 加两秒buffer
-    for($i=0; $i+= 0.5; $i <= 0) {
+    for($i=0; $i+= 0.5; $i <= $dur) {
         handleOneQRCodes($sid, $i);
     }
 }
@@ -584,7 +584,7 @@ function handleOneQRCodes($sid, $t) {
     $shortUrl = $json->url;
     curl_close($curl);
 
-    generateQR($shortUrl, $filename);
+    generateQRPng($shortUrl, $filename);
 }
 function generateQRPng($url, $filename) {
     require_once 'QRcode.php';

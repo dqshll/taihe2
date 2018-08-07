@@ -565,15 +565,13 @@ function toDTS($value) {
 
 function createQRCodes($sid, $t) {
      // $data = input('post.');
-    global $BUZZ_URL;
-    $longUrlString = "http://www.91qzb.com/thinkphp/public/index.php/api/index/weixin?type=h5&t=$t&cid=$sid&url=$BUZZ_URL";     //二维码内容  
-    handleOneQR($longUrlString);
-}
-function handleOneQR($url) {
-    require_once 'QRcode.php';
-   
-    global $QR_FOLDER;
+    global $BUZZ_URL, $QR_FOLDER;
     $filename = "$QR_FOLDER/$sid-$t.png";
+    $longUrlString = "http://www.91qzb.com/thinkphp/public/index.php/api/index/weixin?type=h5&t=$t&cid=$sid&url=$BUZZ_URL";     //二维码内容  
+    handleOneQR($longUrlString, $filename);
+}
+function handleOneQR($url, $filename) {
+    require_once 'QRcode.php';
 
     $errorCorrectionLevel = 'H'; //容错级别  
     $matrixPointSize = 6;   //生成图片大小  
@@ -586,7 +584,7 @@ function handleOneQR($url) {
     $QR = $filename;   //已经生成的原始二维码图  
     
     if (file_exists($logo)) {  
-        echo 'logo = ' . $logo;
+        // echo 'logo = ' . $logo;
         $QR = imagecreatefromstring(file_get_contents($QR));     //目标图象连接资源。
         $logo = imagecreatefromstring(file_get_contents($logo));    //源图象连接资源。
         $QR_width = imagesx($QR);   //二维码图片宽度   
@@ -610,7 +608,5 @@ function handleOneQR($url) {
     imagepng($QR, $filename);  
     imagedestroy($QR);
     imagedestroy($logo);
-
-    echo 'done';
 }
 ?>

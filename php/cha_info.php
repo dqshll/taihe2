@@ -585,10 +585,10 @@ function createQRCodes($sid, $t) {
     curl_close($curl);
     //显示获得的数据
 
-    $json = json_decode($data, true);
+    $json = json_decode($data);
     var_dump($json);
 
-    $shortUrl = $json['url'];
+    $shortUrl = $json->url;
     echo 'short url = ' . $shortUrl;
 
     // handleOneQR($shortUrl, $filename);

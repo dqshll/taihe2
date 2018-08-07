@@ -30,7 +30,7 @@ if (isset($_POST['action'])) {
     } else if ($action == "action_del") {
         $result = onActionDel();
     } else if($action == "qr") {
-        createQRCodes(11, 0.5);
+        createQRCodes(11, 7.5);
     }
 }
 echo json_encode($result);
@@ -565,21 +565,22 @@ function toDTS($value) {
 
 function createQRCodes($sid, $t) {
      // $data = input('post.');
-    global $QR_FOLDER, $BUZZ_URL;
-    $filename = "$QR_FOLDER/$sid-$t.png";
-
+    global $BUZZ_URL;
     $longUrlString = "http://www.91qzb.com/thinkphp/public/index.php/api/index/weixin?type=h5&t=$t&cid=$sid&url=$BUZZ_URL";     //二维码内容  
     handleOneQR($longUrlString);
 }
-function handleOneQR($longUrlString) {
+function handleOneQR($url) {
     require_once 'QRcode.php';
    
+    global $QR_FOLDER;
+    $filename = "$QR_FOLDER/$sid-$t.png";
+
     $errorCorrectionLevel = 'H'; //容错级别  
     $matrixPointSize = 6;   //生成图片大小  
     //生成二维码图片
     // $filename = microtime().'.png';
     // echo 'path = ' . $filename;
-    QRcode::png($longUrlString,$filename , $errorCorrectionLevel, $matrixPointSize, 2);  
+    QRcode::png($url,$filename , $errorCorrectionLevel, $matrixPointSize, 2);  
     
     $logo = 'edisonx_logo.png';  //准备好的logo图片   
     $QR = $filename;   //已经生成的原始二维码图  

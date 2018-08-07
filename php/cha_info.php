@@ -334,7 +334,6 @@ function onActionUpdate () {
     }
 
     $stages_json = $_GET['stage'];
-    echo 'stage=' . $stages_json;
     if ( empty($stages_json) || strlen($stages_json) <= 0) {
         $result['error'] = 103;
         return;

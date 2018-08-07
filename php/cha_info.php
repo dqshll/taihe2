@@ -586,6 +586,8 @@ function createQRCodes($sid, $t) {
     //显示获得的数据
 
     $json = json_decode($data);
+    print_r($json);
+    
     $shortUrl = $json['url'];
     echo 'shot url = ' . $shortUrl;
 

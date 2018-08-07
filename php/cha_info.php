@@ -167,8 +167,6 @@ function onActionList () {
                 'name'=>$name, 
                 'st'=>$item['start_time'], 
                 'ed'=>$item['end_time'],
-                'qr_video_url'=>"http://xxx/xxx/$aid.zip",
-                'qr_pics_url'=>"http://yyy/yyy/$aid.zip",
                 'desc'=>$item['description'],
                 'ct'=>$item['create_time'],
                 'enable'=>$enable);
@@ -213,8 +211,6 @@ function onActionDetail ($actionId) {
             'name'=>$name, 
             'st'=>$item['start_time'], 
             'ed'=>$item['end_time'],
-            'qr_video_url'=>"http://xxx/xxx/$aid.zip",
-            'qr_pics_url'=>"http://yyy/yyy/$aid.zip",
             'desc'=>$item['description'],
             'ct'=>$item['create_time'],
             'to'=>$item['redirect'],
@@ -594,6 +590,30 @@ function createQRCodeVideo($sid, $dur) {
     // echo $cmd;
     exec($cmd);
     $result['error'] = 0;
+
+    // udpate viedo url in db
+    global $DB_HOST, $DB_NAME;
+    $db_connection = mysql_connect($DB_HOST,"root","e5cda60c7e");
+
+    mysql_query("set names 'utf8'"); //数据库输出编码
+
+    mysql_select_db($DB_NAME); //打开数据库
+
+    $qr_video = "https://miniapp.edisonx.cn/data/files/cha/video/$sid.mp4";
+    $sql = "UPDATE find_pkg SET qr_video='$qr_video' WHERE id='$sid'";
+
+    // echo $sql;
+
+    $db_result = mysql_query($sql);
+
+    // var_dump($all_info);
+
+    if ($db_result !== false) { // 空
+        $result['error'] = 0;
+    } else {
+        $result['error'] = 116;
+    }
+    mysql_close(); 
 }
 
 function handleOneQRCodes($sid, $t, $i) {

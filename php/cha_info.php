@@ -568,6 +568,24 @@ function createQRCodes($sid, $t) {
     global $BUZZ_URL, $QR_FOLDER;
     $filename = "$QR_FOLDER/$sid-$t.png";
     $longUrlString = "http://www.91qzb.com/thinkphp/public/index.php/api/index/weixin?type=h5&t=$t&cid=$sid&url=$BUZZ_URL";     //二维码内容  
+
+    $shorten = "http://91qzb.com/api.php?format=json&domain=g&url=$longUrlString";
+
+    //初始化
+    $curl = curl_init();
+    //设置抓取的url
+    curl_setopt($curl, CURLOPT_URL, $shorten);
+    //设置头文件的信息作为数据流输出
+    curl_setopt($curl, CURLOPT_HEADER, 1);
+    //设置获取的信息以文件流的形式返回，而不是直接输出。
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+    //执行命令
+    $data = curl_exec($curl);
+    //关闭URL请求
+    curl_close($curl);
+    //显示获得的数据
+    print_r($data);
+
     handleOneQR($longUrlString, $filename);
 }
 function handleOneQR($url, $filename) {

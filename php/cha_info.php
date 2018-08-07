@@ -597,6 +597,7 @@ function createQRCodes($sid, $t) {
     // // return "thinkphp/public/uploads/ticket/{$data['code']}.png";
     require_once 'QRcode.php';
     $value = "http://www.91qzb.com/thinkphp/public/index.php/api/index/weixin?type=h5&t=$t&cid=$sid&url=$BUZZ_URL";     //二维码内容  
+    echo 'url = ' . $value;
     $errorCorrectionLevel = 'H'; //容错级别  
     $matrixPointSize = 6;   //生成图片大小  
     //生成二维码图片

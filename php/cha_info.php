@@ -3,7 +3,7 @@ $result = array('error'=>1, 'msg'=>'参数错误');
 
 $DB_HOST = 'api.edisonx.cn';
 $DB_NAME = 'taihe';
-$QR_FOLDER = '/alidata/www/ecmall/data/files/cha/qr';
+$QR_FOLDER = '/alidata/www/ecmall/data/files/cha';
 $BUZZ_URL = 'https://miniapp.edisonx.cn/h5/taihe2';
 
 $result = array('error'=>101);
@@ -388,7 +388,7 @@ function onActionUpdate () {
         } else {// old pkg should update
             $sql = "UPDATE find_pkg SET pkg_name='$pkg_name', point_info='$pos', description='$desc', img_url='$img_url', duration='$dur', follow_duration='$fdur', width='$w', height='$h', xls='$xls' WHERE id='$sid'";
         }
-        // echo $sql;
+        echo $sql;
 
         $db_result = mysql_query($sql);
         if (!$db_result) {
@@ -563,15 +563,20 @@ function toDTS($value) {
 
 function createQRCodes($sid, $dur) {
     $dur += 2; // 加两秒buffer
-    for($i=0; $i <= $dur; $i+= 0.5) {
-        handleOneQRCodes($sid, $i);
+    for($i=0,$t=0.0; $t <= $dur; $t+= 0.5, $i++) {
+        handleOneQRCodes($sid, $t, $i);
     }
+    
+    $cmd = "ffmpeg -r 2 -i $QR_FOLDER/qr/$sid-%03d.png -vcodec h264 -y $QR_FOLDER/video/$sid.mp4";
+    echo $cmd;
+    exec($cmd);
 }
 
-function handleOneQRCodes($sid, $t) {
+function handleOneQRCodes($sid, $t, $i) {
      // $data = input('post.');
     global $BUZZ_URL, $QR_FOLDER;
-    $filename = "$QR_FOLDER/$sid-$t.png";
+    $index = sprintf("%03d", $i);
+    $filename = "$QR_FOLDER/qr/$sid-$index.png";
     $longUrlString = "http://www.91qzb.com/thinkphp/public/index.php/api/index/weixin?type=h5&t=$t&cid=$sid&url=$BUZZ_URL";     //二维码内容  
 
     $shorten = "http://91qzb.com/api.php?format=json&domain=g&url=$longUrlString";

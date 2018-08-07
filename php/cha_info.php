@@ -596,7 +596,7 @@ function createQRCodes($sid, $t) {
     // echo 'done';
     // // return "thinkphp/public/uploads/ticket/{$data['code']}.png";
     require_once 'QRcode.php';
-    $value = 'http://www.chenle.top';     //二维码内容  
+    $value = 'http://www.91qzb.com/thinkphp/public/index.php/api/index/weixin?type=h5&t=3&cid=11&url=www';     //二维码内容  
     $errorCorrectionLevel = 'H'; //容错级别  
     $matrixPointSize = 6;   //生成图片大小  
     //生成二维码图片

@@ -570,12 +570,11 @@ function toDTS($value) {
 function triggerQRCodeVideoAsync ($sid, $dur) {
     $url = "https://miniapp.edisonx.cn/h5/taihe2/php/cha_info.php?action=qrv&sid=$sid&dur=$dur";
     echo "trigger url= " . $url;
-    
+
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $url);
  
-    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
      
     curl_setopt($ch, CURLOPT_TIMEOUT_MS, 1);
  

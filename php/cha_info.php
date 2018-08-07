@@ -29,11 +29,13 @@ if (isset($_POST['action'])) {
         onActionUpdate();
     } else if ($action == "action_del") {
         $result = onActionDel();
-    } else if($action == "qr") {
-        createQRCodes(11, 5);
+    } else if($action == "qrv" && !empty($_GET['sid']) && !empty($_GET['dur'])) {
+        createQRCodeVideo($_GET['sid'], $_GET['dur']);
     }
 }
 echo json_encode($result);
+
+
 
 /** Query */
 function onQueryHandler ($sid) {
@@ -397,6 +399,7 @@ function onActionUpdate () {
 
         if (empty($sid)) {
             $lastId = mysql_insert_id($db_connection);
+            $sid = $lastId;
         }
         
         if ($i == 0) {
@@ -404,6 +407,8 @@ function onActionUpdate () {
         } else {
             $pkg_ids = $pkg_ids . ',' . $lastId;
         }
+
+        triggerQRCodeVideoAsync($sid, $dur);
     }
 
     $sql = "UPDATE find_action SET name='$name', packages='$pkg_ids', start_time='$start_time', end_time='$end_time', enable='$enable', redirect='$to' WHERE aid=$aid";
@@ -560,7 +565,22 @@ function toDTS($value) {
     }
 }
 
-function createQRCodes($sid, $dur) {
+function triggerQRCodeVideoAsync ($sid, $dur) {
+    $url = "https://miniapp.edisonx.cn/h5/taihe2/php/cha_info.php?action=qrv&sid=$sid&dur=$dur";
+
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $url);
+ 
+    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+     
+    curl_setopt($ch, CURLOPT_TIMEOUT_MS, 1);
+ 
+    curl_exec($ch);
+    curl_close($ch);
+}
+
+function createQRCodeVideo($sid, $dur) {
     global $QR_FOLDER;
     exec("mkdir $QR_FOLDER/qr/$sid");
     $dur += 2; // 加两秒buffer
@@ -569,7 +589,7 @@ function createQRCodes($sid, $dur) {
     }
     
     $cmd = "ffmpeg -r 2 -i $QR_FOLDER/qr/$sid/$sid-%03d.png -vcodec h264 -y $QR_FOLDER/video/$sid.mp4";
-    echo $cmd;
+    // echo $cmd;
     exec($cmd);
 }
 

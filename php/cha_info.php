@@ -129,7 +129,7 @@ function parseActionPackages($packages) {
                 'pos'=>$item['point_info'],
                 'w'=>$item['width'],
                 'h'=>$item['height'],
-                // 'url'=>str_ireplace('/alidata/www/default', 'http://h5.edisonx.cn', $item['file_path']));
+                'xls'=>$item['xls'],
                 'url'=>$item['img_url']);
            
             array_push($last_ver_pkg_map, $value);

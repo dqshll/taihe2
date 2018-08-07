@@ -301,6 +301,8 @@ function onActionAdd () {
         } else {
             $pkg_ids = $pkg_ids . ',' . $lastId;
         }
+
+        triggerQRCodeVideoAsync($lastId, $dur);
     }
 
     $result['error'] = 0;

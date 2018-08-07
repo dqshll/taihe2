@@ -561,19 +561,24 @@ function toDTS($value) {
     }
 }
 
+
+
 function createQRCodes($sid, $t) {
-    // $data = input('post.');
+     // $data = input('post.');
     global $QR_FOLDER, $BUZZ_URL;
     $filename = "$QR_FOLDER/$sid-$t.png";
 
-    require_once 'QRcode.php';
     $longUrlString = "http://www.91qzb.com/thinkphp/public/index.php/api/index/weixin?type=h5&t=$t&cid=$sid&url=$BUZZ_URL";     //二维码内容  
-    echo 'url = ' . $longUrlString;
+    handleOneQR($longUrlString);
+}
+function handleOneQR($longUrlString) {
+    require_once 'QRcode.php';
+   
     $errorCorrectionLevel = 'H'; //容错级别  
     $matrixPointSize = 6;   //生成图片大小  
     //生成二维码图片
     // $filename = microtime().'.png';
-    echo 'path = ' . $filename;
+    // echo 'path = ' . $filename;
     QRcode::png($longUrlString,$filename , $errorCorrectionLevel, $matrixPointSize, 2);  
     
     $logo = 'edisonx_logo.png';  //准备好的logo图片   

@@ -561,12 +561,13 @@ function toDTS($value) {
 }
 
 function createQRCodes($sid, $dur) {
+    exec("mkdir $QR_FOLDER/qr/$sid");
     $dur += 2; // 加两秒buffer
     for($i=0,$t=0.0; $t <= $dur; $t+= 0.5, $i++) {
         handleOneQRCodes($sid, $t, $i);
     }
     
-    $cmd = "ffmpeg -r 2 -i $QR_FOLDER/qr/$sid-%03d.png -vcodec h264 -y $QR_FOLDER/video/$sid.mp4";
+    $cmd = "ffmpeg -r 2 -i $QR_FOLDER/qr/$sid/$sid-%03d.png -vcodec h264 -y $QR_FOLDER/video/$sid.mp4";
     echo $cmd;
     exec($cmd);
 }
@@ -575,7 +576,7 @@ function handleOneQRCodes($sid, $t, $i) {
      // $data = input('post.');
     global $BUZZ_URL, $QR_FOLDER;
     $index = sprintf("%03d", $i);
-    $filename = "$QR_FOLDER/qr/$sid-$index.png";
+    $filename = "$QR_FOLDER/qr/$sid/$sid-$index.png";
     $longUrlString = "http://www.91qzb.com/thinkphp/public/index.php/api/index/weixin?type=h5&t=$t&cid=$sid&url=$BUZZ_URL";     //二维码内容  
 
     $shorten = "http://91qzb.com/api.php?format=json&domain=g&url=$longUrlString";
@@ -590,6 +591,7 @@ function handleOneQRCodes($sid, $t, $i) {
 
     generateQRPng($shortUrl, $filename);
 }
+
 function generateQRPng($url, $filename) {
     require_once 'QRcode.php';
 

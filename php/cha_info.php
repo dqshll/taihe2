@@ -581,7 +581,7 @@ function createQRCodes($sid, $t) {
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
     //执行命令
     $data = curl_exec($curl);
-    print_r($json);
+    print_r($data);
     //关闭URL请求
     curl_close($curl);
     //显示获得的数据
@@ -590,9 +590,9 @@ function createQRCodes($sid, $t) {
     print_r($json);
 
     $shortUrl = $json['url'];
-    echo 'shot url = ' . $shortUrl;
+    echo 'short url = ' . $shortUrl;
 
-    handleOneQR($shortUrl, $filename);
+    // handleOneQR($shortUrl, $filename);
 }
 function handleOneQR($url, $filename) {
     require_once 'QRcode.php';

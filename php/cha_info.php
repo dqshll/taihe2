@@ -279,7 +279,7 @@ function onActionAdd () {
         $img_url = $stage['url'];
         $xls = $stage['xls'];
 
-        if (empty($w) || empty($h) || empty($img_url) || empty($pos) || empty($dur) || empty($fdur) || empty($pkg_name)) {
+        if (empty($w) || empty($h) || empty($img_url) || empty($pos) || empty($dur) || empty($pkg_name)) {
             $result['error'] = 105;
             return;
         }
@@ -372,10 +372,8 @@ function onActionUpdate () {
         $img_url = $stage['url'];
         $xls = $stage['xls'];
 
-        if (empty($w) || empty($h) || empty($img_url) || empty($pos) || empty($dur) || empty($fdur) || empty($pkg_name)) {
+        if (empty($w) || empty($h) || empty($img_url) || empty($pos) || empty($dur) || empty($pkg_name)) {
             $result['error'] = 105;
-            echo "find_pkg (pkg_name, point_info, description, img_url, duration, follow_duration, width, height, xls) VALUES ('$pkg_name','$pos','$desc','$img_url','$dur','$fdur','$w','$h','$xls')";
-        
             return;
         }
 
@@ -389,7 +387,7 @@ function onActionUpdate () {
         } else {// old pkg should update
             $sql = "UPDATE find_pkg SET pkg_name='$pkg_name', point_info='$pos', description='$desc', img_url='$img_url', duration='$dur', follow_duration='$fdur', width='$w', height='$h', xls='$xls' WHERE id='$sid'";
         }
-        echo $sql;
+        // echo $sql;
 
         $db_result = mysql_query($sql);
         if (!$db_result) {

@@ -510,6 +510,23 @@ function zipFile($file_path_A, $file_path_B, $file_path_P, $zip_file_path) {
     $zip->close();  //关闭压缩包
 }
 
+function zipQRPics($qr_folder, $zip_file_path) {
+    $zip = new ZipArchive();
+    $zip->open($zip_file_path,ZipArchive::CREATE);   //打开压缩包
+
+    if(@$handle = opendir($qr_folder)) { //注意这里要加一个@，不然会有warning错误提示：）
+        while(($file = readdir($handle)) !== false) {
+            if($file != ".." && $file != ".") { //排除根目录；
+                if(!is_dir($dir."/".$file)) { //忽略子文件夹
+                    $zip->addFile($file,basename($file_path_A));   //
+                }
+            }
+        }
+        closedir($handle);
+    }
+}
+
+
 function save2Db ($pkg_name, $version, $file_path, $pos_list) {
     $error = 0;
     global $DB_HOST, $DB_NAME;
@@ -600,7 +617,8 @@ function createQRCodeVideo($sid, $dur) {
     mysql_select_db($DB_NAME); //打开数据库
 
     $qr_video = "https://miniapp.edisonx.cn/data/files/cha/video/$sid.mp4";
-    $sql = "UPDATE find_pkg SET qr_video='$qr_video' WHERE id='$sid'";
+    $qr_png_zip = "https://miniapp.edisonx.cn/data/files/cha/qr/$sid.zip";
+    $sql = "UPDATE find_pkg SET qr_video='$qr_video',qr_png_zip='$qr_png_zip' WHERE id='$sid'";
 
     // echo $sql;
 
@@ -613,7 +631,9 @@ function createQRCodeVideo($sid, $dur) {
     } else {
         $result['error'] = 116;
     }
-    mysql_close(); 
+    mysql_close();
+
+    zipQRPics("$QR_FOLDER/qr/$sid", "$QR_FOLDER/qr/$sid.zip");
 }
 
 function handleOneQRCodes($sid, $t, $i) {

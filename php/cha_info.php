@@ -511,18 +511,16 @@ function zipFile($file_path_A, $file_path_B, $file_path_P, $zip_file_path) {
 }
 
 function zipQRPics($qr_folder, $zip_file_path) {
-    echo "$qr_folder";
-    echo "$zip_file_path";
-
     $zip = new ZipArchive();
     $zip->open($zip_file_path,ZipArchive::CREATE);   //打开压缩包
 
     if(@$handle = opendir($qr_folder)) { //注意这里要加一个@，不然会有warning错误提示：）
         while(($file = readdir($handle)) !== false) {
             if($file != ".." && $file != ".") { //排除根目录；
-                if(!is_dir($qr_folder."/".$file)) { //忽略子文件夹
-                    echo "$file";
-                    $zip->addFile($file,basename($file_path_A));   //
+                $tmp = $qr_folder."/".$file;
+                if(!is_dir($tmp)) { //忽略子文件夹
+                    echo "$tmp";
+                    $zip->addFile($tmp, basename($tmp)); 
                 }
             }
         }

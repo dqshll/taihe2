@@ -132,6 +132,8 @@ function parseActionPackages($packages) {
                 'w'=>$item['width'],
                 'h'=>$item['height'],
                 'xls'=>$item['xls'],
+                'qr_png_zip'=>$item['qr_png_zip'],
+                'qr_video'=>$item['qr_video'],
                 'url'=>$item['img_url']);
            
             array_push($last_ver_pkg_map, $value);

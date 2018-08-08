@@ -519,7 +519,7 @@ function zipQRPics($qr_folder, $zip_file_path) {
             if($file != ".." && $file != ".") { //排除根目录；
                 $tmp = $qr_folder."/".$file;
                 if(!is_dir($tmp)) { //忽略子文件夹
-                    echo "$tmp";
+                    // echo "$tmp";
                     $zip->addFile($tmp, basename($tmp)); 
                 }
             }

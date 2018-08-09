@@ -182,7 +182,7 @@ function requestChaPicInfo () {
                 continue; // skip
             }
 
-            var chaInfo = [];
+            var chaInfo = new Array();
             var pos_list = stage['pos'].split(';');
             chaInfo ['sid'] = stage['sid'];
             chaInfo ['width'] = stage['w'];

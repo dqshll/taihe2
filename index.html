@@ -281,6 +281,9 @@ function requestChaPicInfo () {
             if (WaitCountDown <= 0) {
                 clearInterval(WaitTimer);
                 CurStageId = getNextStageId();
+                
+                console.log('CurStageId ->' + CurStageId);
+
                 if (CurStageId != null) {
                     toPlayState();
                 } else {
@@ -369,7 +372,7 @@ function requestChaPicInfo () {
     }
 
     function checkHit (pos) {
-        // console.log("checking touch x=" + pos.x + ' y=' + pos.y);  
+        console.log("checking touch x=" + pos.x + ' y=' + pos.y);  
         var chaInfo = StageList[CurStageId];
         var scale = 1;
         
@@ -392,7 +395,7 @@ function requestChaPicInfo () {
 
             var sum = (pos.x - x) * (pos.x - x) + (pos.y - y) * (pos.y - y);
             var r2 = r*r;
-            // console.log ('comparing x=' + x + ' y=' + y + ' r=' + r);
+            console.log ('comparing x=' + x + ' y=' + y + ' r=' + r);
             if (sum < r2) {
                 return true;
             }

@@ -107,6 +107,7 @@ var CurStageId = null;
 var StartTime = 0;
 var WaitTimer = null;
 var WaitCountDown = 0;
+var MatchIndicators = [];
 
 $(document).ready(function(){
     StartTime = getQueryString('t') * 1000;
@@ -202,7 +203,7 @@ function requestChaPicInfo () {
             });
 
             StageList.push(chaInfo);
-            console.log (JSON.stringify(chaInfo));
+            // console.log (JSON.stringify(chaInfo));
         }
         
         return foundCurId;
@@ -234,6 +235,8 @@ function requestChaPicInfo () {
                             toWaitState(follow_duration);
                         }
                         
+                        onEndStage ();
+
                     }, duration, stage['fdur'] * 1000);
                 } else {
                     if(isLastStage) {
@@ -241,6 +244,7 @@ function requestChaPicInfo () {
                     } else {
                         toWaitState(stage['fdur']*1000 + (1000 - duration));
                     }
+                    onEndStage ();
                 }
 
                 return;
@@ -249,6 +253,14 @@ function requestChaPicInfo () {
             }
         }
         alert('活动未开始, 敬请期待!');
+    }
+
+    function onEndStage () {
+        for (var i=0; i< MatchIndicators.length; i++) {
+            var ind =  MatchIndicators[i];
+            ind.remove();
+        }
+        MatchIndicators = [];
     }
 
     function getNextStageId () {
@@ -368,12 +380,13 @@ function requestChaPicInfo () {
         if(checkHit(pickPos) || false) {
             oImgBox.setAttribute("id", "correct");
             oImgBox.setAttribute("src", "asset/diff_match.png");
+            MatchIndicators.push(oImgBox);
         } else {
             oImgBox.setAttribute("id", "wrong");
             oImgBox.setAttribute("src", "asset/diff_miss.png");
 
             window.setTimeout(function(){
-                console.log('removing');
+                // console.log('removing');
                 oImgBox.remove();
             }, 1000);
         }
@@ -382,7 +395,7 @@ function requestChaPicInfo () {
     }
 
     function checkHit (pos) {
-        console.log("checking touch x=" + pos.x + ' y=' + pos.y);  
+        // console.log("checking touch x=" + pos.x + ' y=' + pos.y);  
         var chaInfo = getStageBySId(CurStageId);
         var scale = 1;
         
@@ -405,7 +418,7 @@ function requestChaPicInfo () {
 
             var sum = (pos.x - x) * (pos.x - x) + (pos.y - y) * (pos.y - y);
             var r2 = r*r;
-            console.log ('comparing x=' + x + ' y=' + y + ' r=' + r);
+            // console.log ('comparing x=' + x + ' y=' + y + ' r=' + r);
             if (sum < r2) {
                 return true;
             }

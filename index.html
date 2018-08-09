@@ -190,10 +190,11 @@ function requestChaPicInfo () {
             chaInfo ['url'] = stage['url'];
             chaInfo ['dur'] = stage['dur'];
             chaInfo ['fdur'] = stage['fdur'];
+            chaInfo ['pos'] = new Array();
 
             pos_list.forEach(function(value,i){
             　　var tmp = value.split(',')
-                chaInfo.push({
+                chaInfo['pos'].push({
                     "x":tmp[0],
                     "y":tmp[1],
                     "r":tmp[2]
@@ -203,7 +204,6 @@ function requestChaPicInfo () {
             StageList.push(chaInfo);
             console.log (JSON.stringify(chaInfo));
         }
-        
         
         return foundCurId;
     }
@@ -385,7 +385,7 @@ function requestChaPicInfo () {
 
         // console.log('checkHit s=' + scale);
         
-        for(var i=0; i<chaInfo.length; i++) {
+        for(var i=0; i<chaInfo['pos'].length; i++) {
             var x = chaInfo[i].x * scale + bounding.left;
             var y = chaInfo[i].y * scale + bounding.top;
             var r = chaInfo[i].r * scale;

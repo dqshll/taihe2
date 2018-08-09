@@ -265,6 +265,16 @@ function requestChaPicInfo () {
         return null;
     }
 
+    function getStageBySId (sid) {
+        for (var i=0; i< StageList.length; i ++) {
+            var stage = StageList[i];
+            if (stage ['sid'] == sid) {
+                return StageList[i];
+            } 
+        }
+        return null;
+    }
+
     function toWaitState (dur) {
         WaitCountDown = parseInt(dur * 0.001);
         console.log('toWaitState countDown=' + WaitCountDown);
@@ -373,7 +383,7 @@ function requestChaPicInfo () {
 
     function checkHit (pos) {
         console.log("checking touch x=" + pos.x + ' y=' + pos.y);  
-        var chaInfo = StageList[CurStageId];
+        var chaInfo = getStageBySId(CurStageId);
         var scale = 1;
         
         var bounding = $('#pic')[0].getBoundingClientRect();

@@ -386,9 +386,9 @@ function requestChaPicInfo () {
         // console.log('checkHit s=' + scale);
         
         for(var i=0; i<chaInfo['pos'].length; i++) {
-            var x = chaInfo[i].x * scale + bounding.left;
-            var y = chaInfo[i].y * scale + bounding.top;
-            var r = chaInfo[i].r * scale;
+            var x = chaInfo['pos'][i].x * scale + bounding.left;
+            var y = chaInfo['pos'][i].y * scale + bounding.top;
+            var r = chaInfo['pos'][i].r * scale;
 
             var sum = (pos.x - x) * (pos.x - x) + (pos.y - y) * (pos.y - y);
             var r2 = r*r;

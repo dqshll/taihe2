@@ -169,7 +169,7 @@ function requestChaPicInfo () {
         console.log('to ' + ActionRedirect);
         document.getElementById('action_name').innerHTML = ActionName;
         document.getElementById('result_title').innerHTML = ActionName;
-        document.getElementById('btn_join').style.display = ((ActionRedirect == null) ? 'none' : 'block');
+        document.getElementById('btn_join').style.display = ((ActionRedirect == null || ActionRedirect.length == 0) ? 'none' : 'block');
     }
 
     function parseStageList (jsonList) {

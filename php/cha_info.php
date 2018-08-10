@@ -351,6 +351,7 @@ function onActionUpdate () {
     $end_time = $_GET['ed'];
     $enable = $_GET['enable'];
     $to = $_GET['to'];
+    $adesc = $_GET['desc'];
 
     global $DB_HOST, $DB_NAME;
 
@@ -411,7 +412,7 @@ function onActionUpdate () {
         triggerQRCodeVideoAsync($sid, $dur);
     }
 
-    $sql = "UPDATE find_action SET name='$name', packages='$pkg_ids', start_time='$start_time', end_time='$end_time', enable='$enable', redirect='$to' WHERE aid=$aid";
+    $sql = "UPDATE find_action SET name='$name', packages='$pkg_ids', start_time='$start_time', end_time='$end_time', enable='$enable', redirect='$to', description='$adesc' WHERE aid=$aid";
      
     $action_result = mysql_query($sql);
 

@@ -85,7 +85,7 @@ function onQueryHandler ($sid) {
 
             $packages = $item['packages'];
 
-            if (containSid($sid)) {
+            if (containSid($sid, $packages)) {
                 $actionPkg =  parseActionPackages ($packages);
                 if (!empty($actionPkg) && count($actionPkg) > 0) {
                     $actions[$aid] = array();
@@ -103,7 +103,7 @@ function onQueryHandler ($sid) {
     return $actions;
 }
 
-function containSid () {
+function containSid ($sid, $packages) {
     $sid_list = explode(",",$packages);
     for ($i=0; $i<count($sid_list); $i++) {
         if ($sid_list[$i] == $sid) {

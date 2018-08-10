@@ -112,7 +112,7 @@ var MatchIndicators = [];
 $(document).ready(function(){
     StartTime = getQueryString('t') * 1000;
     CurStageId = getQueryString('cid');
-    console.log('starting at ' + StartTime + ' cid=' + CurStageId);
+    console.log('starting at ' + StartTime + ' sid=' + CurStageId);
     requestChaPicInfo();
 });
 
@@ -155,6 +155,9 @@ function requestChaPicInfo () {
     function searchCurAction (actions) {
         ActionName = '欢乐找茬';
         ActionRedirect = null;
+        
+        console.log (JSON.stringify(actions));
+
         for(var aid in actions){
             if (parseStageList(actions[aid]['pkg'])) {
                 ActionName = actions[aid]['name'];

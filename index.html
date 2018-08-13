@@ -422,6 +422,7 @@ function requestChaPicInfo () {
             var r2 = r*r;
             // console.log ('comparing x=' + x + ' y=' + y + ' r=' + r);
             if (sum < r2) {
+                chaInfo['pos'].splice(i,1);
                 return true;
             }
         }

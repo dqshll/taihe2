@@ -23,7 +23,7 @@
             <img id="pic">
         </div>
         <div class="sec">
-            <img id="btn_tujian" src="asset/btn_tj_0.png">
+            <img id="btn_tujian" src="asset/btn_tj_0.png" onclick="onTuJian()">
         </div>
         <h3 id="desc">测试下你的眼力! 查看上图与大屏幕不同之处, 赢取丰厚奖品!</h3>
     </div>
@@ -467,6 +467,11 @@ function requestChaPicInfo () {
             window.location = ActionRedirect;
             document.getElementById('btn_join').src = 'asset/join_1.png'
         }
+    }
+
+    function onTuJian() {
+        var viewTJ = document.getElementById('btn_tujian');
+        viewTJ.style.display = 'block';
     }
 </script>
 </html>

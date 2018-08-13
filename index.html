@@ -411,7 +411,7 @@ function requestChaPicInfo () {
             // console.log('Calculating w=' + bounding.width + " ,h=" + bounding.height + ' ,s=' + scale);
         }
 
-        // console.log('checkHit s=' + scale);
+        console.log('checkHit pos num ' + chaInfo['pos'].length);
         
         for(var i=0; i<chaInfo['pos'].length; i++) {
             var x = chaInfo['pos'][i].x * scale + bounding.left;
@@ -420,9 +420,10 @@ function requestChaPicInfo () {
 
             var sum = (pos.x - x) * (pos.x - x) + (pos.y - y) * (pos.y - y);
             var r2 = r*r;
-            // console.log ('comparing x=' + x + ' y=' + y + ' r=' + r);
+            console.log ('comparing x=' + x + ' y=' + y + ' r=' + r);
             if (sum < r2) {
                 chaInfo['pos'].splice(i,1);
+                console.log('removing pos[' + i + ']');
                 return true;
             }
         }

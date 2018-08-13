@@ -108,11 +108,13 @@ var StartTime = 0;
 var WaitTimer = null;
 var WaitCountDown = 0;
 var MatchIndicators = [];
+var UserId = 0;
 
 $(document).ready(function(){
     StartTime = getQueryString('t') * 1000;
     CurStageId = getQueryString('cid');
-    console.log('starting at ' + StartTime + ' sid=' + CurStageId);
+    UserId = getQueryString('user_id');
+    console.log('starting at ' + StartTime + ' sid=' + CurStageId + ' uid=' + UserId);
     requestChaPicInfo();
 });
 

@@ -610,8 +610,9 @@ function createQRCodeVideo($sid, $dur) {
         handleOneQRCodes($sid, $t, $i);
     }
     
-    $cmd = "ffmpeg -r 2 -i $QR_FOLDER/qr/$sid/$sid-%03d.png -vcodec mpeg4 -y $QR_FOLDER/video/$sid.mp4";
-   
+    $cmd = 'fmpeg -r 2 -i $QR_FOLDER/qr/$sid/$sid-%03d.png -c:v libx264 -vf "format=yuv420p" -y $QR_FOLDER/video/$sid.mp4';
+    // $cmd = 'ffmpeg -r 2 -i 1-%03d.png -c:v libx264 -vf "format=yuv420p" out.mp4'
+
     // echo $cmd;
     exec($cmd);
     $result['error'] = 0;

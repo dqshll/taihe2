@@ -603,13 +603,15 @@ function triggerQRCodeVideoAsync ($sid, $dur) {
 
 function createQRCodeVideo($sid, $dur) {
     global $QR_FOLDER, $result;
+    exec("rm -rf $QR_FOLDER/qr/$sid");
     exec("mkdir $QR_FOLDER/qr/$sid");
     $dur += 2; // 加两秒buffer
     for($i=0,$t=0.0; $t <= $dur; $t+= 0.5, $i++) {
         handleOneQRCodes($sid, $t, $i);
     }
     
-    $cmd = "ffmpeg -r 2 -i $QR_FOLDER/qr/$sid/$sid-%03d.png -vcodec h264 -y $QR_FOLDER/video/$sid.mp4";
+    // $cmd = "ffmpeg -r 2 -i $QR_FOLDER/qr/$sid/$sid-%03d.png -vcodec h264 -y $QR_FOLDER/video/$sid.mp4";
+    $cmd = "ffmpeg -r 2 -i $QR_FOLDER/qr/$sid/$sid-%03d.png -y $QR_FOLDER/video/$sid.mp4";
     // echo $cmd;
     exec($cmd);
     $result['error'] = 0;

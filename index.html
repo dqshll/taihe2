@@ -506,6 +506,13 @@ function requestChaPicInfo () {
                     for(var i=0; i<3; i++) {
                         document.getElementById('icon_1_' + i).src = 'asset/tj_1_'+ i + '_'+ (((group1 & (1 << i)) == 0) ? '0' : '1') + '.png';
                     }
+                    
+                    if (group0 >= 0b1111) {
+                        document.getElementById('btn_charge_0').src = 'asset/charge_1.png';
+                    }
+                    if (group1 >= 0b111) {
+                        document.getElementById('btn_charge_1').src = 'asset/charge_1.png';
+                    }
                 } else {
                     console.log('get tujian error =' + jsonObj['error']);
                 }

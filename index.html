@@ -511,7 +511,7 @@ function requestChaPicInfo () {
                     var btn0 = document.getElementById('btn_charge_0');
                     if (group0 >= 0b1111) {
                         btn0.src = 'asset/charge_1.png';
-                        btn0.onclick = function(){onChargeClick()};
+                        btn0.onclick = onChargeClick;
                     } else {
                         btn0.onclick = null;
                     }
@@ -519,7 +519,7 @@ function requestChaPicInfo () {
                     var btn1 = document.getElementById('btn_charge_1');
                     if (group1 >= 0b111) {
                         btn1.src = 'asset/charge_1.png';
-                        btn1.onclick = function(){onChargeClick()};
+                        btn1.onclick = function(){onChargeClick();};
                     } else {
                         btn1.onclick = null;
                     }
@@ -581,16 +581,16 @@ function requestChaPicInfo () {
                 }
             }
         });
+    }
 
-        function onChargeClick() {
-            console.log('onChargeClick');
-            closeTuJian();
-            if (WaitTimer != null) {
-                clearInterval(WaitTimer);
-                WaitTimer = null;
-            }
-            toResultState();
+    function onChargeClick() {
+        console.log('onChargeClick');
+        closeTuJian();
+        if (WaitTimer != null) {
+            clearInterval(WaitTimer);
+            WaitTimer = null;
         }
+        toResultState();
     }
 </script>
 </html>

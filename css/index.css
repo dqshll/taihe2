@@ -170,7 +170,7 @@ body{
     padding-top: 5vw;
 }
 
-.div_close {
+#dclose {
     background-color:white;
     text-align:right;
 }

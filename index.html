@@ -50,6 +50,9 @@
         <div class="opacity_cover"></div>
 
         <div id="dialog">
+            <div>
+                <img class="close_btn" src='asset/close.png' onclick="onCloseBtnClicked()">
+            </div>
             <div id="list">
                 <div id='raw_0' class='tj_item'>
                     <div class="icon_wrap icon_first">
@@ -496,15 +499,11 @@ function requestChaPicInfo () {
                     console.log('group0 = ' + group0 + ' group1=' + group1);
 
                     for(var i=0; i<4; i++) {
-                        var xxx = group0 & (1 << i);
-                        var tmp = 'asset/tj_0_'+ i + '_'+ (((group0 & (1 << i)) == 0) ? '0' : '1') + '.png';
-                        console.log('xxx[' + i + ']=' + xxx + ' src=' + tmp);
-
-                        document.getElementById('icon_0_' + i).src = tmp;
+                        document.getElementById('icon_0_' + i).src = 'asset/tj_0_'+ i + '_'+ (((group0 & (1 << i)) == 0) ? '0' : '1') + '.png';
                     }
                     
                     for(var i=0; i<3; i++) {
-                        document.getElementById('icon_1_' + i).src = 'asset/tj_1_'+ i + '_'+ ((group1 & (1 << i) == 0) ? '0' : '1') + '.png';
+                        document.getElementById('icon_1_' + i).src = 'asset/tj_1_'+ i + '_'+ (((group1 & (1 << i)) == 0) ? '0' : '1') + '.png';
                     }
                 } else {
                     console.log('get tujian error =' + jsonObj['error']);

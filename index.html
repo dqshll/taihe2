@@ -488,6 +488,8 @@ function requestChaPicInfo () {
 
                 var jsonObj = JSON.parse(data);
 
+                console.log(data);
+
                 if (jsonObj['error'] == 0) {
                     var group0 = jsonObj['group0'];
                     var group1 = jsonObj['group1'];
@@ -497,7 +499,7 @@ function requestChaPicInfo () {
                         var xxx = group0 & (1 << i);
                         var tmp = 'asset/tj_0_'+ i + '_'+ ((group0 & (1 << i) == 0) ? '0' : '1') + '.png';
                         console.log('xxx[' + i + ']=' + xxx + ' src=' + tmp);
-                        
+
                         document.getElementById('icon_0_' + i).src = tmp;
                     }
                     

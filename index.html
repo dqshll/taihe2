@@ -113,6 +113,7 @@ var WaitTimer = null;
 var WaitCountDown = 0;
 var MatchIndicators = [];
 var UserId = 0;
+var FullTuJian = false;
 
 $(document).ready(function(){
     StartTime = getQueryString('t') * 1000;
@@ -175,7 +176,7 @@ function requestChaPicInfo () {
         console.log('to ' + ActionRedirect);
         document.getElementById('action_name').innerHTML = ActionName;
         document.getElementById('result_title').innerHTML = ActionName;
-        document.getElementById('btn_join').style.display = ((ActionRedirect == null || ActionRedirect.length == 0) ? 'none' : 'block');
+        document.getElementById('btn_join').style.display = (FullTuJian && (ActionRedirect == null || ActionRedirect.length == 0) ? 'none' : 'block');
     }
 
     function parseStageList (jsonList) {
@@ -494,7 +495,7 @@ function requestChaPicInfo () {
 
                 var jsonObj = JSON.parse(data);
 
-                console.log(data);
+                // console.log(data);
 
                 if (jsonObj['error'] == 0) {
                     var group0 = jsonObj['group0'];
@@ -510,7 +511,9 @@ function requestChaPicInfo () {
                     }
                     
                     var btn0 = document.getElementById('btn_charge_0');
-                    if (group0 >= 0b1111) {
+                    var fullGroup0 = (group0 >= 0b1111);
+                    
+                    if (fullGroup0) {
                         btn0.src = 'asset/charge_1.png';
                         btn0.onclick = onChargeClick;
                     } else {
@@ -518,12 +521,16 @@ function requestChaPicInfo () {
                     }
 
                     var btn1 = document.getElementById('btn_charge_1');
-                    if (group1 >= 0b111) {
+                    var fullGroup1 = (group1 >= 0b111);
+
+                    if (fullGroup1) {
                         btn1.src = 'asset/charge_1.png';
-                        btn1.onclick = function(){onChargeClick();};
+                        btn1.onclick = onChargeClick;
                     } else {
                         btn1.onclick = null;
                     }
+
+                    FullTuJian = (fullGroup0 && fullGroup1);
 
                 } else {
                     console.log('get tujian error =' + jsonObj['error']);
@@ -562,7 +569,7 @@ function requestChaPicInfo () {
                 action:'req_tujian', user_id:UserId
             },
             success: function (data) {
-                console.log(data);
+                // console.log(data);
 
                 if (jsonObj['error'] != 0) {
                     console.log('req tujian error');

@@ -170,13 +170,18 @@ body{
     padding-top: 5vw;
 }
 
+.div_close {
+    /* background-color:white; */
+    text-align:right;
+}
+
 .close_btn {
     width: 6vw;
     height:auto;
     float: right;
 
-    margin-top: 1vw;
-    margin-right: 1vw;
+    margin-top: 4vw;
+    margin-right: 4vw;
 }
 
 #list {

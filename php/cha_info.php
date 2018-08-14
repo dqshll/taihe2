@@ -579,9 +579,12 @@ function requestTujian ($userId) {
     $group0 = 1;
     $group1 = 0;
 
-    if ($db_result != false) { //已有记录
-
+    if ($db_result !== false) { 
+        echo '1';
         $item = mysql_fetch_array($result);
+
+        var_dump ($item);
+
         if ($item != false) {
             $group0 = $item['group0'];
             $group1 = $item['group1'];
@@ -602,6 +605,7 @@ function requestTujian ($userId) {
             }
     
             $sql = "UPDATE find_tujian SET group0='$group0',group1='$group1' WHERE userid='$userId'";
+
         } else {
             $sql = "insert into find_tujian (userid,group0,group1) values ('$userId','$group0','$group1')";
         }
@@ -611,8 +615,8 @@ function requestTujian ($userId) {
     }
 
     $db_result = mysql_query($sql);
+
     if ($db_result == false) { // 空
-        echo $sql;
         $result['error'] = 119;
     }
 

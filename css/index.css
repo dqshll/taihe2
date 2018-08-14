@@ -171,9 +171,11 @@ body{
 }
 
 .close_btn {
-    width: 10vw;
+    width: 6vw;
     height:auto;
-    float: left;
+    float: right;
+    margin-top: 1vw;
+    margin-right: 1vw;
 }
 
 #list {

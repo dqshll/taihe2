@@ -640,6 +640,8 @@ function getTujian ($userId) {
 
         $item = mysql_fetch_array($result);
 
+        print_r($item);
+
         $group0 = $item['group0'];
         $group1 = $item['group1'];
 

@@ -649,6 +649,7 @@ function getTujian ($userId) {
         $result['group1'] = $group1; 
 
     } else {
+        echo $sql;
         $result['group0'] = 0; 
         $result['group1'] = 0; 
     }

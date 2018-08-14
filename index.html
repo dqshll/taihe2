@@ -62,7 +62,7 @@
                         <img id='icon_0_2' src='asset/tj_0_2_0.png' class='tj_icon'>
                     </div>
                     <div class="icon_wrap">
-                        <img id='icon_0_3' src='asset/tj_0_2_0.png' class='tj_icon'>
+                        <img id='icon_0_3' src='asset/tj_0_3_0.png' class='tj_icon'>
                     </div>
                     <div class="btn_wrap">
                         <img id='btn_charge_0' src='asset/charge_0.png' class='brn_charge'>
@@ -475,6 +475,48 @@ function requestChaPicInfo () {
         console.log('onTuJian');
         var viewTJ = document.getElementById('view_tujian');
         viewTJ.style.display = 'block';
+
+        $.ajax({
+            url: MainUrl,
+            type: "get",
+            jsonType: "json",
+            timeout: 10000,
+            data: {
+                action:'get_tujian', user_id:UserId
+            },
+            success: function (data) {
+
+                var jsonObj = JSON.parse(data);
+
+                if (jsonObj['error'] == 0) {
+                    var group0 = jsonObj['group0'];
+                    var group1 = jsonObj['group1'];
+
+                    for(var i=0; i<4; i++) {
+                        document.getElementById('icon_0_' + i).src = 'asset/tj_0_'+ i + '_'+ ((group0 & (1 << i) == 0) ? '0' : '1') + '.png';
+                    }
+                    
+                    for(var i=0; i<3; i++) {
+                        document.getElementById('icon_1_' + i).src = 'asset/tj_1_'+ i + '_'+ ((group1 & (1 << i) == 0) ? '0' : '1') + '.png';
+                    }
+                } else {
+                    console.log('get tujian error =' + jsonObj['error']);
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                console.log('error');
+                console.log(XMLHttpRequest.status);
+                console.log(XMLHttpRequest.readyState);
+                console.log(textStatus);
+            },
+            complete: function (XMLHttpRequest, status) {
+                console.log('complete: ' + status);
+
+                if (status == 'timeout') {
+                    console.log("超时");
+                }
+            }
+        });
     }
 
 </script>

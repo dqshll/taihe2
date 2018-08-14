@@ -774,8 +774,8 @@ function generateQRPng($url, $filename) {
         // echo 'logo = ' . $logo;
         $QR = imagecreatefromstring(file_get_contents($QR));     //目标图象连接资源。
         $logo = imagecreatefromstring(file_get_contents($logo));    //源图象连接资源。
-        $QR_width = imagesx($QR);   //二维码图片宽度   
-        $QR_height = imagesy($QR);   //二维码图片高度   
+        $QR_width = 222;//imagesx($QR);   //二维码图片宽度   
+        $QR_height = 222;//imagesy($QR);   //二维码图片高度   
         $logo_width = imagesx($logo);  //logo图片宽度   
         $logo_height = imagesy($logo);  //logo图片高度   
         $logo_qr_width = $QR_width / 4;    //组合之后logo的宽度(占二维码的1/5)

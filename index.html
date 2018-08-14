@@ -309,6 +309,7 @@ function requestChaPicInfo () {
             updateTimeCounting(-- WaitCountDown);
             if (WaitCountDown <= 0) {
                 clearInterval(WaitTimer);
+                WaitTimer = null;
                 CurStageId = getNextStageId();
                 
                 console.log('CurStageId ->' + CurStageId);
@@ -507,12 +508,22 @@ function requestChaPicInfo () {
                         document.getElementById('icon_1_' + i).src = 'asset/tj_1_'+ i + '_'+ (((group1 & (1 << i)) == 0) ? '0' : '1') + '.png';
                     }
                     
+                    var btn0 = document.getElementById('btn_charge_0');
                     if (group0 >= 0b1111) {
-                        document.getElementById('btn_charge_0').src = 'asset/charge_1.png';
+                        btn0.src = 'asset/charge_1.png';
+                        btn0.onclick = onChargeClick;
+                    } else {
+                        btn0.onclick = null;
                     }
+
+                    var btn1 = document.getElementById('btn_charge_1');
                     if (group1 >= 0b111) {
-                        document.getElementById('btn_charge_1').src = 'asset/charge_1.png';
+                        btn1.src = 'asset/charge_1.png';
+                        btn1.onclick = onChargeClick;
+                    } else {
+                        btn0.onclick = null;
                     }
+
                 } else {
                     console.log('get tujian error =' + jsonObj['error']);
                 }
@@ -570,6 +581,15 @@ function requestChaPicInfo () {
                 }
             }
         });
+
+        function onChargeClick() {
+            console.log('onChargeClick');
+            if (WaitTimer != null) {
+                clearInterval(WaitTimer);
+                WaitTimer = null;
+            }
+            toResultState();
+        }
     }
 </script>
 </html>

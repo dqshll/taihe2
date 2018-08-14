@@ -643,7 +643,8 @@ function getTujian ($userId) {
 
         $item = mysql_fetch_array($result);
         if ($item !== false) {
-            echo 'not false';
+            var_dump($item);
+            
             $group0 = $item['group0'];
             $group1 = $item['group1'];
     

@@ -5,6 +5,9 @@ $DB_HOST = 'api.edisonx.cn';
 $DB_NAME = 'taihe';
 $QR_FOLDER = '/alidata/www/ecmall/data/files/cha';
 $BUZZ_URL = 'https://miniapp.edisonx.cn/h5/taihe2';
+$TUJIAN_RANDOM = 9; /** 0-9, 9 is 100%  */
+$TUJIAN_MAX_GROUP_0 = 0b1111;
+$TUJIAN_MAX_GROUP_1 = 0b0111;
 
 $result = array('error'=>101);
 if (isset($_POST['action'])) {
@@ -31,6 +34,10 @@ if (isset($_POST['action'])) {
         $result = onActionDel();
     } else if($action == "qrv" && !empty($_GET['sid']) && !empty($_GET['dur'])) {
         createQRCodeVideo($_GET['sid'], $_GET['dur']);
+    } else if ($action == 'req_tujian' && !empty($_GET['user_id'])) {
+        requestTujian($_GET['user_id']);
+    } else if ($action == 'get_tujian' && !empty($_GET['user_id'])) {
+        getTujian($_GET['user_id']);
     }
 }
 echo json_encode($result);
@@ -464,6 +471,7 @@ function onActionDel ($delID) {
 
 /** Upload */
 function onUploadHandler() {
+    global $result;
     $result = array('error'=>$_FILES['upImgA']['error']);
     if ($result['error'] === 0) {
         $pkgName = $_POST['name'];
@@ -532,9 +540,89 @@ function zipQRPics($qr_folder, $zip_file_path) {
     $zip->close();  //关闭压缩包
 }
 
+function judgeTujian () {
+    global $TUJIAN_RANDOM;
+    if ($TUJIAN_RANDOM == 9) {
+        return true;
+    } else if ($TUJIAN_RANDOM == 0) {
+        return false;
+    }
 
-function save2Db ($pkg_name, $version, $file_path, $pos_list) {
-    $error = 0;
+    $value = rand(0,9);
+    return $value < $TUJIAN_RANDOM;
+}
+
+function requestTujian ($userId) {
+    global $result;
+    $result['error'] = 0;
+
+    if (!judgeTujian()) {
+        gettTujian($userId);
+        return;
+    }
+
+    global $TUJIAN_RANDOM, $DB_HOST, $DB_NAME, $TUJIAN_MAX_GROUP_0, $TUJIAN_MAX_GROUP_1;
+    $db_connection = mysql_connect($DB_HOST,"root","e5cda60c7e");
+
+    mysql_query("set names 'utf8'"); //数据库输出编码
+
+    mysql_select_db($DB_NAME); //打开数据库
+
+    // $curtime = toDTS(curSystime());
+
+    $sql = "select * from find_tujian where userid = '$userId'";
+
+//    echo $sql;
+
+    $db_result = mysql_query($sql);
+
+    $group0 = 1;
+    $group1 = 0;
+
+    if ($db_result !== false) { //已有记录
+
+        $item = mysql_fetch_array($result);
+
+        $group0 = $item['group0'];
+        $group1 = $item['group1'];
+
+        if ($group0 >= $TUJIAN_MAX_GROUP_0) { 
+            if ($group1 >= $TUJIAN_MAX_GROUP_1) { // full
+                $result['group0'] = $TUJIAN_MAX_GROUP_0; 
+                $result['group1'] = $TUJIAN_MAX_GROUP_1; 
+                mysql_close();
+                return;
+            } else {
+                $group1 << 1;
+                $group1 ++;
+            }
+        } else {
+            $group0 << 1;
+            $group0 ++;
+        }
+
+        $sql = "UPDATE find_tujian SET group0='$group0',group1='$group1' WHERE userid='$userId'";
+
+    } else {
+        $sql = "insert into find_tujian (userid,group0,group1) values ('$userId','$group0','$group1')";
+    }
+
+    $db_result = mysql_query($sql);
+    if ($db_result === false) { // 空
+        $result['error'] = 119;
+    }
+
+    $result['group0'] = $group0; 
+    $result['group1'] = $group1; 
+
+    mysql_close();
+    return;
+}
+
+function getTujian ($userId) {
+    global $result;
+    $result['error'] = 0;
+
     global $DB_HOST, $DB_NAME;
     $db_connection = mysql_connect($DB_HOST,"root","e5cda60c7e");
 
@@ -542,35 +630,29 @@ function save2Db ($pkg_name, $version, $file_path, $pos_list) {
 
     mysql_select_db($DB_NAME); //打开数据库
 
-    $curtime = toDTS(curSystime());
-
-    $sql = "select * from find_pkg_pub where pkg_name = '$pkg_name' ORDER BY version DESC LIMIT 1";
+    $sql = "select * from find_tujian where userid = '$userId'";
 
 //    echo $sql;
 
-    $result = mysql_query($sql);
+    $db_result = mysql_query($sql);
 
-    if ($result !== false) { //已经有该app的版本了
+    if ($db_result !== false) { //已有记录
 
-        $msg = mysql_fetch_array($result);
+        $item = mysql_fetch_array($result);
 
-        $cur_version = $msg['version'];
+        $group0 = $item['group0'];
+        $group1 = $item['group1'];
 
-        if ($cur_version >= $version) { // 不比当前版本高
-            $error = 105;
-//            echo $error;
-        }
-    }
+        $result['group0'] = $group0; 
+        $result['group1'] = $group1; 
 
-    if ($error === 0) {
-        $sql = "insert into find_pkg_pub (pkg_name,version,upload_time,file_path,point_info) 
-        values ('$pkg_name','$version','$curtime','$file_path','$pos_list')";
-        mysql_query($sql);
-//        echo $sql;
+    } else {
+        $result['group0'] = 0; 
+        $result['group1'] = 0; 
     }
 
     mysql_close();
-    return $error;
+    return;
 }
 
 function curSystime() {

@@ -579,10 +579,10 @@ function requestTujian ($userId) {
     $group0 = 1;
     $group1 = 0;
 
-    if ($db_result !== false) { //已有记录
+    if ($db_result != false) { //已有记录
 
         $item = mysql_fetch_array($result);
-        if ($item !== false) {
+        if ($item != false) {
             $group0 = $item['group0'];
             $group1 = $item['group1'];
     
@@ -611,7 +611,7 @@ function requestTujian ($userId) {
     }
 
     $db_result = mysql_query($sql);
-    if ($db_result === false) { // 空
+    if ($db_result == false) { // 空
         $result['error'] = 119;
     }
 
@@ -639,12 +639,12 @@ function getTujian ($userId) {
 
     $db_result = mysql_query($sql);
 
-    if ($db_result !== false) { 
+    if ($db_result != false) { 
 
         $item = mysql_fetch_array($result);
-        if ($item !== false) {
-            var_dump($item);
-            
+        if ($item != false) {
+            // var_dump($item);
+
             $group0 = $item['group0'];
             $group1 = $item['group1'];
     

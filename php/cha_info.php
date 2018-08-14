@@ -568,11 +568,7 @@ function requestTujian ($userId) {
 
     mysql_select_db($DB_NAME); //打开数据库
 
-    // $curtime = toDTS(curSystime());
-
     $sql = "select * from find_tujian where userid = '$userId'";
-
-//    echo $sql;
 
     $db_result = mysql_query($sql);
 
@@ -580,11 +576,7 @@ function requestTujian ($userId) {
     $group1 = 0;
 
     if ($db_result !== false) { 
-        var_dump ($db_result);
-        
-        $item = mysql_fetch_array($result);
-
-       
+        $item = mysql_fetch_array($db_result);
 
         if ($item != false) {
             $group0 = $item['group0'];
@@ -645,7 +637,7 @@ function getTujian ($userId) {
 
     if ($db_result != false) { 
 
-        $item = mysql_fetch_array($result);
+        $item = mysql_fetch_array($db_result);
         if ($item != false) {
             $group0 = $item['group0'];
             $group1 = $item['group1'];

@@ -582,27 +582,30 @@ function requestTujian ($userId) {
     if ($db_result !== false) { //已有记录
 
         $item = mysql_fetch_array($result);
-
-        $group0 = $item['group0'];
-        $group1 = $item['group1'];
-
-        if ($group0 >= $TUJIAN_MAX_GROUP_0) { 
-            if ($group1 >= $TUJIAN_MAX_GROUP_1) { // full
-                $result['group0'] = $TUJIAN_MAX_GROUP_0; 
-                $result['group1'] = $TUJIAN_MAX_GROUP_1; 
-                mysql_close();
-                return;
+        if ($item !== false) {
+            $group0 = $item['group0'];
+            $group1 = $item['group1'];
+    
+            if ($group0 >= $TUJIAN_MAX_GROUP_0) { 
+                if ($group1 >= $TUJIAN_MAX_GROUP_1) { // full
+                    $result['group0'] = $TUJIAN_MAX_GROUP_0; 
+                    $result['group1'] = $TUJIAN_MAX_GROUP_1; 
+                    mysql_close();
+                    return;
+                } else {
+                    $group1 << 1;
+                    $group1 ++;
+                }
             } else {
-                $group1 << 1;
-                $group1 ++;
+                $group0 << 1;
+                $group0 ++;
             }
+    
+            $sql = "UPDATE find_tujian SET group0='$group0',group1='$group1' WHERE userid='$userId'";
         } else {
-            $group0 << 1;
-            $group0 ++;
+            $sql = "insert into find_tujian (userid,group0,group1) values ('$userId','$group0','$group1')";
         }
-
-        $sql = "UPDATE find_tujian SET group0='$group0',group1='$group1' WHERE userid='$userId'";
-
+        
     } else {
         $sql = "insert into find_tujian (userid,group0,group1) values ('$userId','$group0','$group1')";
     }
@@ -639,17 +642,17 @@ function getTujian ($userId) {
     if ($db_result !== false) { //已有记录
 
         $item = mysql_fetch_array($result);
-
-        print_r($item);
-
-        $group0 = $item['group0'];
-        $group1 = $item['group1'];
-
-        $result['group0'] = $group0; 
-        $result['group1'] = $group1; 
-
+        if ($item !== false) {
+            $group0 = $item['group0'];
+            $group1 = $item['group1'];
+    
+            $result['group0'] = $group0; 
+            $result['group1'] = $group1; 
+        } else {
+            $result['group0'] = 0; 
+            $result['group1'] = 0; 
+        }
     } else {
-        echo $sql;
         $result['group0'] = 0; 
         $result['group1'] = 0; 
     }

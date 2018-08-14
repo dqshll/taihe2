@@ -580,10 +580,11 @@ function requestTujian ($userId) {
     $group1 = 0;
 
     if ($db_result !== false) { 
-        echo '1';
+        var_dump ($db_result);
+        
         $item = mysql_fetch_array($result);
 
-        var_dump ($item);
+       
 
         if ($item != false) {
             $group0 = $item['group0'];

@@ -108,6 +108,7 @@ var ActionRedirect = null;
 var StageList = [];
 var CurStageId = null;
 var StartTime = 0;
+var PlayTimer = null;
 var WaitTimer = null;
 var WaitCountDown = 0;
 var MatchIndicators = [];
@@ -235,7 +236,7 @@ function requestChaPicInfo () {
                 var isLastStage = (getNextStageId() == null);
 
                 if (duration > 1000) {
-                    setTimeout(function(follow_duration){
+                    PlayTimer = setTimeout(function(follow_duration){
                         if(isLastStage) {
                             toResultState();
                         } else {
@@ -586,6 +587,11 @@ function requestChaPicInfo () {
     function onChargeClick() {
         console.log('onChargeClick');
         closeTuJian();
+        if (PlayTimer != null) {
+            clearTimeout(PlayTimer);
+            PlayTimer = null;
+        }
+        
         if (WaitTimer != null) {
             clearInterval(WaitTimer);
             WaitTimer = null;

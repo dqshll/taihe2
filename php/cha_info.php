@@ -423,8 +423,6 @@ function onActionUpdate () {
      
     $action_result = mysql_query($sql);
 
-    // var_dump($action_result);
-
     if (!$action_result) { // 空
         $result['error'] = 112;
     }
@@ -734,7 +732,7 @@ function handleOneQRCodes($sid, $t, $i) {
     $filename = "$QR_FOLDER/qr/$sid/$sid-$index.png";
     $longUrlString = "http://www.91qzb.com/thinkphp/public/index.php/api/index/weixin?type=h5&t=$t&cid=$sid&url=$BUZZ_URL";     //二维码内容  
 
-    $shorten = "http://91qzb.com/api.php?format=json&domain=g&del_status=1&url=$longUrlString";
+    $shorten = "http://91qzb.com/api.php?format=json&domain=g&del_status=1&n=6&url=$longUrlString";
 
     $curl = curl_init();
     curl_setopt($curl, CURLOPT_URL, $shorten);

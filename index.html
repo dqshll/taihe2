@@ -51,7 +51,7 @@
 
         <div id="dialog">
             <div id="dclose">
-                <img class="close_btn" src='asset/close.png' onclick="onCloseBtnClicked()">
+                <img class="close_btn" src='asset/close.png' onclick="onTuJianCloseClick()">
             </div>
             <div id="list">
                 <div id='raw_0' class='tj_item'>
@@ -388,6 +388,7 @@ function requestChaPicInfo () {
             oImgBox.setAttribute("id", "correct");
             oImgBox.setAttribute("src", "asset/diff_match.png");
             MatchIndicators.push(oImgBox);
+            requestTujian();
         } else {
             oImgBox.setAttribute("id", "wrong");
             oImgBox.setAttribute("src", "asset/diff_miss.png");
@@ -525,5 +526,43 @@ function requestChaPicInfo () {
         });
     }
 
+    function onTuJianCloseClick () {
+        console.log('onTuJianCloseClick');
+        var viewTJ = document.getElementById('view_tujian');
+        viewTJ.style.display = 'none';
+    }
+
+    function requestTujian() {
+        console.log('requestTujian');
+        $.ajax({
+            url: MainUrl,
+            type: "get",
+            jsonType: "json",
+            timeout: 10000,
+            data: {
+                action:'req_tujian', user_id:UserId
+            },
+            success: function (data) {
+                console.log(data);
+
+                if (jsonObj['error'] != 0) {
+                    console.log('req tujian error');
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                console.log('error');
+                console.log(XMLHttpRequest.status);
+                console.log(XMLHttpRequest.readyState);
+                console.log(textStatus);
+            },
+            complete: function (XMLHttpRequest, status) {
+                console.log('complete: ' + status);
+
+                if (status == 'timeout') {
+                    console.log("超时");
+                }
+            }
+        });
+    }
 </script>
 </html>

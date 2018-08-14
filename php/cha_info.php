@@ -589,11 +589,11 @@ function requestTujian ($userId) {
                     mysql_close();
                     return;
                 } else {
-                    $group1 << 1;
+                    $group1 = $group1 << 1;
                     $group1 ++;
                 }
             } else {
-                $group0 << 1;
+                $group0 = $group0 << 1;
                 $group0 ++;
             }
     

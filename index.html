@@ -51,7 +51,7 @@
 
         <div id="dialog">
             <div id="dclose">
-                <img class="close_btn" src='asset/close.png' onclick="onTuJianCloseClick()">
+                <img class="close_btn" src='asset/close.png' onclick="closeTuJian()">
             </div>
             <div id="list">
                 <div id='raw_0' class='tj_item'>
@@ -521,7 +521,7 @@ function requestChaPicInfo () {
                         btn1.src = 'asset/charge_1.png';
                         btn1.onclick = onChargeClick;
                     } else {
-                        btn0.onclick = null;
+                        btn1.onclick = null;
                     }
 
                 } else {
@@ -544,8 +544,8 @@ function requestChaPicInfo () {
         });
     }
 
-    function onTuJianCloseClick () {
-        console.log('onTuJianCloseClick');
+    function closeTuJian () {
+        console.log('closeTuJian');
         var viewTJ = document.getElementById('view_tujian');
         viewTJ.style.display = 'none';
     }
@@ -584,6 +584,7 @@ function requestChaPicInfo () {
 
         function onChargeClick() {
             console.log('onChargeClick');
+            closeTuJian();
             if (WaitTimer != null) {
                 clearInterval(WaitTimer);
                 WaitTimer = null;

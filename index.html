@@ -418,7 +418,8 @@ function requestChaPicInfo () {
         var oImgBox = document.createElement("img");
         oImgBox.setAttribute("style", "width:" + IndWidth + "px;height:auto;position:fixed;left:" + (pickPos.x - IndWidth*0.5) + "px;top:" + (pickPos.y - IndWidth*0.5) + "px;");
         var imgPic = document.getElementById('pic');
-        insertAfter(oImgBox, imgPic);
+        imgPic.appendChild(oImgBox)
+        // insertAfter(oImgBox, imgPic);
 
         if(checkHit(pickPos) || false) {
             oImgBox.setAttribute("id", "correct");
@@ -644,8 +645,8 @@ function requestChaPicInfo () {
         return tmp;
     }
 
-    document.ontouchmove = function(event){ // prevent bouncing
-        event.preventDefault();
-    }
+    // document.ontouchmove = function(event){ // prevent bouncing
+    //     event.preventDefault();
+    // }
 </script>
 </html>

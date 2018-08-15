@@ -20,6 +20,14 @@ body{
     z-index:-1;
 }
 
+#debug_info {
+    width:100vw;
+    height:10vh;
+    top:10vh;
+    left:2vw;
+    position: fixed;;
+}
+
 #pic_area {
     width:100vw;
     height:auto;

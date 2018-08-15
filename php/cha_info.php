@@ -520,6 +520,8 @@ function zipFile($file_path_A, $file_path_B, $file_path_P, $zip_file_path) {
 }
 
 function zipQRPics($qr_folder, $zip_file_path) {
+    exec("rm -f $zip_file_path");
+
     $zip = new ZipArchive();
     $zip->open($zip_file_path,ZipArchive::CREATE);   //打开压缩包
 

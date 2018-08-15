@@ -19,6 +19,7 @@
 
     <div class="container" id="view_play">
         <img src="asset/bg.jpg" class="img_bg"/>
+        <h1 id="debug_info">debug info</h1>
         <div id="pic_area">
             <img id="pic">
         </div>
@@ -43,7 +44,7 @@
         <h2 class="title" id="result_title">欢乐找茬</h2>
 
         <img src="asset/default_result.png" id="result_info_img"/>
-        <img src="asset/join_0.png" id="btn_join" onclick="onJoin()"/>
+        <img src="asset/btn_tj_0.png" id="btn_join" onclick="onJoin()"/>
     </div>
 
     <div class="popup" id="view_tujian">
@@ -115,11 +116,15 @@ var MatchIndicators = [];
 var UserId = 0;
 var FullTuJian = false;
 
+var debugInfo = document.getElementById('debug_info');
+
 $(document).ready(function(){
     StartTime = getQueryString('t') * 1000;
     CurStageId = getQueryString('cid');
     UserId = getQueryString('user_id');
     console.log('starting at ' + StartTime + ' sid=' + CurStageId + ' uid=' + UserId);
+    debugInfo.innerHTML('starting at ' + StartTime + ' sid=' + CurStageId + ' uid=' + UserId);
+
     requestChaPicInfo();
 });
 
@@ -297,6 +302,19 @@ function requestChaPicInfo () {
     }
 
     function toWaitState (dur) {
+        if (dur <= 0) {
+            console.log('no need to wait');
+            CurStageId = getNextStageId();
+            console.log('CurStageId ->' + CurStageId);
+
+            if (CurStageId != null) {
+                toPlayState();
+            } else {
+                toResultState();
+            }
+            return;
+        } 
+
         WaitCountDown = parseInt(dur * 0.001);
         console.log('toWaitState countDown=' + WaitCountDown);
 
@@ -593,7 +611,7 @@ function requestChaPicInfo () {
 
     function onChargeClick() {
         console.log('onChargeClick');
-        closeTuJian();
+        // closeTuJian();
         if (PlayTimer != null) {
             clearTimeout(PlayTimer);
             PlayTimer = null;
@@ -603,7 +621,7 @@ function requestChaPicInfo () {
             clearInterval(WaitTimer);
             WaitTimer = null;
         }
-        toResultState();
+        onJoin();
     }
 </script>
 </html>

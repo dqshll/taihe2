@@ -19,7 +19,7 @@
 
     <div class="container" id="view_play">
         <img src="asset/bg.jpg" class="img_bg"/>
-        <h4 id="debug_info">debug info</h4>
+        <!-- <h4 id="debug_info">debug info</h4> -->
         <div id="pic_area">
             <img id="pic">
         </div>
@@ -98,10 +98,10 @@
 <script src="js/jquery.js"></script>
 <script src="js/jweixin-1.2.0.js"></script>
 <!-- <script type="text/javascript" src="js/zoom.js"> </script> -->
-<script src='js/vconsole.min.js'></script>
+<!-- <script src='js/vconsole.min.js'></script> -->
 <script>
 var TS_Enter = getCurTimeStamp();
-var TIMING_REPAY_PLUS = 1000; // 1 second
+var TIMING_REPAY_PLUS = 2000; // 1 second
 
 var MainUrl = 'https://miniapp.edisonx.cn/h5/taihe2/php/cha_info.php';
 var IndWidth = 40;
@@ -125,7 +125,7 @@ $(document).ready(function(){
     CurStageId = getQueryString('cid');
     UserId = getQueryString('user_id');
     console.log('starting at ' + StartTime + ' sid=' + CurStageId + ' uid=' + UserId);
-    debugInfo.innerHTML = 'starting at ' + StartTime + ' sid=' + CurStageId + ' uid=' + UserId;
+    // debugInfo.innerHTML = 'starting at ' + StartTime + ' sid=' + CurStageId + ' uid=' + UserId;
 
     requestChaPicInfo();
 });
@@ -241,7 +241,7 @@ function requestChaPicInfo () {
 
             // debugInfo.innerHTML = 'time repay ' + timeRepay;
 
-            StartTime += timeRepay;// + TIMING_REPAY_PLUS;
+            StartTime += timeRepay + TIMING_REPAY_PLUS;
             TS_Enter = 0;
         }
        

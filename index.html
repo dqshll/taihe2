@@ -643,5 +643,9 @@ function requestChaPicInfo () {
         var tmp = new Date().getTime();
         return tmp;
     }
+
+    document.ontouchmove = function(event){ // prevent bouncing
+        event.preventDefault();
+    }
 </script>
 </html>

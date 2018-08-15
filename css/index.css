@@ -25,7 +25,8 @@ body{
     height:10vh;
     top:10vh;
     left:2vw;
-    position: fixed;;
+    position: fixed;
+    background-color: white;
 }
 
 #pic_area {

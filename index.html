@@ -100,7 +100,9 @@
 <!-- <script type="text/javascript" src="js/zoom.js"> </script> -->
 <script src='js/vconsole.min.js'></script>
 <script>
-var JudgeRadiusSquare = 100;
+var TS_Enter = getCurTimeStamp();
+var TIMING_REPAY_PLUS = 1000; // 1 second
+
 var MainUrl = 'https://miniapp.edisonx.cn/h5/taihe2/php/cha_info.php';
 var IndWidth = 40;
 
@@ -230,6 +232,13 @@ function requestChaPicInfo () {
         document.getElementById('view_result').style.display = "none";
 
         registerTouchListener();
+
+        var tsCur = getCurTimeStamp();
+
+        var timeRepay = tsCur - TS_Enter;
+        console.log('tsCur=' + tsCur + ' tsEnter=' + TS_Enter + ' repay=' + timeRepay);
+
+        StartTime += timeRepay;// + TIMING_REPAY_PLUS;
 
         for (var i=0; i< StageList.length; i++) {
             var stage =  StageList[i];
@@ -622,6 +631,11 @@ function requestChaPicInfo () {
             WaitTimer = null;
         }
         onJoin();
+    }
+
+    function getCurTimeStamp () {
+        var tmp = new Date().getTime();
+        return tmp;
     }
 </script>
 </html>

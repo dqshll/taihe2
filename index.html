@@ -101,7 +101,7 @@
 <script src='js/vconsole.min.js'></script>
 <script>
 var TS_Enter = getCurTimeStamp();
-var TIMING_REPAY_PLUS = 3000; // 3 second
+var TIMING_REPAY_PLUS = 0 * 1000; // ms
 
 var MainUrl = 'https://miniapp.edisonx.cn/h5/taihe2/php/cha_info.php';
 var IndWidth = 40;
@@ -124,7 +124,8 @@ $(document).ready(function(){
     StartTime = getQueryString('t') * 1000;
     CurStageId = getQueryString('cid');
     UserId = getQueryString('user_id');
-    console.log('starting at ' + StartTime + ' sid=' + CurStageId + ' uid=' + UserId);
+    TS_Enter = getQueryString('scan') * 1000;
+    console.log('starting at ' + StartTime + ' sid=' + CurStageId + ' uid=' + UserId + ' scan=' + TS_Enter);
     // debugInfo.innerHTML = 'starting at ' + StartTime + ' sid=' + CurStageId + ' uid=' + UserId;
 
     requestChaPicInfo();

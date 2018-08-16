@@ -510,8 +510,7 @@ function logStat () {
     $sql = "select * from find_stat where userid = '$userId' and '$start_time'";
 
     $db_result = mysql_query($sql);
-echo $start_time;
-echo $end_time;
+
     $stvalue = toDTS($start_time);
     $edvalue = toDTS($end_time);
 
@@ -521,6 +520,7 @@ echo $end_time;
     } else {
         $sql = "UPDATE find_stat SET duration='$dur', end_time='$end_time', repay_dur='$repay_dur' WHERE id='$user_id' AND $start_time='$start_time'";
     }
+    echo $sql;
 
     $db_result = mysql_query($sql);
     if (!$db_result) {

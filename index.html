@@ -672,22 +672,22 @@ function requestChaPicInfo () {
             jsonType: "json",
             timeout: 10000,
             data: {
-                action:'stat', 
-                user_id:UserId,
+                action: 'stat', 
+                user_id: UserId,
                 join_at: Stat['join_at'],
                 rpd: Stat['rp_dur'],
                 st: Stat['st'],
                 ed: getCurTimeStamp(),
-                aid:Stat['aid'],  // action id
-                sid:Stat['sid'], // stage id
-                uid:Stat['uid'],  // union id
+                aid: Stat['aid'],  // action id
+                sid: Stat['sid'], // stage id
+                uid: Stat['uid'],  // union id
                 nick: Stat['nick'], 
                 gender: Stat['gender'],
-                lat:Stat['lat'],
-                lng:Stat['lng']
+                lat: Stat['lat'],
+                lng: Stat['lng']
             },
             success: function (data) {
-                // console.log(data);
+                console.log(data);
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
                 console.log('error');

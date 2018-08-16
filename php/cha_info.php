@@ -517,9 +517,9 @@ function logStat () {
     
     $db_result = mysql_query($sql);
 
-    var_dump($db_result);
+    $item = mysql_fetch_array($db_result);
 
-    if ($db_result === false) {
+    if ($item == false) {
         $sql = "INSERT INTO find_stat (user_id, name, gender, action_id, stage_id, union_id, duration, join_at, start_time, end_time, lat, lng, repay_dur) 
                               VALUES ('$user_id','$nick','$gender','$aid','$sid','$uid','$dur','$join_at','$stvalue','$edvalue','$lat','$lng','$repay_dur')";
     } else {

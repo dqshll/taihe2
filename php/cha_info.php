@@ -482,6 +482,9 @@ function logStat () {
         return;
     }
 
+    $stvalue = toDTS($start_time);
+    $edvalue = toDTS($end_time);
+
     global $DB_HOST, $DB_NAME;
 
     $db_connection = mysql_connect($DB_HOST,"root","e5cda60c7e");
@@ -507,12 +510,9 @@ function logStat () {
     $lng = $_GET['lng'];
     $repay_dur = $_GET['rpd'];
 
-    $sql = "select * from find_stat where userid = '$userId' and '$start_time'";
+    $sql = "select * from find_stat where userid = '$userId' and '$stvalue'";
 
     $db_result = mysql_query($sql);
-
-    $stvalue = toDTS($start_time);
-    $edvalue = toDTS($end_time);
 
     if ($db_result == false) {
         $sql = "INSERT INTO find_stat (user_id, name, gender, action_id, stage_id, union_id, duration, join_at, start_time, end_time, lat, lng, repay_dur) 

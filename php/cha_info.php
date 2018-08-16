@@ -520,6 +520,8 @@ function logStat () {
     } else {
         $sql = "UPDATE find_stat SET duration='$dur', end_time='$end_time', repay_dur='$repay_dur' WHERE id='$user_id' AND $start_time='$start_time'";
     }
+
+    echo $sql;
     
     $db_result = mysql_query($sql);
     if (!$db_result) {

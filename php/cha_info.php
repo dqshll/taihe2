@@ -38,11 +38,11 @@ if (isset($_POST['action'])) {
         requestTujian($_GET['user_id']);
     } else if ($action == 'get_tujian' && !empty($_GET['user_id'])) {
         getTujian($_GET['user_id']);
+    } else if ($action == 'stat' && !empty($_GET['user_id'])) {
+        logStat();
     }
 }
 echo json_encode($result);
-
-
 
 /** Query */
 function onQueryHandler ($sid) {
@@ -465,6 +465,61 @@ function onActionDel ($delID) {
     }
     mysql_close(); 
     return $result;
+}
+
+function logStat () {
+    global $result;
+    
+    $user_id = $_GET['user_id'];
+    if(empty($user_id)) {
+        $result['error'] = 121;
+        return;
+    }
+
+    $st = $_GET['st'];
+    if(empty($st)) {
+        $result['error'] = 122;
+        return;
+    }
+
+    global $DB_HOST, $DB_NAME;
+
+    $db_connection = mysql_connect($DB_HOST,"root","e5cda60c7e");
+
+    mysql_query("set names 'utf8'"); //数据库输出编码
+
+    mysql_select_db($DB_NAME); //打开数据库
+    $start_time = $_GET["st"];
+    $end_time = $_GET["ed"];
+    $dur = $end_time - $start_time;
+    $user_id = $_GET['user_id'];
+    $nick = $_GET['nick'];
+    $gender = $_GET['gender'];
+    $aid = $_GET['aid'];
+    $sid = $_GET['sid'];
+    $uid = $_GET['uid'];
+    $join_at = $_GET['join_at'];
+    $lat = $_GET['lat'];
+    $lng = $_GET['lng'];
+
+    $sql = "select * from find_stat where userid = '$userId' and '$start_time'";
+
+    $db_result = mysql_query($sql);
+
+    if ($db_result == false) {
+        $sql = "INSERT INTO find_stat (user_id, name, gender, action_id, stage_id, union_id, duration, join_at, start_time, end_time, lat, lng) 
+                              VALUES ('$user_id','$nick','$gender','$aid','$sid','$uid','$dur','$join_at','$start_time','$end_time','$lat','$lng')";
+    } else {// old pkg should update
+        $sql = "UPDATE find_stat SET duration='$dur', end_time='$end_time' WHERE id='$user_id' AND $start_time='$start_time'";
+    }
+
+    $db_result = mysql_query($sql);
+    if (!$db_result) {
+        $result['error'] = 123;
+        return;
+    }
+    $result['error'] = 0;
+    mysql_close(); 
 }
 
 /** Upload */

@@ -117,6 +117,7 @@ var WaitCountDown = 0;
 var MatchIndicators = [];
 var UserId = 0;
 var FullTuJian = false;
+var Stat= [];
 
 var debugInfo = document.getElementById('debug_info');
 
@@ -125,7 +126,17 @@ $(document).ready(function(){
     CurStageId = getQueryString('cid');
     UserId = getQueryString('user_id');
     TS_Enter = getQueryString('scan') * 1000;
-    console.log('starting at ' + StartTime + ' sid=' + CurStageId + ' uid=' + UserId + ' scan=' + TS_Enter);
+
+    Stat['sid'] = CurStageId;
+    Stat['lat'] = getQueryString('lat');
+    Stat['lng'] = getQueryString('lng');
+    Stat['join_at'] = StartTime;
+    Stat['uid'] = getQueryString('uid');
+    Stat['nick'] = getQueryString('nick');
+    Stat['gender'] = getQueryString('gender');
+    Stat['st'] = TS_Enter;
+
+    console.log('starting at ' + StartTime + ' sid=' + CurStageId + ' uid=' + UserId + ' scan=' + TS_Enter + ' lat=' + Stat['lat'] + ' lng' + Stat['lng']);
     // debugInfo.innerHTML = 'starting at ' + StartTime + ' sid=' + CurStageId + ' uid=' + UserId;
 
     requestChaPicInfo();
@@ -142,14 +153,14 @@ function requestChaPicInfo () {
             },
             success: function (data) {
                 console.log('200ok');
-
+                logStat();
                 var jsonObj = JSON.parse(data);
 
                 if (jsonObj['error'] == 0) {
                     searchCurAction(jsonObj['actions']);
                 } else {
                     console.log(jsonObj['msg']);
-                }
+                }                
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
                 console.log('error');
@@ -174,6 +185,7 @@ function requestChaPicInfo () {
 
         for(var aid in actions){
             if (parseStageList(actions[aid]['pkg'])) {
+                Stat['aid'] = aid;
                 ActionName = actions[aid]['name'];
                 ActionRedirect = actions[aid]['to'];
                 toPlayState();
@@ -240,10 +252,12 @@ function requestChaPicInfo () {
             var timeRepay = tsCur - TS_Enter;
             console.log('tsCur=' + tsCur + ' tsEnter=' + TS_Enter + ' repay=' + timeRepay);
 
+            Stat['st_dur'] = timeRepay;
             // debugInfo.innerHTML = 'time repay ' + timeRepay;
 
             StartTime += timeRepay + TIMING_REPAY_PLUS;
             TS_Enter = 0;
+            logStat();
         }
        
         for (var i=0; i< StageList.length; i++) {
@@ -290,6 +304,8 @@ function requestChaPicInfo () {
             ind.remove();
         }
         MatchIndicators = [];
+        Stat['ed'] = getCurTimeStamp();
+        logStat();
     }
 
     function getNextStageId () {
@@ -648,5 +664,45 @@ function requestChaPicInfo () {
     // document.ontouchmove = function(event){ // prevent bouncing
     //     event.preventDefault();
     // }
+
+    function logStat () {
+        console.log('logStats');
+        $.ajax({
+            url: MainUrl,
+            type: "get",
+            jsonType: "json",
+            timeout: 10000,
+            data: {
+                action:'stat', 
+                user_id:UserId,
+                join_at: Stat['join_at'],
+                st: Stat['st'],
+                ed: Stat['ed'], 
+                aid:Stat['aid'],  // action id
+                sid:Stat['sid'], // stage id
+                uid:Stat['uid'],  // union id
+                nick: Stat['nick'], 
+                gender: Stat['gender'],
+                lat:Stat['lat'],
+                lng:Stat['lng']
+            },
+            success: function (data) {
+                // console.log(data);
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                console.log('error');
+                console.log(XMLHttpRequest.status);
+                console.log(XMLHttpRequest.readyState);
+                console.log(textStatus);
+            },
+            complete: function (XMLHttpRequest, status) {
+                console.log('complete: ' + status);
+
+                if (status == 'timeout') {
+                    console.log("超时");
+                }
+            }
+        });
+    }
 </script>
 </html>

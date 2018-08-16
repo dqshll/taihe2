@@ -509,7 +509,7 @@ function logStat () {
     if ($db_result == false) {
         $sql = "INSERT INTO find_stat (user_id, name, gender, action_id, stage_id, union_id, duration, join_at, start_time, end_time, lat, lng) 
                               VALUES ('$user_id','$nick','$gender','$aid','$sid','$uid','$dur','$join_at','$start_time','$end_time','$lat','$lng')";
-    } else {// old pkg should update
+    } else {
         $sql = "UPDATE find_stat SET duration='$dur', end_time='$end_time' WHERE id='$user_id' AND $start_time='$start_time'";
     }
 

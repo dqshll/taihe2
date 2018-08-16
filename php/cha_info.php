@@ -483,7 +483,6 @@ function logStat () {
     }
 
     $stvalue = toDTS($start_time);
-    $edvalue = toDTS($end_time);
 
     global $DB_HOST, $DB_NAME;
 
@@ -494,6 +493,8 @@ function logStat () {
     mysql_select_db($DB_NAME); //打开数据库
 
     $end_time = $_GET["ed"];
+    $edvalue = toDTS($end_time);
+
     $dur = 0;
     if(!empty($end_time)) {
         $dur = ($end_time - $start_time) * 0.001;
@@ -510,7 +511,7 @@ function logStat () {
     $lng = $_GET['lng'];
     $repay_dur = $_GET['rpd'];
 
-    $sql = "select * from find_stat where userid = '$userId' and '$stvalue'";
+    $sql = "select * from find_stat where user_id = '$user_id' and start_time = '$stvalue'";
 
     $db_result = mysql_query($sql);
 
@@ -518,7 +519,7 @@ function logStat () {
         $sql = "INSERT INTO find_stat (user_id, name, gender, action_id, stage_id, union_id, duration, join_at, start_time, end_time, lat, lng, repay_dur) 
                               VALUES ('$user_id','$nick','$gender','$aid','$sid','$uid','$dur','$join_at','$stvalue','$edvalue','$lat','$lng','$repay_dur')";
     } else {
-        $sql = "UPDATE find_stat SET duration='$dur', end_time='$end_time', repay_dur='$repay_dur' WHERE id='$user_id' AND $start_time='$start_time'";
+        $sql = "UPDATE find_stat SET duration='$dur', end_time='$end_time', repay_dur='$repay_dur' WHERE user_id='$user_id' AND start_time='$stvalue'";
     }
 
     echo $sql;

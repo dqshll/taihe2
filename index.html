@@ -104,6 +104,8 @@ var TS_Enter = getCurTimeStamp();
 var TIMING_REPAY_PLUS = 0 * 1000; // ms
 
 var MainUrl = 'https://miniapp.edisonx.cn/h5/taihe2/php/cha_info.php';
+var DevUrl = 'https://miniapp.edisonx.cn/h5/taihe2_dev/php/cha_info.php';
+
 var IndWidth = 40;
 
 var ActionName = '';
@@ -667,7 +669,7 @@ function requestChaPicInfo () {
     function logStat () {
         console.log('logStat');
         $.ajax({
-            url: MainUrl,
+            url: DevUrl,
             type: "get",
             jsonType: "json",
             timeout: 10000,

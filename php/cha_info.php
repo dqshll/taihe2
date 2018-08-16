@@ -510,7 +510,8 @@ function logStat () {
     $sql = "select * from find_stat where userid = '$userId' and '$start_time'";
 
     $db_result = mysql_query($sql);
-
+echo $start_time;
+echo $end_time;
     $stvalue = toDTS($start_time);
     $edvalue = toDTS($end_time);
 
@@ -518,7 +519,7 @@ function logStat () {
         $sql = "INSERT INTO find_stat (user_id, name, gender, action_id, stage_id, union_id, duration, join_at, start_time, end_time, lat, lng, repay_dur) 
                               VALUES ('$user_id','$nick','$gender','$aid','$sid','$uid','$dur','$join_at','$stvalue','$edvalue','$lat','$lng','$repay_dur')";
     } else {
-        $sql = "UPDATE find_stat SET duration='$dur', end_time='$end_time' WHERE id='$user_id' AND $start_time='$start_time'";
+        $sql = "UPDATE find_stat SET duration='$dur', end_time='$end_time', repay_dur='$repay_dur' WHERE id='$user_id' AND $start_time='$start_time'";
     }
 
     $db_result = mysql_query($sql);

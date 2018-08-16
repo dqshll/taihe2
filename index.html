@@ -304,7 +304,6 @@ function requestChaPicInfo () {
             ind.remove();
         }
         MatchIndicators = [];
-        logStat();
     }
 
     function getNextStageId () {
@@ -382,6 +381,7 @@ function requestChaPicInfo () {
         document.getElementById('view_play').style.display = "none";
         document.getElementById('view_wait').style.display = "none";
         document.getElementById('view_result').style.display = "block";
+        logStat();
     }
 
     function updateTimeCounting (evt) {

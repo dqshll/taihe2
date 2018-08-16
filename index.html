@@ -134,7 +134,7 @@ $(document).ready(function(){
     Stat['lng'] = getQueryString('lng');
     Stat['join_at'] = StartTime;
     Stat['uid'] = getQueryString('uid');
-    Stat['nick'] = getQueryString('nick');
+    Stat['nick'] = decodeURI(getQueryString('nick'));
     Stat['gender'] = getQueryString('gender');
     Stat['st'] = TS_Enter;
 

@@ -252,7 +252,7 @@ function requestChaPicInfo () {
             var timeRepay = tsCur - TS_Enter;
             console.log('tsCur=' + tsCur + ' tsEnter=' + TS_Enter + ' repay=' + timeRepay);
 
-            Stat['st_dur'] = timeRepay;
+            Stat['rp_dur'] = timeRepay;
             // debugInfo.innerHTML = 'time repay ' + timeRepay;
 
             StartTime += timeRepay + TIMING_REPAY_PLUS;
@@ -304,7 +304,6 @@ function requestChaPicInfo () {
             ind.remove();
         }
         MatchIndicators = [];
-        Stat['ed'] = getCurTimeStamp();
         logStat();
     }
 
@@ -666,7 +665,7 @@ function requestChaPicInfo () {
     // }
 
     function logStat () {
-        console.log('logStats');
+        console.log('logStat');
         $.ajax({
             url: MainUrl,
             type: "get",
@@ -676,8 +675,9 @@ function requestChaPicInfo () {
                 action:'stat', 
                 user_id:UserId,
                 join_at: Stat['join_at'],
+                rpd: Stat['rp_dur'],
                 st: Stat['st'],
-                ed: Stat['ed'], 
+                ed: getCurTimeStamp(),
                 aid:Stat['aid'],  // action id
                 sid:Stat['sid'], // stage id
                 uid:Stat['uid'],  // union id

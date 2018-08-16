@@ -476,8 +476,8 @@ function logStat () {
         return;
     }
 
-    $st = $_GET['st'];
-    if(empty($st)) {
+    $start_time = $_GET['st'];
+    if(empty($start_time)) {
         $result['error'] = 122;
         return;
     }
@@ -489,9 +489,13 @@ function logStat () {
     mysql_query("set names 'utf8'"); //数据库输出编码
 
     mysql_select_db($DB_NAME); //打开数据库
-    $start_time = $_GET["st"];
+
     $end_time = $_GET["ed"];
-    $dur = $end_time - $start_time;
+    $dur = 0;
+    if(!empty($end_time)) {
+        $dur = ($end_time - $start_time) * 0.001;
+    }
+
     $user_id = $_GET['user_id'];
     $nick = $_GET['nick'];
     $gender = $_GET['gender'];
@@ -501,14 +505,18 @@ function logStat () {
     $join_at = $_GET['join_at'];
     $lat = $_GET['lat'];
     $lng = $_GET['lng'];
+    $repay_dur = $_GET['rpd'];
 
     $sql = "select * from find_stat where userid = '$userId' and '$start_time'";
 
     $db_result = mysql_query($sql);
 
+    $stvalue = toDTS($start_time);
+    $edvalue = toDTS($end_time);
+
     if ($db_result == false) {
-        $sql = "INSERT INTO find_stat (user_id, name, gender, action_id, stage_id, union_id, duration, join_at, start_time, end_time, lat, lng) 
-                              VALUES ('$user_id','$nick','$gender','$aid','$sid','$uid','$dur','$join_at','$start_time','$end_time','$lat','$lng')";
+        $sql = "INSERT INTO find_stat (user_id, name, gender, action_id, stage_id, union_id, duration, join_at, start_time, end_time, lat, lng, repay_dur) 
+                              VALUES ('$user_id','$nick','$gender','$aid','$sid','$uid','$dur','$join_at','$stvalue','$edvalue','$lat','$lng','$repay_dur')";
     } else {
         $sql = "UPDATE find_stat SET duration='$dur', end_time='$end_time' WHERE id='$user_id' AND $start_time='$start_time'";
     }

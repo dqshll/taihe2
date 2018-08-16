@@ -512,7 +512,9 @@ function logStat () {
     $repay_dur = $_GET['rpd'];
 
     $sql = "select * from find_stat where user_id = '$user_id' and start_time = '$stvalue'";
-
+    
+    echo $sql;
+    
     $db_result = mysql_query($sql);
 
     if ($db_result == false) {

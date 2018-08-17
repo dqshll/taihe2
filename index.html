@@ -491,12 +491,15 @@ function requestChaPicInfo () {
     }
 
     function insertAfter(newEle, targetEle){
+        console.log('insertAfter');
         var parentEle = targetEle.parentNode;
         if(parentEle.lastChild == targetEle){
             parentEle.appendChild(newEle);
+            console.log('appendChild');
         }
         else{
             parentEle.insertBefore(newEle, targetEle.nextSibling);
+            console.log('insertBefore');
         }
     }
 

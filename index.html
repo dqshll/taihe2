@@ -512,17 +512,9 @@ function requestChaPicInfo () {
     }
 
     function getQueryString(name) {
-        var url = window.location.search.substr(0);
-        var theRequest = new Object();
-        var n = url.indexOf("?")
-        if (n != -1) {
-            var str = url.substr(n + 1);
-            var strs = str.split("&");
-            for (var i = 0; i < strs.length; i++) {
-                theRequest[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1]);
-            }
-        }
-        return theRequest[name];
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+        var r = decodeURI(window.location.search.substr(1)).match(reg);
+        if (r != null) return unescape(r[2]); return null;
     }
 
     function onJoin () {

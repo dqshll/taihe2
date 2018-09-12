@@ -143,6 +143,11 @@ $(document).ready(function(){
     console.log('nick name = ' + Stat['nick']);
 
     requestChaPicInfo();
+
+    history.pushState(null, null, document.URL);
+    window.addEventListener('popstate', function () {
+        history.pushState(null, null, document.URL);
+    });
 });
 
 function requestChaPicInfo () {

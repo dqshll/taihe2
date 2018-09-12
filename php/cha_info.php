@@ -6,7 +6,7 @@ $DB_NAME = 'taihe';
 $QR_FOLDER = '/alidata/www/ecmall/data/files/cha';
 $BUZZ_URL = 'https://miniapp.edisonx.cn/h5/taihe2';
 $TUJIAN_RANDOM = 9; /** 0-9, 9 is 100%  */
-$TUJIAN_MAX_GROUP_0 = 0b1111;
+$TUJIAN_MAX_GROUP_0 = 0b0111;
 $TUJIAN_MAX_GROUP_1 = 0b0111;
 
 $result = array('error'=>101);

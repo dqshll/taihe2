@@ -103,6 +103,9 @@
 var TS_Enter = getCurTimeStamp();
 var TIMING_REPAY_PLUS = 0 * 1000; // ms
 
+TUJIAN_MAX_GROUP_0 = 0b0111;
+TUJIAN_MAX_GROUP_1 = 0b0111;
+
 var MainUrl = 'https://miniapp.edisonx.cn/h5/taihe2/php/cha_info.php';
 var DevUrl = 'https://miniapp.edisonx.cn/h5/taihe2_dev/php/cha_info.php';
 
@@ -566,7 +569,7 @@ function requestChaPicInfo () {
                     }
                     
                     var btn0 = document.getElementById('btn_charge_0');
-                    var fullGroup0 = (group0 >= 0b1111);
+                    var fullGroup0 = (group0 >= TUJIAN_MAX_GROUP_0);
                     
                     if (fullGroup0) {
                         btn0.src = 'asset/charge_1.png';
@@ -576,7 +579,7 @@ function requestChaPicInfo () {
                     }
 
                     var btn1 = document.getElementById('btn_charge_1');
-                    var fullGroup1 = (group1 >= 0b111);
+                    var fullGroup1 = (group1 >= TUJIAN_MAX_GROUP_1);
 
                     if (fullGroup1) {
                         btn1.src = 'asset/charge_1.png';

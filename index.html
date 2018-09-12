@@ -97,7 +97,7 @@
 </body>
 <script src="js/jquery.js"></script>
 <script src="js/jweixin-1.2.0.js"></script>
-<!-- <script type="text/javascript" src="js/zoom.js"> </script> -->
+<script type="text/javascript" src="js/md5.js"> </script>
 <script src='js/vconsole.min.js'></script>
 <script>
 var TS_Enter = getCurTimeStamp();
@@ -134,7 +134,7 @@ $(document).ready(function(){
     Stat['lng'] = getQueryString('lng');
     Stat['join_at'] = StartTime;
     Stat['uid'] = getQueryString('uid');
-    Stat['nick'] = getQueryString('nick');
+    Stat['nick'] = getQueryString('nickname');
     
     Stat['gender'] = getQueryString('gender');
     Stat['st'] = TS_Enter;
@@ -527,7 +527,11 @@ function requestChaPicInfo () {
 
     function onJoin () {
         if (ActionRedirect != null) {
-            window.location = ActionRedirect;
+            ts = getCurTimeStamp();
+            token = hex_md5(ts);
+            taiheUrl = ActionRedirect + "?openid=" + Stat['uid'] + "&token=" + token + "&ts=" + ts + "&nick=" + Stat['nick'];
+            console.log('to ' + taiheUrl);
+            window.location = taiheUrl;
             // document.getElementById('btn_join').src = 'asset/join_1.png'
         }
     }

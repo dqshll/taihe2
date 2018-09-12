@@ -270,6 +270,10 @@ function requestChaPicInfo () {
             TS_Enter = 0;
             logStat();
         }
+
+        if (timeRepay > 20000) {
+            toResultState();
+        }
        
         for (var i=0; i< StageList.length; i++) {
             var stage =  StageList[i];

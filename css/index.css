@@ -80,6 +80,7 @@ body{
 
 #view_result {
     display: none;
+    padding-top: 6vh; 
 }
 
 .title {
@@ -136,7 +137,6 @@ body{
 #result_info_img {
     width: 90vw;
     height: auto;
-    margin-top: 10vh;
     margin-left:5vw; 
 }
 

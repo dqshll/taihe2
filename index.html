@@ -97,7 +97,7 @@
 </body>
 <script src="js/jquery.js"></script>
 <script src="js/jweixin-1.2.0.js"></script>
-<script type="text/javascript" src="js/md5.js"> </script>
+<script src="js/md5.js"> </script>
 <script src='js/vconsole.min.js'></script>
 <script>
 var TS_Enter = getCurTimeStamp();
@@ -528,7 +528,7 @@ function requestChaPicInfo () {
     function onJoin () {
         if (ActionRedirect != null) {
             ts = getCurTimeStamp();
-            token = str_md5(ts);
+            token = hex_md5(ts);
             taiheUrl = ActionRedirect + "?openid=" + Stat['uid'] + "&token=" + token + "&ts=" + ts + "&nick=" + Stat['nick'];
             console.log('to ' + taiheUrl);
             // window.location = taiheUrl;

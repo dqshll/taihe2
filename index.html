@@ -73,7 +73,7 @@
                     </div>
                 </div>
 
-                <!-- <div id='raw_1' class='tj_item'>
+                <div id='raw_1' class='tj_item' style="display:none">
                     <div class="icon_wrap icon_first">
                         <img id='icon_1_0' src='asset/tj_1_0_0.png' class='tj_icon'>
                     </div>
@@ -86,7 +86,7 @@
                     <div class="btn_wrap">
                         <img id='btn_charge_1' src='asset/charge_0.png' class='brn_charge'>
                     </div>
-                </div> -->
+                </div>
 
                 <h4 id="readme">温馨提示:<br>
                         寻找与大屏幕海报不同点。每找到一处可获得一枚勋章，集齐后可兑换奖品。<br>每次游戏结果可累加哦！多玩多得, 大家一起来比眼力吧！</h4>
@@ -554,7 +554,7 @@ function requestChaPicInfo () {
 
                 if (jsonObj['error'] == 0) {
                     var group0 = jsonObj['group0'];
-                    var group1 = 0;//jsonObj['group1'];
+                    var group1 = jsonObj['group1'];
                     console.log('group0 = ' + group0 + ' group1=' + group1);
 
                     for(var i=0; i<4; i++) {

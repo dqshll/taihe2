@@ -528,10 +528,10 @@ function requestChaPicInfo () {
     function onJoin () {
         if (ActionRedirect != null) {
             ts = getCurTimeStamp();
-            token = hex_md5(ts);
+            token = str_md5(ts);
             taiheUrl = ActionRedirect + "?openid=" + Stat['uid'] + "&token=" + token + "&ts=" + ts + "&nick=" + Stat['nick'];
             console.log('to ' + taiheUrl);
-            window.location = taiheUrl;
+            // window.location = taiheUrl;
             // document.getElementById('btn_join').src = 'asset/join_1.png'
         }
     }

@@ -134,10 +134,9 @@ body{
 }
 
 #result_info_img {
-    width: 90vw;
+    width: 70vw;
     height: auto;
-    padding-top:5vw;
-    margin-left:5vw; 
+    margin-left:15vw; 
 }
 
 #btn_join {

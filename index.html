@@ -98,7 +98,7 @@
 <script src="js/jquery.js"></script>
 <script src="js/jweixin-1.2.0.js"></script>
 <script src="js/md5.js"> </script>
-<!-- <script src='js/vconsole.min.js'></script> -->
+<script src='js/vconsole.min.js'></script>
 <script>
 var TS_Enter = getCurTimeStamp();
 var TIMING_REPAY_PLUS = 0 * 1000; // ms
@@ -535,7 +535,7 @@ function requestChaPicInfo () {
             token = hex_md5(''+ts);
             taiheUrl = ActionRedirect + "?openid=" + Stat['uid'] + "&token=" + token + "&ts=" + ts + "&nick=" + Stat['nick'];
             console.log('to ' + taiheUrl);
-            window.location = taiheUrl;
+            // window.location = taiheUrl;
             // document.getElementById('btn_join').src = 'asset/join_1.png'
         }
     }
